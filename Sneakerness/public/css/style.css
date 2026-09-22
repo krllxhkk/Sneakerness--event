@@ -715,3 +715,296 @@ main {
     box-shadow: 0 0 18px rgba(204, 255, 0, 0.4);
     transform: translateY(-2px);
 }
+/* ==========================================
+   VERKOPERS PAGINA
+   ========================================== */
+
+/* Pagina */
+.verkopers-page {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 130px 30px 80px;
+}
+
+/* Pagina introductie */
+.verkopers-header {
+    margin-bottom: 50px;
+}
+
+.verkopers-header .sub-label {
+    color: var(--yellow);
+    font-size: 12px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.verkopers-header h1 {
+    font-size: 60px;
+    line-height: 1;
+    margin-bottom: 25px;
+}
+
+.verkopers-header p {
+    color: var(--text-gray);
+    max-width: 600px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* Overzicht van verkopers */
+.verkopers-overzicht {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+/* Kaart van een verkoper */
+.verkoper-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-dark);
+    padding: 22px;
+    border-radius: 6px;
+    transition: all 0.25s ease;
+}
+
+.verkoper-card:hover {
+    border-color: var(--yellow);
+    box-shadow: 0 0 15px rgba(204, 255, 0, 0.35);
+    transform: translateY(-3px);
+}
+
+/* Naam van de verkoper */
+.verkoper-card h2 {
+    font-size: 20px;
+    margin-bottom: 18px;
+}
+
+/* Gegevens van de verkoper */
+.verkoper-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.verkoper-info span {
+    color: var(--yellow);
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.verkoper-info p {
+    color: var(--text-gray);
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+/* Opmerking */
+.verkoper-opmerking {
+    border-top: 1px solid var(--border-dark);
+    margin-top: 15px;
+    padding-top: 10px;
+    color: var(--text-gray);
+    font-size: 11px;
+}
+/* Naam van de verkoper */
+.verkoper-card h2 {
+    font-size: 24px;
+    margin-bottom: 25px;
+}
+
+/* Gegevens van de verkoper */
+.verkoper-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.verkoper-info span {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.verkoper-info p {
+    color: var(--text-gray);
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+/* Opmerking */
+.verkoper-opmerking {
+    border-top: 1px solid var(--border-dark);
+    margin-top: 20px;
+    padding-top: 15px;
+    color: var(--text-gray);
+    font-size: 12px;
+}
+
+/* Geen verkopers */
+.no-verkopers {
+    grid-column: 1 / -1;
+    padding: 50px;
+    text-align: center;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-dark);
+}
+
+.no-verkopers h2 {
+    color: var(--yellow);
+    margin-bottom: 15px;
+}
+
+.no-verkopers p {
+    color: var(--text-gray);
+}
+
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 900px) {
+
+    .verkopers-overzicht {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .verkopers-header h1 {
+        font-size: 50px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .verkopers-page {
+        padding: 110px 20px 60px;
+    }
+
+    .verkopers-header h1 {
+        font-size: 40px;
+    }
+
+    .verkopers-overzicht {
+        grid-template-columns: 1fr;
+    }
+
+    .verkoper-card {
+        padding: 25px;
+    }
+}
+/* ==========================================
+   CONTACTPERSONEN TABEL
+   ========================================== */
+
+.contactpersonen-section {
+    margin-top: 80px;
+}
+
+.contactpersonen-section h2 {
+    font-size: 32px;
+    margin-bottom: 25px;
+}
+
+.contactpersonen-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+}
+
+.contactpersonen-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 850px;
+}
+
+.contactpersonen-table thead {
+    background-color: #181818;
+}
+
+.contactpersonen-table th {
+    color: var(--yellow);
+    font-size: 11px;
+    font-weight: 700;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 16px 18px;
+    border-bottom: 1px solid #2a2a2a;
+    white-space: nowrap;
+}
+
+.contactpersonen-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.contactpersonen-table tbody tr:hover {
+    background-color: #191919;
+}
+
+.contactpersonen-table td {
+    color: var(--text-gray);
+    font-size: 13px;
+    padding: 16px 18px;
+    border-bottom: 1px solid #242424;
+    vertical-align: middle;
+}
+
+.contactpersonen-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.contactpersoon-naam {
+    color: var(--text-white) !important;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.contactpersonen-table td:nth-child(2) {
+    color: #cccccc;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.contactpersonen-table td:nth-child(3) {
+    color: #aaaaaa;
+}
+
+.contactpersonen-table td:nth-child(4) {
+    white-space: nowrap;
+}
+
+.status-actief {
+    color: var(--yellow) !important;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-actief span {
+    color: #00ff88;
+    font-size: 9px;
+    margin-right: 5px;
+}
+
+@media (max-width: 700px) {
+    .contactpersonen-section {
+        margin-top: 60px;
+    }
+
+    .contactpersonen-section h2 {
+        font-size: 26px;
+    }
+
+    .contactpersonen-table {
+        min-width: 800px;
+    }
+
+    .contactpersonen-table th,
+    .contactpersonen-table td {
+        padding: 14px;
+    }
+}

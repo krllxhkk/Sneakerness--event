@@ -1,0 +1,241 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background-color: #080808;
+    color: #ffffff;
+
+    font-family: 'Inter', sans-serif;
+}
+
+
+/* PAGINA */
+
+.events-container {
+    width: 90%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+    padding: 80px 0;
+}
+
+
+/* HEADER */
+
+.events-header {
+    max-width: 700px;
+    margin-bottom: 55px;
+}
+
+.events-label {
+    color: #c6ff00;
+
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+.events-header h1 {
+    margin: 10px 0 20px;
+
+    font-family: 'Oswald', sans-serif;
+    font-size: 64px;
+    line-height: 0.95;
+
+    letter-spacing: 1px;
+}
+
+.events-header p {
+    margin: 0;
+
+    color: #9b9b9b;
+
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+
+/* EVENTS */
+
+.events-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(330px, 1fr));
+
+    gap: 25px;
+}
+
+
+/* EVENT CARD */
+
+.event-card {
+    padding: 28px;
+
+    background-color: #111111;
+
+    border: 1px solid #252525;
+    border-radius: 8px;
+
+    transition: 0.2s;
+}
+
+.event-card:hover {
+    border-color: #c6ff00;
+
+    transform: translateY(-4px);
+}
+
+
+/* BOVENKANT CARD */
+
+.event-card-top {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.event-date {
+    color: #c6ff00;
+
+    font-weight: 700;
+}
+
+.event-status {
+    padding: 6px 10px;
+
+    background-color: #c6ff00;
+    color: #080808;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* EVENT TITEL */
+
+.event-card h2 {
+    margin: 0 0 25px;
+
+    font-family: 'Oswald', sans-serif;
+
+    font-size: 30px;
+    text-transform: uppercase;
+}
+
+
+/* DETAILS */
+
+.event-details {
+    border-top: 1px solid #292929;
+}
+
+.event-detail {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 16px 0;
+
+    border-bottom: 1px solid #292929;
+}
+
+.detail-label {
+    color: #777777;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+}
+
+.event-detail strong {
+    text-align: right;
+
+    font-size: 14px;
+}
+
+
+/* UNHAPPY FLOW */
+
+.no-events {
+    padding: 70px 30px;
+
+    text-align: center;
+
+    background-color: #111111;
+
+    border: 1px solid #252525;
+    border-radius: 8px;
+}
+
+.no-events-icon {
+    display: flex;
+
+    width: 50px;
+    height: 50px;
+
+    margin: 0 auto 20px;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: #c6ff00;
+    color: #080808;
+
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.no-events h2 {
+    margin: 0 0 10px;
+
+    font-family: 'Oswald', sans-serif;
+    font-size: 30px;
+}
+
+.no-events p {
+    margin: 0;
+
+    color: #888888;
+}
+
+
+/* MOBIEL */
+
+@media (max-width: 700px) {
+
+    .events-container {
+        width: 92%;
+
+        padding: 50px 0;
+    }
+
+    .events-header h1 {
+        font-size: 46px;
+    }
+
+    .events-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .event-detail {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 6px;
+    }
+
+    .event-detail strong {
+        text-align: left;
+    }
+}
