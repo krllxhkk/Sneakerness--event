@@ -715,3 +715,183 @@ main {
     box-shadow: 0 0 18px rgba(204, 255, 0, 0.4);
     transform: translateY(-2px);
 }
+/* ==========================================
+   VERKOPERS PAGINA
+   ========================================== */
+
+/* Pagina */
+.verkopers-page {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 130px 30px 80px;
+}
+
+/* Pagina introductie */
+.verkopers-header {
+    margin-bottom: 50px;
+}
+
+.verkopers-header .sub-label {
+    color: var(--yellow);
+    font-size: 12px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.verkopers-header h1 {
+    font-size: 60px;
+    line-height: 1;
+    margin-bottom: 25px;
+}
+
+.verkopers-header p {
+    color: var(--text-gray);
+    max-width: 600px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* Overzicht van verkopers */
+.verkopers-overzicht {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+/* Kaart van een verkoper */
+.verkoper-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-dark);
+    padding: 22px;
+    border-radius: 6px;
+    transition: all 0.25s ease;
+}
+
+.verkoper-card:hover {
+    border-color: var(--yellow);
+    box-shadow: 0 0 15px rgba(204, 255, 0, 0.35);
+    transform: translateY(-3px);
+}
+
+/* Naam van de verkoper */
+.verkoper-card h2 {
+    font-size: 20px;
+    margin-bottom: 18px;
+}
+
+/* Gegevens van de verkoper */
+.verkoper-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.verkoper-info span {
+    color: var(--yellow);
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.verkoper-info p {
+    color: var(--text-gray);
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+/* Opmerking */
+.verkoper-opmerking {
+    border-top: 1px solid var(--border-dark);
+    margin-top: 15px;
+    padding-top: 10px;
+    color: var(--text-gray);
+    font-size: 11px;
+}
+/* Naam van de verkoper */
+.verkoper-card h2 {
+    font-size: 24px;
+    margin-bottom: 25px;
+}
+
+/* Gegevens van de verkoper */
+.verkoper-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.verkoper-info span {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.verkoper-info p {
+    color: var(--text-gray);
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+/* Opmerking */
+.verkoper-opmerking {
+    border-top: 1px solid var(--border-dark);
+    margin-top: 20px;
+    padding-top: 15px;
+    color: var(--text-gray);
+    font-size: 12px;
+}
+
+/* Geen verkopers */
+.no-verkopers {
+    grid-column: 1 / -1;
+    padding: 50px;
+    text-align: center;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-dark);
+}
+
+.no-verkopers h2 {
+    color: var(--yellow);
+    margin-bottom: 15px;
+}
+
+.no-verkopers p {
+    color: var(--text-gray);
+}
+
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 900px) {
+
+    .verkopers-overzicht {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .verkopers-header h1 {
+        font-size: 50px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .verkopers-page {
+        padding: 110px 20px 60px;
+    }
+
+    .verkopers-header h1 {
+        font-size: 40px;
+    }
+
+    .verkopers-overzicht {
+        grid-template-columns: 1fr;
+    }
+
+    .verkoper-card {
+        padding: 25px;
+    }
+}

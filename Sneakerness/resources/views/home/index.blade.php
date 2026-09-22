@@ -38,8 +38,13 @@
                 <li><a href="#" class="active">Home</a></li>
                 <li><a href="{{ route('events.index') }}">Events</a></li>
                 <li><a href="#tickets">Tickets</a></li>
+<<<<<<< HEAD
                 <li><a href="#verkopers">Verkopers</a></li>
                 <li><a href="{{ route('stands.index') }}">Stands</a></li>
+=======
+                <li><a href="{{ route('verkopers.index') }}">Verkopers</a></li>
+                <li><a href="#stands">Stands</a></li>
+>>>>>>> a01db18 (Finish verkopers overview)
                 <li><a href="#contact">Contact</a></li>
             </ul>
 
