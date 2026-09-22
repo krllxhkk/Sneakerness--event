@@ -15,9 +15,18 @@
 
     <header>
         <div class="header-container">
+            <!-- Logo -->
             <a href="{{ route('home') }}" class="logo">SNEAKERNESS<sup>®</sup></a>
 
-            <ul class="nav-links">
+            <!-- Hamburger Menu Icoon -->
+            <div class="hamburger" id="hamburgerBtn" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <!-- Navigatielinks -->
+            <ul class="nav-links" id="navLinks">
                 <li><a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Home</a></li>
                 <li><a href="{{ route('events.index') }}"
                         class="{{ request()->routeIs('events.index') ? 'active' : '' }}">Event</a></li>
@@ -30,13 +39,14 @@
                 <li><a href="{{ route('contactpersonen.index') }}"
                         class="{{ request()->routeIs('contactpersonen.index') ? 'active' : '' }}">Contact</a></li>
             </ul>
+
+            <!-- Rechterkant van de navigatie -->
             <div class="nav-right">
                 <a href="#" class="login-link">LOGIN</a>
                 <a href="{{ route('tickets.index') }}" class="btn-yellow-sm">TICKET KOPEN</a>
             </div>
         </div>
     </header>
-
     <main class="main-container">
 
         @if (!empty($errorMessage))
@@ -155,6 +165,14 @@
         @endif
 
     </main>
+
+    <!-- JAVASCRIPT VOOR HAMBURGER MENU -->
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+    </script>
 
 </body>
 

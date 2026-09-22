@@ -697,3 +697,52 @@ header {
 .btn-terug:hover {
     background-color: #2a2a2a;
 }
+
+.nav-links a.active {
+    color: #ccff00;
+    /* Of de exacte gele/groene kleur van je thema */
+    border: 2px solid #ccff00;
+    border-radius: 4px;
+    padding: 6px 16px;
+    font-weight: 700;
+}
+
+/* Hamburger Stijlen */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.hamburger span {
+    height: 3px;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 2px;
+}
+
+/* Responsive instellingen voor mobiel */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        background-color: #0d0d0d;
+        padding: 20px;
+        z-index: 100;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+}
