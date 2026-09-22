@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Events | Sneakerness®</title>
-
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/events.css') }}">
 
     <link
@@ -15,7 +15,7 @@
 </head>
 
 <body>
-
+@include('partials.navbar')
     <main class="events-container">
 
         <section class="events-header">
@@ -78,7 +78,7 @@
             </section>
 
 
-        {{-- UNHAPPY FLOW --}}
+            {{-- UNHAPPY FLOW --}}
         @else
 
             <section class="no-events">
@@ -99,5 +99,5 @@
     </main>
 
 </body>
-
+@include('partials.footer')
 </html>
