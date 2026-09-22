@@ -184,6 +184,64 @@
                             {{ !empty($ticketsZaterdag) ? \Carbon\Carbon::parse(reset($ticketsZaterdag)->datum)->format('j F Y') : '' }}
                         </span>
                     </h3>
+                    <!-- Doorloop alle actieve zaterdagtickets uit de database -->
+                    @forelse($ticketsZaterdag as $ticket)
+                        <div class="ticket-card">
+                            <div class="ticket-left">
+                                <span class="ticket-time">{{ substr($ticket->tijdslot, 0, 5) }}</span>
+                                <div class="ticket-sub">
+                                    <span class="ingang-tag">INGANG</span>
+                                    <span class="ticket-count">{{ $ticket->aantal_tickets_per_tijdslot }} tickets
+                                        beschikbaar</span>
+                                </div>
+                            </div>
+                            <div class="ticket-right">
+                                <span class="ticket-price">€{{ number_format($ticket->tarief, 0) }}</span>
+                                <span class="pp-label">p.p.</span>
+                            </div>
+                        </div>
+                    @empty
+                        <p class="no-tickets">Geen komende tickets beschikbaar voor zaterdag.</p>
+                    @endforelse
+                </div>
+
+                <!-- KOLOM: ZONDAG TICKETS -->
+                <div class="day-column">
+                    <h3 class="day-title">
+                        <span class="dot">•</span> ZONDAG
+                        <span class="day-date">
+                            {{ !empty($ticketsZondag) ? \Carbon\Carbon::parse(reset($ticketsZondag)->datum)->format('j F Y') : '' }}
+                        </span>
+                    </h3>
+
+                    <!-- Doorloop alle actieve zondagtickets uit de database -->
+                    @forelse($ticketsZondag as $ticket)
+                        <div class="ticket-card">
+                            <div class="ticket-left">
+                                <span class="ticket-time">{{ substr($ticket->tijdslot, 0, 5) }}</span>
+                                <div class="ticket-sub">
+                                    <span class="ingang-tag">INGANG</span>
+                                    <span class="ticket-count">{{ $ticket->aantal_tickets_per_tijdslot }} tickets
+                                        beschikbaar</span>
+                                </div>
+                            </div>
+                            <div class="ticket-right">
+                                <span class="ticket-price">€{{ number_format($ticket->tarief, 0) }}</span>
+                                <span class="pp-label">p.p.</span>
+                            </div>
+                        </div>
+                    @empty
+                        <p class="no-tickets">Geen komende tickets beschikbaar voor zondag.</p>
+                    @endforelse
+                </div>
+
+            </div>
+
+            <div class="text-center margin-top-40">
+                <a href="#tickets" class="btn-yellow-lg">TICKETS KOPEN</a>
+            </div>
+        </section>
+
 
 
 </body>
