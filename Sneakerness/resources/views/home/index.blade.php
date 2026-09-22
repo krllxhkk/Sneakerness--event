@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sneakerness® Rotterdam</title>
 
+
+
     <!-- CSS stylesheet uit de public/css map laden -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/events.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/stands.css') }}">
     <!-- Google Fonts voor de strakke typografie -->
     <link
         href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600;700;900&display=swap"
@@ -32,10 +36,10 @@
             <!-- Navigatielinks -->
             <ul class="nav-links" id="navLinks">
                 <li><a href="#" class="active">Home</a></li>
-                <li><a href="#event">Event</a></li>
+                <li><a href="{{ route('events.index') }}">Events</a></li>
                 <li><a href="#tickets">Tickets</a></li>
                 <li><a href="#verkopers">Verkopers</a></li>
-                <li><a href="#stands">Stands</a></li>
+                <li><a href="{{ route('stands.index') }}">Stands</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
 
