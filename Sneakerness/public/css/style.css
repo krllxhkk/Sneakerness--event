@@ -895,3 +895,116 @@ main {
         padding: 25px;
     }
 }
+/* ==========================================
+   CONTACTPERSONEN TABEL
+   ========================================== */
+
+.contactpersonen-section {
+    margin-top: 80px;
+}
+
+.contactpersonen-section h2 {
+    font-size: 32px;
+    margin-bottom: 25px;
+}
+
+.contactpersonen-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-dark);
+    border-radius: 8px;
+}
+
+.contactpersonen-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 850px;
+}
+
+.contactpersonen-table thead {
+    background-color: #181818;
+}
+
+.contactpersonen-table th {
+    color: var(--yellow);
+    font-size: 11px;
+    font-weight: 700;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 16px 18px;
+    border-bottom: 1px solid #2a2a2a;
+    white-space: nowrap;
+}
+
+.contactpersonen-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.contactpersonen-table tbody tr:hover {
+    background-color: #191919;
+}
+
+.contactpersonen-table td {
+    color: var(--text-gray);
+    font-size: 13px;
+    padding: 16px 18px;
+    border-bottom: 1px solid #242424;
+    vertical-align: middle;
+}
+
+.contactpersonen-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.contactpersoon-naam {
+    color: var(--text-white) !important;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.contactpersonen-table td:nth-child(2) {
+    color: #cccccc;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.contactpersonen-table td:nth-child(3) {
+    color: #aaaaaa;
+}
+
+.contactpersonen-table td:nth-child(4) {
+    white-space: nowrap;
+}
+
+.status-actief {
+    color: var(--yellow) !important;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-actief span {
+    color: #00ff88;
+    font-size: 9px;
+    margin-right: 5px;
+}
+
+@media (max-width: 700px) {
+    .contactpersonen-section {
+        margin-top: 60px;
+    }
+
+    .contactpersonen-section h2 {
+        font-size: 26px;
+    }
+
+    .contactpersonen-table {
+        min-width: 800px;
+    }
+
+    .contactpersonen-table th,
+    .contactpersonen-table td {
+        padding: 14px;
+    }
+}
