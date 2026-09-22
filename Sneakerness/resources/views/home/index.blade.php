@@ -32,10 +32,10 @@
             <!-- Navigatielinks -->
             <ul class="nav-links" id="navLinks">
                 <li><a href="#" class="active">Home</a></li>
-                <li><a href="#event">Event</a></li>
+                <li><a href="{{ route('events.index') }}">Events</a></li>
                 <li><a href="#tickets">Tickets</a></li>
                 <li><a href="#verkopers">Verkopers</a></li>
-                <li><a href="#stands">Stands</a></li>
+                <li><a href="{{ route('stands.index') }}">Stands</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
 
