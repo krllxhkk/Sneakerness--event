@@ -8,7 +8,7 @@ class StandController extends Controller
 {
     public function index()
     {
-        $stands = Stand::all();
+        $stands = Stand::with('verkoper')->get();
 
         return view('stands.index', compact('stands'));
     }

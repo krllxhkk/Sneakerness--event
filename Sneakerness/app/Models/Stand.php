@@ -20,4 +20,9 @@ class Stand extends Model
         'Datumaangemaakt',
         'Datumgewijzigd',
     ];
+
+    public function verkoper()
+    {
+        return $this->belongsTo(Verkoper::class, 'VerkoperId', 'Id');
+    }
 }

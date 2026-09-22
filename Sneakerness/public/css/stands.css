@@ -1,0 +1,160 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #080808;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+}
+
+.stands-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 0;
+}
+
+.stands-header {
+    max-width: 700px;
+    margin-bottom: 55px;
+}
+
+.stands-label {
+    color: #c6ff00;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.stands-header h1 {
+    margin: 10px 0 20px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 64px;
+    line-height: 0.95;
+}
+
+.stands-header p {
+    color: #999;
+    line-height: 1.7;
+}
+
+.stands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    gap: 25px;
+}
+
+.stand-card {
+    padding: 28px;
+    background: #111;
+    border: 1px solid #252525;
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+.stand-card:hover {
+    border-color: #c6ff00;
+    transform: translateY(-4px);
+}
+
+.stand-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.stand-type {
+    color: #c6ff00;
+    font-weight: 700;
+}
+
+.status {
+    padding: 6px 10px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.available {
+    background: #c6ff00;
+    color: #080808;
+}
+
+.rented {
+    background: #333;
+    color: #aaa;
+}
+
+.stand-card h2 {
+    margin: 0 0 25px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 30px;
+    text-transform: uppercase;
+}
+
+.stand-details {
+    border-top: 1px solid #292929;
+}
+
+.stand-detail {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 0;
+    border-bottom: 1px solid #292929;
+}
+
+.stand-detail span {
+    color: #777;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.no-stands {
+    padding: 70px 30px;
+    text-align: center;
+    background: #111;
+    border: 1px solid #252525;
+    border-radius: 8px;
+}
+
+.no-stands-icon {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 20px;
+    align-items: center;
+    justify-content: center;
+    background: #c6ff00;
+    color: #080808;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.no-stands h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.no-stands p {
+    color: #888;
+}
+
+@media (max-width: 700px) {
+
+    .stands-container {
+        width: 92%;
+        padding: 50px 0;
+    }
+
+    .stands-header h1 {
+        font-size: 46px;
+    }
+
+    .stands-grid {
+        grid-template-columns: 1fr;
+    }
+}
