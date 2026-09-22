@@ -238,3 +238,336 @@ header {
     font-size: 13px;
     font-family: 'Oswald', sans-serif;
 }
+
+/* ==========================================
+   4. OVER HET EVENEMENT
+   ========================================== */
+.about-section {
+    padding: 100px 30px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.about-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.sub-label {
+    color: var(--yellow);
+    font-size: 12px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.about-text h2 {
+    font-size: 50px;
+    line-height: 1;
+    margin-bottom: 25px;
+}
+
+.about-text p {
+    color: var(--text-gray);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.stats-grid {
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.stat-number {
+    font-size: 36px;
+    font-family: 'Oswald', sans-serif;
+    color: var(--text-white);
+    display: block;
+}
+
+.stat-label {
+    font-size: 10px;
+    color: var(--text-gray);
+}
+
+.about-image-wrapper {
+    position: relative;
+}
+
+.about-img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.image-badge {
+    position: absolute;
+    bottom: -15px;
+    left: 20px;
+    background-color: var(--yellow);
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+.image-badge strong {
+    display: block;
+    font-size: 12px;
+}
+
+.image-badge span {
+    font-size: 10px;
+}
+
+/* ==========================================
+   5. DE ERVARING / CATEGORIEËN
+   ========================================== */
+.experience-section {
+    padding: 80px 30px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.section-heading {
+    font-size: 40px;
+    margin-bottom: 40px;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 15px;
+}
+
+.category-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-dark);
+    padding: 30px 15px;
+    text-align: center;
+    border-radius: 6px;
+}
+
+.cat-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.category-card span {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-white);
+}
+
+/* ==========================================
+   6. TICKETS SECTIE
+   ========================================== */
+.tickets-section {
+    padding: 100px 30px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.tickets-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 40px;
+}
+
+.btn-outline-yellow {
+    border: 1px solid var(--yellow);
+    color: var(--yellow);
+    padding: 8px 16px;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 2px;
+}
+
+.tickets-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.day-title {
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-dark);
+}
+
+.dot {
+    color: var(--yellow);
+}
+
+.day-date {
+    color: var(--text-gray);
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.ticket-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-dark);
+    padding: 22px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.ticket-time {
+    font-size: 22px;
+    font-weight: 800;
+    display: block;
+}
+
+.ticket-sub {
+    margin-top: 5px;
+    font-size: 11px;
+}
+
+.ingang-tag {
+    color: var(--text-gray);
+    font-weight: 700;
+}
+
+.ticket-count {
+    color: var(--text-gray);
+    margin-left: 5px;
+}
+
+.ticket-right {
+    text-align: right;
+}
+
+.ticket-price {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--yellow);
+    display: block;
+}
+
+.pp-label {
+    font-size: 10px;
+    color: var(--text-gray);
+}
+
+/* ==========================================
+   7. GELE STAND BANNER & LOCATIE
+   ========================================== */
+.yellow-banner-section {
+    background-color: var(--yellow);
+    color: #000;
+    padding: 80px 30px;
+    text-align: center;
+}
+
+.yellow-banner-section h2 {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.yellow-banner-section p {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.banner-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn-black {
+    background-color: #000;
+    color: #fff;
+    padding: 12px 24px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 12px;
+}
+
+.btn-outline-dark {
+    border: 1px solid #000;
+    color: #000;
+    padding: 12px 24px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 12px;
+}
+
+.location-section {
+    padding: 100px 30px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.location-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.location-image img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.location-list {
+    list-style: none;
+    margin-top: 20px;
+}
+
+.location-list li {
+    color: var(--text-gray);
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+/* ==========================================
+   8. FOOTER
+   ========================================== */
+footer {
+    border-top: 1px solid var(--border-dark);
+    padding: 40px 30px;
+    background-color: #000;
+}
+
+.footer-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-left p {
+    color: var(--text-gray);
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.footer-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: var(--text-gray);
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.footer-right p {
+    color: var(--text-gray);
+    font-size: 11px;
+}
