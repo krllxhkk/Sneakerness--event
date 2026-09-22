@@ -1,0 +1,240 @@
+/* ==========================================
+   1. HIGHLIGHTS, KLEUREN EN STIJLVARIABELEN
+   ========================================== */
+:root {
+    --bg-black: #0b0b0b;
+    --card-bg: #121212;
+    --yellow: #ccff00;
+    /* De exacte felle Sneakerness geel/groen kleur */
+    --text-white: #ffffff;
+    --text-gray: #888888;
+    --border-dark: #1f1f1f;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-black);
+    color: var(--text-white);
+    overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+.logo,
+.sub-label {
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.highlight {
+    color: var(--yellow);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.margin-top-40 {
+    margin-top: 40px;
+}
+
+/* ==========================================
+   2. HEADER & HAMBURGER MENU
+   ========================================== */
+header {
+    width: 100%;
+    background-color: rgba(11, 11, 11, 0.95);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-dark);
+    backdrop-filter: blur(5px);
+}
+
+.header-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 18px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-white);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: var(--text-gray);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+    color: var(--yellow);
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.login-link {
+    color: var(--text-white);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.btn-yellow-sm {
+    background-color: var(--yellow);
+    color: #000;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+    border-radius: 2px;
+}
+
+/* Hamburger icoon voor mobiele schermen */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-white);
+}
+
+/* ==========================================
+   3. HERO SECTIE
+   ========================================== */
+.hero-section {
+    width: 100%;
+    min-height: 100vh;
+    padding: 0;
+
+    background-image:
+        linear-gradient(to right,
+            rgba(0, 0, 0, 0.90) 0%,
+            rgba(0, 0, 0, 0.60) 45%,
+            rgba(0, 0, 0, 0.25) 100%),
+        url('https://images.unsplash.com/photo-1512374382149-233c42b6a83b?q=80&w=2000&auto=format&fit=crop');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: center;
+}
+
+.hero-container {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 100px 30px 40px;
+}
+
+.badge-pill {
+    background: rgba(204, 255, 0, 0.1);
+    color: var(--yellow);
+    border: 1px solid var(--yellow);
+    padding: 6px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 20px;
+}
+
+.hero-title {
+    font-size: 80px;
+    line-height: 0.95;
+    margin: 25px 0;
+    font-weight: 700;
+}
+
+.hero-tags {
+    color: var(--text-gray);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.hero-description {
+    color: var(--text-gray);
+    max-width: 500px;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-yellow-lg {
+    background-color: var(--yellow);
+    color: #000;
+    padding: 14px 28px;
+    font-weight: 800;
+    font-size: 13px;
+    text-decoration: none;
+    border-radius: 2px;
+}
+
+.btn-outline-lg {
+    border: 1px solid var(--yellow);
+    color: var(--yellow);
+    padding: 14px 28px;
+    font-weight: 800;
+    font-size: 13px;
+    text-decoration: none;
+    border-radius: 2px;
+}
+
+.meta-strip {
+    display: flex;
+    justify-content: space-around;
+    padding: 30px;
+    border-top: 1px solid var(--border-dark);
+    border-bottom: 1px solid var(--border-dark);
+    margin-top: 40px;
+}
+
+.meta-item span {
+    display: block;
+    color: var(--text-gray);
+    font-size: 10px;
+}
+
+.meta-item strong {
+    font-size: 13px;
+    font-family: 'Oswald', sans-serif;
+}
