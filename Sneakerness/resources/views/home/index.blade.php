@@ -241,6 +241,15 @@
                 <a href="#tickets" class="btn-yellow-lg">TICKETS KOPEN</a>
             </div>
         </section>
+         <!-- 5. GELE STAND BANNER SECTIE -->
+        <section id="stands" class="yellow-banner-section">
+            <h2>HUUR JOUW STAND</h2>
+            <p>Presenteer jouw merk, sneakers of diensten aan duizenden bezoekers. Beschikbare stands zijn beperkt.</p>
+            <div class="banner-buttons">
+                <a href="#" class="btn-black">STAND HUREN</a>
+                <a href="#" class="btn-outline-dark">BEKIJK STANDS</a>
+            </div>
+        </section>
 
 
 
