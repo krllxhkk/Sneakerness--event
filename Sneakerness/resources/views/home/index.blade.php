@@ -46,9 +46,15 @@
             </div>
         </div>
     </header>
+    @if (!empty($errorMessage))
+        <div class="alert alert-danger text-center my-4"
+            style="background-color: #2b0000; color: #ff4d4d; border: 1px solid #ff4d4d; padding: 15px; border-radius: 6px; font-weight: bold; max-width: 1200px; margin: 90px auto 20px auto; position: relative; z-index: 999;">
+            {{ $errorMessage }}
+        </div>
+    @endif
 
     <!-- 1. HERO BANNER SECTIE -->
-    <<!-- HERO SECTIE DIREK IN HET MIDDEN (NIET BINNEN EEN SMALLE CONTAINER) -->
+    <!-- HERO SECTIE DIREK IN HET MIDDEN (NIET BINNEN EEN SMALLE CONTAINER) -->
         <section class="hero-section">
             <div class="hero-container">
                 <div class="hero-content">

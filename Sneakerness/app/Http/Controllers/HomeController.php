@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Exception;
 
 class HomeController extends Controller
 {
     public function index()
     {
         try {
-            // 1. Roep de Stored Procedure aan in MySQL voor alle actieve tickets (is_actief = 1)
+            // 1. Roep de Stored Procedure aan in MySQL voor alle actieve tickets
             $allTickets = DB::select('CALL sp_GetTicketsOverzicht(?)', [1]);
 
             // Tijdstip van VANDAAG (begin van de dag) ophalen
@@ -29,19 +30,17 @@ class HomeController extends Controller
                 return $ticketDatum->dayOfWeek === Carbon::SUNDAY && $ticketDatum->gte($today);
             });
 
-            // Gegevens doorgeven aan de Blade View
-            return view('home.index', compact('ticketsZaterdag', 'ticketsZondag'));
-        } catch (\Exception $e) {
+            $errorMessage = null;
+
+            return view('home.index', compact('ticketsZaterdag', 'ticketsZondag', 'errorMessage'));
+
+        } catch (Exception $e) {
+            // Unhappy Scenario: Bij een database- of systeemfout
             $ticketsZaterdag = [];
             $ticketsZondag = [];
-
             $errorMessage = 'De pagina kan momenteel niet geladen worden. Probeer het later opnieuw.';
 
-            return view('home.index', compact(
-                'ticketsZaterdag',
-                'ticketsZondag',
-                'errorMessage'
-            ));
+            return view('home.index', compact('ticketsZaterdag', 'ticketsZondag', 'errorMessage'));
         }
     }
 }
