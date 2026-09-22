@@ -163,6 +163,28 @@
             </div>
         </section>
 
+        <!-- 4. DYNAMISCHE TICKETS SECTIE (DATA UIT DATABASE) -->
+        <section id="tickets" class="tickets-section">
+            <div class="tickets-header-row">
+                <div>
+                    <span class="sub-label">ENTREEPRIJZEN</span>
+                    <h2 class="section-heading">TICKETS</h2>
+                </div>
+                <a href="#" class="btn-outline-yellow">BEKIJK ALLE TICKETS</a>
+            </div>
+
+            <div class="tickets-grid">
+
+                <!-- KOLOM: ZATERDAG TICKETS -->
+                <div class="day-column">
+                    <h3 class="day-title">
+                        <span class="dot">•</span> ZATERDAG
+                        <span class="day-date">
+                            <!-- Haalt de datum op van het eerste ticket en formatteert deze netjes (bijv. 26 September 2026) -->
+                            {{ !empty($ticketsZaterdag) ? \Carbon\Carbon::parse(reset($ticketsZaterdag)->datum)->format('j F Y') : '' }}
+                        </span>
+                    </h3>
+
 
 </body>
 
