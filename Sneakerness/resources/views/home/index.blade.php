@@ -250,6 +250,30 @@
                 <a href="#" class="btn-outline-dark">BEKIJK STANDS</a>
             </div>
         </section>
+        <!-- 6. LOCATIE SECTIE -->
+        <section class="location-section">
+            <div class="location-container">
+                <div class="location-image">
+                    <!-- Vang hier de foto op met een eigen afbeelding of nieuwe URL -->
+                    <img src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=1000&auto=format&fit=crop"
+                        alt="Sneakerness Event">
+                </div>
+                <div class="location-info">
+                    <span class="sub-label">LOCATIE</span>
+                    <h2>VAN NELLE<br>FABRIEK</h2>
+                    <p>
+                        De iconische Van Nellefabriek in Rotterdam is een UNESCO Werelderfgoedsite en het perfecte decor
+                        voor Sneakerness®. De industriële architectuur biedt een unieke sfeer die kunst, cultuur en
+                        community bij elkaar brengt.
+                    </p>
+                    <ul class="location-list">
+                        <li>📍 Van Nelleweg 1, Rotterdam</li>
+                        <li>🚌 Goed bereikbaar met OV</li>
+                        <li>🅿️ Gratis parkeren beschikbaar</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
 
 
