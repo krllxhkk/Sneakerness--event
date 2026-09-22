@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS Organisator
    ,Datumaangemaakt     DATETIME                        NOT NULL
    ,Datumgewijzigd      DATETIME                        NOT NULL
 
-   ,CONSTRAINT      PK_Organisator_Id   PRIMARY KEY CLUSTERED(Id)
+   ,CONSTRAINT      PK_Organisator_Id   PRIMARY KEY (Id)
 ) ENGINE=InnoDB;
 
 
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS Evenement
    ,Datumaangemaakt         DATETIME                        NOT NULL
    ,Datumgewijzigd          DATETIME                        NOT NULL
 
-   ,CONSTRAINT      PK_Evenement_Id   PRIMARY KEY CLUSTERED(Id)
+   ,CONSTRAINT      PK_Evenement_Id   PRIMARY KEY (Id)
 ) ENGINE=InnoDB;
 
 
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS Prijs
    ,Datumaangemaakt     DATETIME                        NOT NULL
    ,Datumgewijzigd      DATETIME                        NOT NULL
 
-   ,CONSTRAINT      PK_Prijs_Id   PRIMARY KEY CLUSTERED(Id)
+   ,CONSTRAINT      PK_Prijs_Id   PRIMARY KEY (Id)
 ) ENGINE=InnoDB;
 
 
@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS Bezoeker
    ,Datumaangemaakt     DATETIME                        NOT NULL
    ,Datumgewijzigd      DATETIME                        NOT NULL
 
-   ,CONSTRAINT      PK_Bezoeker_Id   PRIMARY KEY CLUSTERED(Id)
+   ,CONSTRAINT      PK_Bezoeker_Id   PRIMARY KEY (Id)
 ) ENGINE=InnoDB;
 
 
@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS Verkoper
    ,Datumaangemaakt     DATETIME                        NOT NULL
    ,Datumgewijzigd      DATETIME                        NOT NULL
 
-   ,CONSTRAINT      PK_Verkoper_Id   PRIMARY KEY CLUSTERED(Id)
+   ,CONSTRAINT      PK_Verkoper_Id   PRIMARY KEY (Id)
 ) ENGINE=InnoDB;
 
 
@@ -172,7 +172,7 @@ CREATE TABLE IF NOT EXISTS Contactpersoon
    ,Datumaangemaakt     DATETIME                        NOT NULL
    ,Datumgewijzigd      DATETIME                        NOT NULL
 
-   ,CONSTRAINT      PK_Contactpersoon_Id   PRIMARY KEY CLUSTERED(Id)
+   ,CONSTRAINT      PK_Contactpersoon_Id   PRIMARY KEY (Id)
 ) ENGINE=InnoDB;
 
 
@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS Ticket
    ,Datumaangemaakt     DATETIME                        NOT NULL
    ,Datumgewijzigd      DATETIME                        NOT NULL
 
-   ,CONSTRAINT      PK_Ticket_Id   PRIMARY KEY CLUSTERED(Id)
+   ,CONSTRAINT      PK_Ticket_Id   PRIMARY KEY (Id)
    ,CONSTRAINT      FK_Ticket_BezoekerId_Bezoeker_Id FOREIGN KEY (BezoekerId) REFERENCES Bezoeker(Id)
    ,CONSTRAINT      FK_Ticket_EvenementId_Evenement_Id FOREIGN KEY (EvenementId) REFERENCES Evenement(Id)
    ,CONSTRAINT      FK_Ticket_PrijsId_Prijs_Id FOREIGN KEY (PrijsId) REFERENCES Prijs(Id)
@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS Stand
    ,Datumaangemaakt     DATETIME                        NOT NULL
    ,Datumgewijzigd      DATETIME                        NOT NULL
 
-   ,CONSTRAINT      PK_Stand_Id   PRIMARY KEY CLUSTERED(Id)
+   ,CONSTRAINT      PK_Stand_Id   PRIMARY KEY (Id)
    ,CONSTRAINT      FK_Stand_VerkoperId_Verkoper_Id FOREIGN KEY (VerkoperId) REFERENCES Verkoper(Id)
 ) ENGINE=InnoDB;
 
@@ -256,7 +256,7 @@ CREATE TABLE IF NOT EXISTS ContactPerVerkoper
    ,Datumaangemaakt     DATETIME                        NOT NULL
    ,Datumgewijzigd      DATETIME                        NOT NULL
 
-   ,CONSTRAINT      PK_ContactPerVerkoper_Id   PRIMARY KEY CLUSTERED(Id)
+   ,CONSTRAINT      PK_ContactPerVerkoper_Id   PRIMARY KEY (Id)
    ,CONSTRAINT      FK_ContactPerVerkoper_VerkoperId_Verkoper_Id FOREIGN KEY (VerkoperId) REFERENCES Verkoper(Id)
    ,CONSTRAINT      FK_ContactPerVerkoper_ContactpersoonId_Contactpersoon_Id FOREIGN KEY (ContactpersoonId) REFERENCES Contactpersoon(Id)
 ) ENGINE=InnoDB;
