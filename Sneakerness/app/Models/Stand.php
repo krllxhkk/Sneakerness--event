@@ -20,12 +20,9 @@ class Stand extends Model
         'Datumaangemaakt',
         'Datumgewijzigd',
     ];
-<<<<<<< HEAD
 
     public function verkoper()
     {
         return $this->belongsTo(Verkoper::class, 'VerkoperId', 'Id');
     }
-=======
->>>>>>> origin/feature-events-overzicht
 }
