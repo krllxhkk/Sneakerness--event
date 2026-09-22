@@ -130,6 +130,39 @@
             </div>
         </section>
 
+         <!-- 3. DE ERVARING / CATEGORIEËN SECTIE -->
+        <section class="experience-section">
+            <span class="sub-label text-center">WAT JE KAN VERWACHTEN</span>
+            <h2 class="section-heading text-center">DE SNEAKERNESS<sup>®</sup> ERVARING</h2>
+
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="cat-icon">👟</div>
+                    <span>SNEAKERS</span>
+                </div>
+                <div class="category-card">
+                    <div class="cat-icon">🎨</div>
+                    <span>ART</span>
+                </div>
+                <div class="category-card">
+                    <div class="cat-icon">⚽</div>
+                    <span>SPORT</span>
+                </div>
+                <div class="category-card">
+                    <div class="cat-icon">👔</div>
+                    <span>FASHION</span>
+                </div>
+                <div class="category-card">
+                    <div class="cat-icon">🎵</div>
+                    <span>MUSIC</span>
+                </div>
+                <div class="category-card">
+                    <div class="cat-icon">🤝</div>
+                    <span>COMMUNITY</span>
+                </div>
+            </div>
+        </section>
+
 
 </body>
 
