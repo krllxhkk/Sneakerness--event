@@ -6,9 +6,13 @@ use App\Http\Controllers\StandController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\VerkoperController;
 use App\Http\Controllers\ContactpersoonController;
+use App\Http\Controllers\TicketController;
 
 // Homepagina
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Tickets stappenpagina (Kies dag / Kies tijdslot)
+Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
 
 // Stands overzicht
 Route::get('/stands', [StandController::class, 'index'])
