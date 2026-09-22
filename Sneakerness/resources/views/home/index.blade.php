@@ -71,6 +71,66 @@
             </div>
         </section>
 
+         <!-- REST VAN DE CONTENT IN CONTAINER -->
+        <main class="container">
+            <!-- Overige secties... -->
+        </main>
+        <!-- METADATA STRIP ONDER HERO -->
+        <div class="meta-strip">
+            <div class="meta-item"><span>LOCATIE</span><strong>VAN NELLEFABRIEK</strong></div>
+            <div class="meta-item"><span>STAD</span><strong>ROTTERDAM</strong></div>
+            <div class="meta-item"><span>DATUM</span><strong>14 - 15 NOVEMBER</strong></div>
+            <div class="meta-item"><span>COMMUNITY</span><strong>SNEAKERS • ART • FASHION • MUSIC</strong></div>
+        </div>
+
+        <!-- 2. OVER HET EVENEMENT SECTIE -->
+        <section id="event" class="about-section">
+            <div class="about-container">
+                <div class="about-text">
+                    <span class="sub-label">OVER HET EVENEMENT</span>
+                    <h2>MEER DAN<br>ALLEEN<br><span class="highlight">SNEAKERS</span></h2>
+                    <p>
+                        Sneakerness® Rotterdam is het ontmoetingspunt voor de sneaker- en streetwear-community. Twee
+                        dagen
+                        lang staan de deuren van de Van Nellefabriek open voor iedereen die gepassioneerd is door
+                        sneakers,
+                        kunst, muziek en mode.
+                    </p>
+                    <p>
+                        Van exclusieve drops tot live art, van barbershops tot DJ-sets — Sneakerness® is meer dan een
+                        beurs.
+                        Het is een cultureel evenement.
+                    </p>
+
+                    <!-- Statistieken teller blokjes -->
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-number">200+</span>
+                            <span class="stat-label">VERKOPERS</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number">10K+</span>
+                            <span class="stat-label">BEZOEKERS</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-number">2</span>
+                            <span class="stat-label">DAGEN</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1552346154-21d32810aba3?q=80&w=1000&auto=format&fit=crop"
+                        alt="Sneakers Event" class="about-img">
+                    <div class="image-badge">
+                        <strong>VAN NELLEFABRIEK</strong>
+                        <span>Rotterdam, Nederland</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
 </body>
 
 </html>
