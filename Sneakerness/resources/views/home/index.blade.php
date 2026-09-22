@@ -71,7 +71,7 @@
             </div>
         </section>
 
-         <!-- REST VAN DE CONTENT IN CONTAINER -->
+        <!-- REST VAN DE CONTENT IN CONTAINER -->
         <main class="container">
             <!-- Overige secties... -->
         </main>
@@ -130,7 +130,7 @@
             </div>
         </section>
 
-         <!-- 3. DE ERVARING / CATEGORIEËN SECTIE -->
+        <!-- 3. DE ERVARING / CATEGORIEËN SECTIE -->
         <section class="experience-section">
             <span class="sub-label text-center">WAT JE KAN VERWACHTEN</span>
             <h2 class="section-heading text-center">DE SNEAKERNESS<sup>®</sup> ERVARING</h2>
@@ -184,6 +184,7 @@
                             {{ !empty($ticketsZaterdag) ? \Carbon\Carbon::parse(reset($ticketsZaterdag)->datum)->format('j F Y') : '' }}
                         </span>
                     </h3>
+
                     <!-- Doorloop alle actieve zaterdagtickets uit de database -->
                     @forelse($ticketsZaterdag as $ticket)
                         <div class="ticket-card">
@@ -241,7 +242,8 @@
                 <a href="#tickets" class="btn-yellow-lg">TICKETS KOPEN</a>
             </div>
         </section>
-         <!-- 5. GELE STAND BANNER SECTIE -->
+
+        <!-- 5. GELE STAND BANNER SECTIE -->
         <section id="stands" class="yellow-banner-section">
             <h2>HUUR JOUW STAND</h2>
             <p>Presenteer jouw merk, sneakers of diensten aan duizenden bezoekers. Beschikbare stands zijn beperkt.</p>
@@ -250,6 +252,7 @@
                 <a href="#" class="btn-outline-dark">BEKIJK STANDS</a>
             </div>
         </section>
+
         <!-- 6. LOCATIE SECTIE -->
         <section class="location-section">
             <div class="location-container">
@@ -275,7 +278,36 @@
             </div>
         </section>
 
+        <!-- 7. FOOTER -->
+        <footer>
+            <div class="footer-container">
+                <div class="footer-left">
+                    <strong class="logo">SNEAKERNESS<sup>®</sup></strong>
+                    <p>Rotterdam | Van Nellefabriek</p>
+                </div>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#event">Event</a></li>
+                    <li><a href="#tickets">Tickets</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="footer-right">
+                    <p>© Sneakerness®</p>
+                </div>
+            </div>
+        </footer>
 
+        <!-- JAVASCRIPT VOOR HAMBURGER MENU -->
+        <script>
+            /**
+             * Schakelt de klasse 'active' op de navigatielinks in/uit
+             * wanneer op de hamburgerknop op mobiel wordt geklikt.
+             */
+            function toggleMenu() {
+                const navLinks = document.getElementById('navLinks');
+                navLinks.classList.toggle('active');
+            }
+        </script>
 
 </body>
 
