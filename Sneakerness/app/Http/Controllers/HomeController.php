@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -9,30 +10,38 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Haal alle actieve tickets op uit de database
-        $allTickets = DB::select('CALL sp_GetTicketsOverzicht(?)', [1]);
+        try {
+            // 1. Roep de Stored Procedure aan in MySQL voor alle actieve tickets (is_actief = 1)
+            $allTickets = DB::select('CALL sp_GetTicketsOverzicht(?)', [1]);
 
-        $today = Carbon::today();
+            // Tijdstip van VANDAAG (begin van de dag) ophalen
+            $today = Carbon::today();
 
-        // Zaterdag tickets
-        $ticketsZaterdag = array_filter($allTickets, function ($ticket) use ($today) {
-            $ticketDatum = Carbon::parse($ticket->datum);
+            // 2. Filter ZATERDAG: Datum moet Zaterdag zijn én gelijk aan of ná vandaag zijn
+            $ticketsZaterdag = array_filter($allTickets, function ($ticket) use ($today) {
+                $ticketDatum = Carbon::parse($ticket->datum);
+                return $ticketDatum->dayOfWeek === Carbon::SATURDAY && $ticketDatum->gte($today);
+            });
 
-            return $ticketDatum->dayOfWeek === Carbon::SATURDAY
-                && $ticketDatum->gte($today);
-        });
+            // 3. Filter ZONDAG: Datum moet Zondag zijn én gelijk aan of ná vandaag zijn
+            $ticketsZondag = array_filter($allTickets, function ($ticket) use ($today) {
+                $ticketDatum = Carbon::parse($ticket->datum);
+                return $ticketDatum->dayOfWeek === Carbon::SUNDAY && $ticketDatum->gte($today);
+            });
 
-        // Zondag tickets
-        $ticketsZondag = array_filter($allTickets, function ($ticket) use ($today) {
-            $ticketDatum = Carbon::parse($ticket->datum);
+            // Gegevens doorgeven aan de Blade View
+            return view('home.index', compact('ticketsZaterdag', 'ticketsZondag'));
+        } catch (\Exception $e) {
+            $ticketsZaterdag = [];
+            $ticketsZondag = [];
 
-            return $ticketDatum->dayOfWeek === Carbon::SUNDAY
-                && $ticketDatum->gte($today);
-        });
+            $errorMessage = 'De pagina kan momenteel niet geladen worden. Probeer het later opnieuw.';
 
-        return view('home.index', compact(
-            'ticketsZaterdag',
-            'ticketsZondag'
-        ));
+            return view('home.index', compact(
+                'ticketsZaterdag',
+                'ticketsZondag',
+                'errorMessage'
+            ));
+        }
     }
 }
