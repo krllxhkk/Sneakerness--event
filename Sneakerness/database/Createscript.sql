@@ -1,262 +1,219 @@
--- Step: 01
--- Goal: Create a new database Sneakerness
--- **********************************************************************************
--- Version       Date:           Author:                     Description:
--- *******       **********      ****************            ******************
--- 01            16-09-2026      Ali                         New
--- **********************************************************************************/
+-- =========================================================
+-- SNEAKERNESS DATABASE
+-- =========================================================
 
--- Check if the database exists
 DROP DATABASE IF EXISTS `SneakernessDB`;
 
--- Create a new Database
-CREATE DATABASE IF NOT EXISTS `SneakernessDB`;
+CREATE DATABASE `SneakernessDB`;
 
--- Use database SneakernessDB
-Use `SneakernessDB`;
+USE `SneakernessDB`;
 
 
--- Step: 02
--- Goal: Create a new table Organisator
--- **********************************************************************************
--- Version       Date:           Author:                     Description:
--- *******       **********      ****************            ******************
--- 01            16-09-2026      Ali                         New
--- **********************************************************************************/
+-- =========================================================
+-- 1. ORGANISATOR
+-- =========================================================
 
--- Drop table Organisator
-DROP TABLE IF EXISTS Organisator;
-
-CREATE TABLE IF NOT EXISTS Organisator
+CREATE TABLE Organisator
 (
-    Id                  INT             UNSIGNED        NOT NULL    AUTO_INCREMENT
-   ,Naam                VARCHAR(100)                    NOT NULL
-   ,Gebruikersnaam      VARCHAR(100)                    NOT NULL
-   ,Wachtwoord          VARCHAR(255)                    NOT NULL
-   ,Isactief            BIT                             NOT NULL    DEFAULT 1
-   ,Opmerking           VARCHAR(250)                        NULL    DEFAULT NULL
-   ,Datumaangemaakt     DATETIME                        NOT NULL
-   ,Datumgewijzigd      DATETIME                        NOT NULL
+     Id                 INT UNSIGNED NOT NULL AUTO_INCREMENT
+    ,Naam               VARCHAR(100) NOT NULL
+    ,Gebruikersnaam     VARCHAR(100) NOT NULL
+    ,Wachtwoord         VARCHAR(255) NOT NULL
+    ,Isactief           BIT NOT NULL DEFAULT 1
+    ,Opmerking          VARCHAR(250) NULL DEFAULT NULL
+    ,Datumaangemaakt    DATETIME NOT NULL
+    ,Datumgewijzigd     DATETIME NOT NULL
 
-   ,CONSTRAINT      PK_Organisator_Id   PRIMARY KEY (Id)
+    ,CONSTRAINT PK_Organisator_Id
+        PRIMARY KEY (Id)
 ) ENGINE=InnoDB;
 
 
--- Step: 03
--- Goal: Create a new table Evenement
--- **********************************************************************************
--- Version       Date:           Author:                     Description:
--- *******       **********      ****************            ******************
--- 01            16-09-2026      Ali                         New
--- **********************************************************************************/
+-- =========================================================
+-- 2. EVENEMENT
+-- =========================================================
 
--- Drop table Evenement
-DROP TABLE IF EXISTS Evenement;
-
-CREATE TABLE IF NOT EXISTS Evenement
+CREATE TABLE Evenement
 (
-    Id                      INT             UNSIGNED        NOT NULL    AUTO_INCREMENT
-   ,Naam                    VARCHAR(100)                    NOT NULL
-   ,Datum                   DATE                            NOT NULL
-   ,Locatie                 VARCHAR(150)                    NOT NULL
-   ,AantalTicketsPerTijdslot INT                            NOT NULL
-   ,BeschikbareStands       INT                             NOT NULL
-   ,Isactief                BIT                             NOT NULL    DEFAULT 1
-   ,Opmerking               VARCHAR(250)                        NULL    DEFAULT NULL
-   ,Datumaangemaakt         DATETIME                        NOT NULL
-   ,Datumgewijzigd          DATETIME                        NOT NULL
+     Id                         INT UNSIGNED NOT NULL AUTO_INCREMENT
+    ,Naam                       VARCHAR(100) NOT NULL
+    ,Datum                      DATE NOT NULL
+    ,Locatie                    VARCHAR(150) NOT NULL
+    ,AantalTicketsPerTijdslot   INT NOT NULL
+    ,BeschikbareStands          INT NOT NULL
+    ,Isactief                   BIT NOT NULL DEFAULT 1
+    ,Opmerking                  VARCHAR(250) NULL DEFAULT NULL
+    ,Datumaangemaakt            DATETIME NOT NULL
+    ,Datumgewijzigd             DATETIME NOT NULL
 
-   ,CONSTRAINT      PK_Evenement_Id   PRIMARY KEY (Id)
+    ,CONSTRAINT PK_Evenement_Id
+        PRIMARY KEY (Id)
 ) ENGINE=InnoDB;
 
 
--- Step: 04
--- Goal: Create a new table Prijs
--- **********************************************************************************
--- Version       Date:           Author:                     Description:
--- *******       **********      ****************            ******************
--- 01            16-09-2026      Ali                         New
--- **********************************************************************************/
+-- =========================================================
+-- 3. PRIJS
+-- =========================================================
 
--- Drop table Prijs
-DROP TABLE IF EXISTS Prijs;
-
-CREATE TABLE IF NOT EXISTS Prijs
+CREATE TABLE Prijs
 (
-    Id                  INT             UNSIGNED        NOT NULL    AUTO_INCREMENT
-   ,Datum               DATE                            NOT NULL
-   ,Tijdslot            TIME                            NOT NULL
-   ,Tarief              DECIMAL(6,2)                    NOT NULL
-   ,Isactief            BIT                             NOT NULL    DEFAULT 1
-   ,Opmerking           VARCHAR(250)                        NULL    DEFAULT NULL
-   ,Datumaangemaakt     DATETIME                        NOT NULL
-   ,Datumgewijzigd      DATETIME                        NOT NULL
+     Id                 INT UNSIGNED NOT NULL AUTO_INCREMENT
+    ,Datum              DATE NOT NULL
+    ,Tijdslot           TIME NOT NULL
+    ,Tarief             DECIMAL(6,2) NOT NULL
+    ,Isactief           BIT NOT NULL DEFAULT 1
+    ,Opmerking          VARCHAR(250) NULL DEFAULT NULL
+    ,Datumaangemaakt    DATETIME NOT NULL
+    ,Datumgewijzigd     DATETIME NOT NULL
 
-   ,CONSTRAINT      PK_Prijs_Id   PRIMARY KEY (Id)
+    ,CONSTRAINT PK_Prijs_Id
+        PRIMARY KEY (Id)
 ) ENGINE=InnoDB;
 
 
--- Step: 05
--- Goal: Create a new table Bezoeker
--- **********************************************************************************
--- Version       Date:           Author:                     Description:
--- *******       **********      ****************            ******************
--- 01            16-09-2026      Ali                         New
--- **********************************************************************************/
+-- =========================================================
+-- 4. BEZOEKER
+-- =========================================================
 
--- Drop table Bezoeker
-DROP TABLE IF EXISTS Bezoeker;
-
-CREATE TABLE IF NOT EXISTS Bezoeker
+CREATE TABLE Bezoeker
 (
-    Id                  INT             UNSIGNED        NOT NULL    AUTO_INCREMENT
-   ,Naam                VARCHAR(100)                    NOT NULL
-   ,`E-mailadres`       VARCHAR(150)                    NOT NULL
-   ,Isactief            BIT                             NOT NULL    DEFAULT 1
-   ,Opmerking           VARCHAR(250)                        NULL    DEFAULT NULL
-   ,Datumaangemaakt     DATETIME                        NOT NULL
-   ,Datumgewijzigd      DATETIME                        NOT NULL
+     Id                 INT UNSIGNED NOT NULL AUTO_INCREMENT
+    ,Naam               VARCHAR(100) NOT NULL
+    ,`E-mailadres`      VARCHAR(150) NOT NULL
+    ,Isactief           BIT NOT NULL DEFAULT 1
+    ,Opmerking          VARCHAR(250) NULL DEFAULT NULL
+    ,Datumaangemaakt    DATETIME NOT NULL
+    ,Datumgewijzigd     DATETIME NOT NULL
 
-   ,CONSTRAINT      PK_Bezoeker_Id   PRIMARY KEY (Id)
+    ,CONSTRAINT PK_Bezoeker_Id
+        PRIMARY KEY (Id)
 ) ENGINE=InnoDB;
 
 
--- Step: 06
--- Goal: Create a new table Verkoper
--- **********************************************************************************
--- Version       Date:           Author:                     Description:
--- *******       **********      ****************            ******************
--- 01            16-09-2026      Ali                         New
--- **********************************************************************************/
+-- =========================================================
+-- 5. VERKOPER
+-- =========================================================
 
--- Drop table Verkoper
-DROP TABLE IF EXISTS Verkoper;
-
-CREATE TABLE IF NOT EXISTS Verkoper
+CREATE TABLE Verkoper
 (
-    Id                  INT             UNSIGNED        NOT NULL    AUTO_INCREMENT
-   ,Naam                VARCHAR(100)                    NOT NULL
-   ,SpecialeStatus      VARCHAR(50)                         NULL    DEFAULT NULL
-   ,VerkooptSoort       VARCHAR(100)                    NOT NULL
-   ,StandType           VARCHAR(10)                     NOT NULL
-   ,Dagen               VARCHAR(50)                     NOT NULL
-   ,Logo                VARCHAR(255)                        NULL    DEFAULT NULL
-   ,Isactief            BIT                             NOT NULL    DEFAULT 1
-   ,Opmerking           VARCHAR(250)                        NULL    DEFAULT NULL
-   ,Datumaangemaakt     DATETIME                        NOT NULL
-   ,Datumgewijzigd      DATETIME                        NOT NULL
+     Id                 INT UNSIGNED NOT NULL AUTO_INCREMENT
+    ,Naam               VARCHAR(100) NOT NULL
+    ,SpecialeStatus     VARCHAR(50) NULL DEFAULT NULL
+    ,VerkooptSoort      VARCHAR(100) NOT NULL
+    ,StandType          VARCHAR(10) NOT NULL
+    ,Dagen              VARCHAR(50) NOT NULL
+    ,Logo               VARCHAR(255) NULL DEFAULT NULL
+    ,Isactief           BIT NOT NULL DEFAULT 1
+    ,Opmerking          VARCHAR(250) NULL DEFAULT NULL
+    ,Datumaangemaakt    DATETIME NOT NULL
+    ,Datumgewijzigd     DATETIME NOT NULL
 
-   ,CONSTRAINT      PK_Verkoper_Id   PRIMARY KEY (Id)
+    ,CONSTRAINT PK_Verkoper_Id
+        PRIMARY KEY (Id)
 ) ENGINE=InnoDB;
 
 
--- Step: 07
--- Goal: Create a new table Contactpersoon
--- **********************************************************************************
--- Version       Date:           Author:                     Description:
--- *******       **********      ****************            ******************
--- 01            16-09-2026      Ali                         New
--- **********************************************************************************/
+-- =========================================================
+-- 6. CONTACTPERSOON
+-- =========================================================
 
--- Drop table Contactpersoon
-DROP TABLE IF EXISTS Contactpersoon;
-
-CREATE TABLE IF NOT EXISTS Contactpersoon
+CREATE TABLE Contactpersoon
 (
-    Id                  INT             UNSIGNED        NOT NULL    AUTO_INCREMENT
-   ,Naam                VARCHAR(100)                    NOT NULL
-   ,Telefoonnummer      VARCHAR(20)                     NOT NULL
-   ,`E-mailadres`       VARCHAR(150)                    NOT NULL
-   ,Isactief            BIT                             NOT NULL    DEFAULT 1
-   ,Opmerking           VARCHAR(250)                        NULL    DEFAULT NULL
-   ,Datumaangemaakt     DATETIME                        NOT NULL
-   ,Datumgewijzigd      DATETIME                        NOT NULL
+     Id                 INT UNSIGNED NOT NULL AUTO_INCREMENT
+    ,Naam               VARCHAR(100) NOT NULL
+    ,Telefoonnummer     VARCHAR(20) NOT NULL
+    ,`E-mailadres`      VARCHAR(150) NOT NULL
+    ,Isactief           BIT NOT NULL DEFAULT 1
+    ,Opmerking          VARCHAR(250) NULL DEFAULT NULL
+    ,Datumaangemaakt    DATETIME NOT NULL
+    ,Datumgewijzigd     DATETIME NOT NULL
 
-   ,CONSTRAINT      PK_Contactpersoon_Id   PRIMARY KEY (Id)
+    ,CONSTRAINT PK_Contactpersoon_Id
+        PRIMARY KEY (Id)
 ) ENGINE=InnoDB;
 
 
--- Step: 08
--- Goal: Create a new table Ticket
--- **********************************************************************************
--- Version       Date:           Author:                     Description:
--- *******       **********      ****************            ******************
--- 01            16-09-2026      Ali                         New
--- **********************************************************************************/
+-- =========================================================
+-- 7. TICKET
+-- =========================================================
 
--- Drop table Ticket
-DROP TABLE IF EXISTS Ticket;
-
-CREATE TABLE IF NOT EXISTS Ticket
+CREATE TABLE Ticket
 (
-    Id                  INT             UNSIGNED        NOT NULL    AUTO_INCREMENT
-   ,BezoekerId          INT             UNSIGNED        NOT NULL
-   ,EvenementId         INT             UNSIGNED        NOT NULL
-   ,PrijsId             INT             UNSIGNED        NOT NULL
-   ,AantalTickets       INT                             NOT NULL
-   ,Datum               DATE                            NOT NULL
-   ,Isactief            BIT                             NOT NULL    DEFAULT 1
-   ,Opmerking           VARCHAR(250)                        NULL    DEFAULT NULL
-   ,Datumaangemaakt     DATETIME                        NOT NULL
-   ,Datumgewijzigd      DATETIME                        NOT NULL
+     Id                 INT UNSIGNED NOT NULL AUTO_INCREMENT
+    ,BezoekerId         INT UNSIGNED NOT NULL
+    ,EvenementId        INT UNSIGNED NOT NULL
+    ,PrijsId            INT UNSIGNED NOT NULL
+    ,AantalTickets      INT NOT NULL
+    ,Datum              DATE NOT NULL
+    ,Isactief           BIT NOT NULL DEFAULT 1
+    ,Opmerking          VARCHAR(250) NULL DEFAULT NULL
+    ,Datumaangemaakt    DATETIME NOT NULL
+    ,Datumgewijzigd     DATETIME NOT NULL
 
-   ,CONSTRAINT      PK_Ticket_Id   PRIMARY KEY (Id)
-   ,CONSTRAINT      FK_Ticket_BezoekerId_Bezoeker_Id FOREIGN KEY (BezoekerId) REFERENCES Bezoeker(Id)
-   ,CONSTRAINT      FK_Ticket_EvenementId_Evenement_Id FOREIGN KEY (EvenementId) REFERENCES Evenement(Id)
-   ,CONSTRAINT      FK_Ticket_PrijsId_Prijs_Id FOREIGN KEY (PrijsId) REFERENCES Prijs(Id)
+    ,CONSTRAINT PK_Ticket_Id
+        PRIMARY KEY (Id)
+
+    ,CONSTRAINT FK_Ticket_BezoekerId_Bezoeker_Id
+        FOREIGN KEY (BezoekerId)
+        REFERENCES Bezoeker(Id)
+
+    ,CONSTRAINT FK_Ticket_EvenementId_Evenement_Id
+        FOREIGN KEY (EvenementId)
+        REFERENCES Evenement(Id)
+
+    ,CONSTRAINT FK_Ticket_PrijsId_Prijs_Id
+        FOREIGN KEY (PrijsId)
+        REFERENCES Prijs(Id)
 ) ENGINE=InnoDB;
 
 
--- Step: 09
--- Goal: Create a new table Stand
--- **********************************************************************************
--- Version       Date:           Author:                     Description:
--- *******       **********      ****************            ******************
--- 01            16-09-2026      Ali                         New
--- **********************************************************************************/
+-- =========================================================
+-- 8. STAND
+-- =========================================================
 
--- Drop table Stand
-DROP TABLE IF EXISTS Stand;
-
-CREATE TABLE IF NOT EXISTS Stand
+CREATE TABLE Stand
 (
-    Id                  INT             UNSIGNED        NOT NULL    AUTO_INCREMENT
-   ,VerkoperId          INT             UNSIGNED        NOT NULL
-   ,StandType           VARCHAR(3)                      NOT NULL
-   ,Prijs               DECIMAL(8,2)                    NOT NULL
-   ,VerhuurdStatus      BOOLEAN                         NOT NULL
-   ,Isactief            BIT                             NOT NULL    DEFAULT 1
-   ,Opmerking           VARCHAR(250)                        NULL    DEFAULT NULL
-   ,Datumaangemaakt     DATETIME                        NOT NULL
-   ,Datumgewijzigd      DATETIME                        NOT NULL
+     Id                 INT UNSIGNED NOT NULL AUTO_INCREMENT
+    ,VerkoperId         INT UNSIGNED NOT NULL
+    ,StandType          VARCHAR(3) NOT NULL
+    ,Prijs              DECIMAL(8,2) NOT NULL
+    ,VerhuurdStatus     BOOLEAN NOT NULL
+    ,Isactief           BIT NOT NULL DEFAULT 1
+    ,Opmerking          VARCHAR(250) NULL DEFAULT NULL
+    ,Datumaangemaakt    DATETIME NOT NULL
+    ,Datumgewijzigd     DATETIME NOT NULL
 
-   ,CONSTRAINT      PK_Stand_Id   PRIMARY KEY (Id)
-   ,CONSTRAINT      FK_Stand_VerkoperId_Verkoper_Id FOREIGN KEY (VerkoperId) REFERENCES Verkoper(Id)
+    ,CONSTRAINT PK_Stand_Id
+        PRIMARY KEY (Id)
+
+    ,CONSTRAINT FK_Stand_VerkoperId_Verkoper_Id
+        FOREIGN KEY (VerkoperId)
+        REFERENCES Verkoper(Id)
 ) ENGINE=InnoDB;
 
 
--- Step: 10
--- Goal: Create a new table ContactPerVerkoper
--- **********************************************************************************
--- Version       Date:           Author:                     Description:
--- *******       **********      ****************            ******************
--- 01            16-09-2026      Ali                         New
--- **********************************************************************************/
+-- =========================================================
+-- 9. CONTACT PER VERKOPER
+-- =========================================================
 
--- Drop table ContactPerVerkoper
-DROP TABLE IF EXISTS ContactPerVerkoper;
-
-CREATE TABLE IF NOT EXISTS ContactPerVerkoper
+CREATE TABLE ContactPerVerkoper
 (
-    Id                  INT             UNSIGNED        NOT NULL    AUTO_INCREMENT
-   ,VerkoperId          INT             UNSIGNED        NOT NULL
-   ,ContactpersoonId    INT             UNSIGNED        NOT NULL
-   ,Isactief            BIT                             NOT NULL    DEFAULT 1
-   ,Opmerking           VARCHAR(250)                        NULL    DEFAULT NULL
-   ,Datumaangemaakt     DATETIME                        NOT NULL
-   ,Datumgewijzigd      DATETIME                        NOT NULL
+     Id                     INT UNSIGNED NOT NULL AUTO_INCREMENT
+    ,VerkoperId             INT UNSIGNED NOT NULL
+    ,ContactpersoonId       INT UNSIGNED NOT NULL
+    ,Isactief               BIT NOT NULL DEFAULT 1
+    ,Opmerking              VARCHAR(250) NULL DEFAULT NULL
+    ,Datumaangemaakt        DATETIME NOT NULL
+    ,Datumgewijzigd         DATETIME NOT NULL
 
-   ,CONSTRAINT      PK_ContactPerVerkoper_Id   PRIMARY KEY (Id)
-   ,CONSTRAINT      FK_ContactPerVerkoper_VerkoperId_Verkoper_Id FOREIGN KEY (VerkoperId) REFERENCES Verkoper(Id)
-   ,CONSTRAINT      FK_ContactPerVerkoper_ContactpersoonId_Contactpersoon_Id FOREIGN KEY (ContactpersoonId) REFERENCES Contactpersoon(Id)
+    ,CONSTRAINT PK_ContactPerVerkoper_Id
+        PRIMARY KEY (Id)
+
+    ,CONSTRAINT FK_ContactPerVerkoper_VerkoperId_Verkoper_Id
+        FOREIGN KEY (VerkoperId)
+        REFERENCES Verkoper(Id)
+
+    ,CONSTRAINT FK_ContactPerVerkoper_ContactpersoonId_Contactpersoon_Id
+        FOREIGN KEY (ContactpersoonId)
+        REFERENCES Contactpersoon(Id)
 ) ENGINE=InnoDB;
