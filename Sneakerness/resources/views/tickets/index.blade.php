@@ -36,8 +36,6 @@
                         class="{{ request()->routeIs('verkopers.index') ? 'active' : '' }}">Verkopers</a></li>
                 <li><a href="{{ route('stands.index') }}"
                         class="{{ request()->routeIs('stands.index') ? 'active' : '' }}">Stands</a></li>
-                <li><a href="{{ route('contactpersonen.index') }}"
-                        class="{{ request()->routeIs('contactpersonen.index') ? 'active' : '' }}">Contact</a></li>
             </ul>
 
             <!-- Rechterkant van de navigatie -->
