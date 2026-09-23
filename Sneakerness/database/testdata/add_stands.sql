@@ -1,3 +1,7 @@
+-- ============================================
+-- TESTDATA VERKOPERS
+-- ============================================
+
 INSERT INTO Verkoper
 (
     Naam,
@@ -12,20 +16,82 @@ INSERT INTO Verkoper
     Datumgewijzigd
 )
 VALUES
-('Sole District', 0, 'Sneakers', 'A', 'Zaterdag en Zondag', NULL, 1, 'Testdata stands overzicht', NOW(), NOW()),
-('Urban Kicks', 0, 'Sneakers', 'B', 'Zaterdag', NULL, 1, 'Testdata stands overzicht', NOW(), NOW()),
-('Street Supply', 0, 'Streetwear', 'A', 'Zaterdag en Zondag', NULL, 1, 'Testdata stands overzicht', NOW(), NOW()),
-('Rare Pairs', 1, 'Exclusive Sneakers', 'C', 'Zondag', NULL, 1, 'Testdata stands overzicht', NOW(), NOW()),
-('Sneaker Vault', 0, 'Sneakers', 'B', 'Zaterdag en Zondag', NULL, 1, 'Testdata stands overzicht', NOW(), NOW()),
-('Lace Lab', 0, 'Accessoires', 'A', 'Zaterdag', NULL, 1, 'Testdata stands overzicht', NOW(), NOW()),
-('Retro Soles', 0, 'Vintage Sneakers', 'C', 'Zondag', NULL, 1, 'Testdata stands overzicht', NOW(), NOW()),
-('Fresh Fits', 0, 'Streetwear', 'B', 'Zaterdag en Zondag', NULL, 1, 'Testdata stands overzicht', NOW(), NOW()),
-('Kick Culture', 1, 'Sneakers', 'A', 'Zaterdag en Zondag', NULL, 1, 'Testdata stands overzicht', NOW(), NOW()),
-('Custom Kicks', 0, 'Custom Sneakers', 'C', 'Zaterdag', NULL, 1, 'Testdata stands overzicht', NOW(), NOW());
+(
+    'Sole District',
+    0,
+    'Sneakers',
+    'A',
+    'Zaterdag en Zondag',
+    NULL,
+    1,
+    'Testdata stands overzicht',
+    NOW(),
+    NOW()
+),
+(
+    'Urban Kicks',
+    0,
+    'Sneakers',
+    'B',
+    'Zaterdag',
+    NULL,
+    1,
+    'Testdata stands overzicht',
+    NOW(),
+    NOW()
+),
+(
+    'Street Supply',
+    0,
+    'Streetwear',
+    'A',
+    'Zaterdag en Zondag',
+    NULL,
+    1,
+    'Testdata stands overzicht',
+    NOW(),
+    NOW()
+),
+(
+    'Rare Pairs',
+    1,
+    'Exclusive Sneakers',
+    'C',
+    'Zondag',
+    NULL,
+    1,
+    'Testdata stands overzicht',
+    NOW(),
+    NOW()
+),
+(
+    'Sneaker Vault',
+    0,
+    'Sneakers',
+    'B',
+    'Zaterdag en Zondag',
+    NULL,
+    1,
+    'Testdata stands overzicht',
+    NOW(),
+    NOW()
+),
+(
+    'Lace Lab',
+    0,
+    'Accessoires',
+    'A',
+    'Zaterdag',
+    NULL,
+    1,
+    'Testdata stands overzicht',
+    NOW(),
+    NOW()
+);
 
 
 -- ============================================
--- TESTDATA STANDS
+-- VERHUURDE STANDS
 -- ============================================
 
 INSERT INTO Stand
@@ -42,15 +108,72 @@ INSERT INTO Stand
 SELECT
     Id,
     StandType,
+
     CASE
         WHEN StandType = 'A' THEN 150.00
         WHEN StandType = 'B' THEN 200.00
         WHEN StandType = 'C' THEN 250.00
     END,
+
     1,
     1,
     'Testdata stands overzicht',
     NOW(),
     NOW()
+
 FROM Verkoper
-WHERE Opmerking = 'Testdata stands overzicht';
+
+WHERE Naam IN
+(
+    'Sole District',
+    'Street Supply',
+    'Rare Pairs'
+);
+
+
+-- ============================================
+-- BESCHIKBARE STANDS
+-- ============================================
+
+INSERT INTO Stand
+(
+    VerkoperId,
+    StandType,
+    Prijs,
+    VerhuurdStatus,
+    Isactief,
+    Opmerking,
+    Datumaangemaakt,
+    Datumgewijzigd
+)
+VALUES
+(
+    NULL,
+    'A',
+    150.00,
+    0,
+    1,
+    'Testdata stands overzicht',
+    NOW(),
+    NOW()
+),
+(
+    NULL,
+    'B',
+    200.00,
+    0,
+    1,
+    'Testdata stands overzicht',
+    NOW(),
+    NOW()
+),
+(
+    NULL,
+    'C',
+    250.00,
+    0,
+    1,
+    'Testdata stands overzicht',
+    NOW(),
+    NOW()
+);

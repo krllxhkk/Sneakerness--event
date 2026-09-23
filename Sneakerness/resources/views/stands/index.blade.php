@@ -7,18 +7,27 @@
 
     <title>Stands | Sneakerness®</title>
 
+    <!-- Algemene CSS -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+    <!-- Stands CSS -->
     <link rel="stylesheet" href="{{ asset('css/stands.css') }}">
 
+    <!-- Google Fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
         rel="stylesheet">
 </head>
 
 <body>
-@include('partials.navbar')
+
+    <!-- Navbar -->
+    @include('partials.navbar')
+
+
     <main class="stands-container">
 
+        <!-- Header -->
         <section class="stands-header">
 
             <span class="stands-label">
@@ -47,11 +56,13 @@
 
                     <article class="stand-card">
 
+                        <!-- Bovenkant van de kaart -->
                         <div class="stand-card-top">
 
                             <span class="stand-type">
-                                {{ $stand->StandType }}
+                                STAND {{ $stand->StandType }}
                             </span>
+
 
                             @if ($stand->VerhuurdStatus)
 
@@ -70,35 +81,117 @@
                         </div>
 
 
+                        <!-- Naam -->
                         <h2>
-                            {{ $stand->verkoper->Naam ?? 'Geen verkoper' }}
+
+                            @if ($stand->VerhuurdStatus && $stand->verkoper)
+
+                                {{ $stand->verkoper->Naam }}
+
+                            @else
+
+                                VRIJE STAND
+
+                            @endif
+
                         </h2>
 
 
+                        <!-- Informatie -->
                         <div class="stand-details">
 
+
+                            <!-- Status -->
                             <div class="stand-detail">
-                                <span>SOORT</span>
+
+                                <span>
+                                    STATUS
+                                </span>
 
                                 <strong>
-                                    {{ $stand->verkoper->VerkooptSoort ?? '-' }}
+                                    @if ($stand->VerhuurdStatus)
+                                        Verhuurd
+                                    @else
+                                        Beschikbaar
+                                    @endif
                                 </strong>
+
                             </div>
 
+
+                            <!-- Standtype -->
                             <div class="stand-detail">
-                                <span>STANDTYPE</span>
+
+                                <span>
+                                    STANDTYPE
+                                </span>
 
                                 <strong>
                                     {{ $stand->StandType }}
                                 </strong>
+
                             </div>
 
+
+                            <!-- Prijs -->
                             <div class="stand-detail">
-                                <span>PRIJS</span>
+
+                                <span>
+                                    PRIJS
+                                </span>
 
                                 <strong>
                                     €{{ number_format($stand->Prijs, 2, ',', '.') }}
                                 </strong>
+
+                            </div>
+
+
+                            <!-- Verkoper -->
+                            <div class="stand-detail">
+
+                                <span>
+                                    VERKOPER
+                                </span>
+
+                                <strong>
+
+                                    @if ($stand->VerhuurdStatus && $stand->verkoper)
+
+                                        {{ $stand->verkoper->Naam }}
+
+                                    @else
+
+                                        Nog niet verhuurd
+
+                                    @endif
+
+                                </strong>
+
+                            </div>
+
+
+                            <!-- Categorie / soort -->
+                            <div class="stand-detail">
+
+                                <span>
+                                    CATEGORIE
+                                </span>
+
+                                <strong>
+
+                                    @if ($stand->VerhuurdStatus && $stand->verkoper)
+
+                                        {{ $stand->verkoper->VerkooptSoort ?? '-' }}
+
+                                    @else
+
+                                        -
+
+                                    @endif
+
+                                </strong>
+
                             </div>
 
                         </div>
@@ -110,17 +203,21 @@
             </section>
 
 
-            {{-- UNHAPPY FLOW --}}
+        {{-- UNHAPPY FLOW --}}
         @else
 
             <section class="no-stands">
 
-                <div class="no-stands-icon">!</div>
+                <div class="no-stands-icon">
+                    !
+                </div>
 
-                <h2>GEEN STANDS BESCHIKBAAR</h2>
+                <h2>
+                    GEEN STANDS BESCHIKBAAR
+                </h2>
 
                 <p>
-                    Er zijn momenteel geen stands beschikbaar.
+                    Er zijn momenteel geen stands in het systeem.
                     Bekijk deze pagina later opnieuw.
                 </p>
 
@@ -129,8 +226,11 @@
         @endif
 
     </main>
-@include('partials.footer')
-</body>
 
+
+    <!-- Footer -->
+    @include('partials.footer')
+
+</body>
 
 </html>
