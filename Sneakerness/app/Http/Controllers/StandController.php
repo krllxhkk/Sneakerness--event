@@ -8,7 +8,9 @@ class StandController extends Controller
 {
     public function index()
     {
-        $stands = Stand::with('verkoper')->get();
+        $stands = Stand::with('verkoper')
+    ->orderBy('VerhuurdStatus', 'asc')
+    ->get();
 
         return view('stands.index', compact('stands'));
     }
