@@ -297,9 +297,9 @@
             </div>
             <ul class="footer-links">
                 <li><a href="{{ route('home') }}">Home</a></li>
-                <li><a href="{{ route('events.index') }}">Event</a></li>
+                <li><a href="{{ route('events.index') }}">Events</a></li>
                 <li><a href="{{ route('tickets.index') }}">Tickets</a></li>
-                <li><a href="{{ route('contactpersonen.index') }}">Contact</a></li>
+                <li><a href="{{ route('stands.index') }}">Stands</a></li>
             </ul>
             <div class="footer-right">
                 <p>© Sneakerness®</p>
