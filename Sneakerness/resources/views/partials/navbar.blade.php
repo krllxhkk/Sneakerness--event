@@ -10,22 +10,62 @@
             <span></span>
             <span></span>
         </div>
+
         <ul class="nav-links" id="navLinks">
-            <li><a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Home</a></li>
-            <li><a href="{{ route('events.index') }}"
-                    class="{{ request()->routeIs('events.index') ? 'active' : '' }}">Events</a></li>
-            <li><a href="{{ url('/#tickets') }}">Tickets</a></li>
-            <li><a href="{{ url('/#verkopers') }}">Verkopers</a></li>
-            <li><a href="{{ route('stands.index') }}"
-                    class="{{ request()->routeIs('stands.index') ? 'active' : '' }}">Stands</a></li>
-            <li><a href="{{ url('/#contact') }}">Contact</a></li>
+
+            {{-- HOME --}}
+            <li>
+                <a href="{{ route('home') }}"
+                   class="{{ request()->routeIs('home') ? 'active' : '' }}">
+                    Home
+                </a>
+            </li>
+
+            {{-- EVENTS --}}
+            <li>
+                <a href="{{ route('events.index') }}"
+                   class="{{ request()->routeIs('events.*') ? 'active' : '' }}">
+                    Events
+                </a>
+            </li>
+
+            {{-- TICKETS --}}
+            <li>
+                <a href="{{ route('tickets.index') }}"
+                   class="{{ request()->routeIs('tickets.*') ? 'active' : '' }}">
+                    Tickets
+                </a>
+            </li>
+
+            {{-- VERKOPERS --}}
+            <li>
+                <a href="{{ route('verkopers.index') }}"
+                   class="{{ request()->routeIs('verkopers.*') ? 'active' : '' }}">
+                    Verkopers
+                </a>
+            </li>
+
+            {{-- STANDS --}}
+            <li>
+                <a href="{{ route('stands.index') }}"
+                   class="{{ request()->routeIs('stands.*') ? 'active' : '' }}">
+                    Stands
+                </a>
+            </li>
+
+
         </ul>
 
         <div class="nav-right">
-            <a href="#" class="login-link">LOGIN</a>
-            <a href="{{ url('/#tickets') }}" class="btn-yellow-sm">
+
+            <a href="#" class="login-link">
+                LOGIN
+            </a>
+
+            <a href="{{ route('tickets.index') }}" class="btn-yellow-sm">
                 TICKET KOPEN
             </a>
+
         </div>
 
     </div>

@@ -41,7 +41,6 @@
                         class="{{ request()->routeIs('tickets.index') ? 'active' : '' }}">Tickets</a></li>
                 <li><a href="{{ route('verkopers.index') }}">Verkopers</a></li>
                 <li><a href="{{ route('stands.index') }}">Stands</a></li>
-                <li><a href="#tickets">Contact</a></li>
             </ul>
 
             <!-- Rechterkant van de navigatie (Login & Actieknop) -->
