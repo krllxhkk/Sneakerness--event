@@ -1,98 +1,28 @@
--- ============================================
--- TESTDATA VERKOPERS
--- ============================================
-
-INSERT INTO Verkoper
-(
-    Naam,
-    SpecialeStatus,
-    VerkooptSoort,
-    StandType,
-    Dagen,
-    Logo,
-    Isactief,
-    Opmerking,
-    Datumaangemaakt,
-    Datumgewijzigd
-)
-VALUES
-(
-    'Sole District',
-    0,
-    'Sneakers',
-    'A',
-    'Zaterdag en Zondag',
-    NULL,
-    1,
-    'Testdata stands overzicht',
-    NOW(),
-    NOW()
-),
-(
-    'Urban Kicks',
-    0,
-    'Sneakers',
-    'B',
-    'Zaterdag',
-    NULL,
-    1,
-    'Testdata stands overzicht',
-    NOW(),
-    NOW()
-),
-(
-    'Street Supply',
-    0,
-    'Streetwear',
-    'A',
-    'Zaterdag en Zondag',
-    NULL,
-    1,
-    'Testdata stands overzicht',
-    NOW(),
-    NOW()
-),
-(
-    'Rare Pairs',
-    1,
-    'Exclusive Sneakers',
-    'C',
-    'Zondag',
-    NULL,
-    1,
-    'Testdata stands overzicht',
-    NOW(),
-    NOW()
-),
-(
-    'Sneaker Vault',
-    0,
-    'Sneakers',
-    'B',
-    'Zaterdag en Zondag',
-    NULL,
-    1,
-    'Testdata stands overzicht',
-    NOW(),
-    NOW()
-),
-(
-    'Lace Lab',
-    0,
-    'Accessoires',
-    'A',
-    'Zaterdag',
-    NULL,
-    1,
-    'Testdata stands overzicht',
-    NOW(),
-    NOW()
-);
+USE SneakernessDB;
 
 
--- ============================================
--- VERHUURDE STANDS
--- ============================================
+-- =========================================================
+-- TESTDATA STANDS
+-- User Story: Stands overzicht
+-- =========================================================
+
+
+-- =========================================================
+-- 1. OUDE STAND TESTDATA VERWIJDEREN
+-- =========================================================
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE Stand;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+-- =========================================================
+-- 2. VERHUURDE STANDS
+-- De verkopers bestaan al in de Verkoper-tabel.
+-- Daarom worden de VerkoperIds automatisch opgehaald.
+-- =========================================================
 
 INSERT INTO Stand
 (
@@ -110,14 +40,14 @@ SELECT
     StandType,
 
     CASE
-        WHEN StandType = 'A' THEN 150.00
-        WHEN StandType = 'B' THEN 200.00
-        WHEN StandType = 'C' THEN 250.00
+        WHEN StandType = 'Klein' THEN 100.00
+        WHEN StandType = 'Middel' THEN 150.00
+        WHEN StandType = 'Groot' THEN 200.00
     END,
 
     1,
     1,
-    'Testdata stands overzicht',
+    'Testdata verhuurde stand',
     NOW(),
     NOW()
 
@@ -125,15 +55,19 @@ FROM Verkoper
 
 WHERE Naam IN
 (
-    'Sole District',
-    'Street Supply',
-    'Rare Pairs'
+    'Sneaker District',
+    'Urban Kicks',
+    'Custom Creps',
+    'Vintage Sole',
+    'Sole Supply',
+    'Street Culture'
 );
 
 
--- ============================================
--- BESCHIKBARE STANDS
--- ============================================
+-- =========================================================
+-- 3. BESCHIKBARE STANDS
+-- VerkoperId is NULL omdat deze stands nog niet verhuurd zijn.
+-- =========================================================
 
 INSERT INTO Stand
 (
@@ -147,33 +81,75 @@ INSERT INTO Stand
     Datumgewijzigd
 )
 VALUES
+
 (
     NULL,
-    'A',
+    'Klein',
+    100.00,
+    0,
+    1,
+    'Testdata beschikbare stand',
+    NOW(),
+    NOW()
+),
+
+(
+    NULL,
+    'Middel',
     150.00,
     0,
     1,
-    'Testdata stands overzicht',
+    'Testdata beschikbare stand',
     NOW(),
     NOW()
 ),
+
 (
     NULL,
-    'B',
+    'Groot',
     200.00,
     0,
     1,
-    'Testdata stands overzicht',
+    'Testdata beschikbare stand',
     NOW(),
     NOW()
 ),
+
 (
     NULL,
-    'C',
-    250.00,
+    'Middel',
+    150.00,
     0,
     1,
-    'Testdata stands overzicht',
+    'Testdata beschikbare stand',
     NOW(),
     NOW()
 );
+
+
+-- =========================================================
+-- 4. TESTDATA CONTROLEREN
+-- =========================================================
+
+SELECT
+    s.Id AS StandId,
+    s.StandType,
+    s.Prijs,
+
+    CASE
+        WHEN s.VerhuurdStatus = 1 THEN 'Verhuurd'
+        ELSE 'Beschikbaar'
+    END AS Status,
+
+    s.VerkoperId,
+    v.Naam AS Verkoper,
+    v.VerkooptSoort AS Categorie
+
+FROM Stand s
+
+LEFT JOIN Verkoper v
+    ON v.Id = s.VerkoperId
+
+ORDER BY
+    s.VerhuurdStatus ASC,
+    s.Id ASC;

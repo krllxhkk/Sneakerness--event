@@ -1,15 +1,22 @@
 USE SneakernessDB;
 
-SET SQL_SAFE_UPDATES = 0;
 
--- Eerst de stands verwijderen vanwege de foreign key naar Verkoper
+-- =========================================================
+-- DELETE TESTDATA STANDS
+-- Verwijdert alleen de testdata van het Stands-overzicht
+-- =========================================================
+
 DELETE FROM Stand
-WHERE Opmerking = 'Testdata stands overzicht';
+WHERE Id > 0
+AND Opmerking IN
+(
+    'Testdata verhuurde stand',
+    'Testdata beschikbare stand'
+);
 
--- Daarna alleen onze testverkopers verwijderen
-DELETE FROM Verkoper
-WHERE Opmerking = 'Testdata stands overzicht';
 
-SET SQL_SAFE_UPDATES = 1;
+-- =========================================================
+-- CONTROLEREN
+-- =========================================================
 
 SELECT * FROM Stand;
