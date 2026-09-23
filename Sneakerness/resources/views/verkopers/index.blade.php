@@ -42,9 +42,8 @@
 
                 <li><a href="{{ route('events.index') }}">Events</a></li>
 
-                <li>
-                    <a href="{{ route('home') }}#tickets">Tickets</a>
-                </li>
+                <li><a href="{{ route('tickets.index') }}"
+                        class="{{ request()->routeIs('tickets.index') ? 'active' : '' }}">Tickets</a></li>
 
                 <li>
                     <a href="{{ route('verkopers.index') }}" class="active">
