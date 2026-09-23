@@ -1008,3 +1008,89 @@ main {
         padding: 14px;
     }
 }
+/* ==========================================
+   DATABASE ERROR
+   ========================================== */
+
+.database-error {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    width: 100%;
+    padding: 30px;
+    background-color: var(--card-bg);
+    border: 1px solid #3a3a3a;
+    border-left: 4px solid var(--yellow);
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.database-error-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 52px;
+    width: 52px;
+    height: 52px;
+    border: 2px solid var(--yellow);
+    border-radius: 50%;
+    color: var(--yellow);
+    font-size: 28px;
+    font-weight: 900;
+}
+
+.database-error-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.database-error-content > span {
+    color: var(--yellow);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.database-error-content h2 {
+    margin: 0;
+    color: var(--text-white);
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.database-error-content p {
+    margin: 0;
+    color: var(--text-gray);
+    font-size: 14px;
+}
+
+.database-error-content small {
+    margin-top: 5px;
+    color: #777;
+    font-size: 12px;
+}
+
+.database-error:hover {
+    border-color: #555;
+    transition: border-color 0.2s ease;
+}
+
+@media (max-width: 700px) {
+    .database-error {
+        align-items: flex-start;
+        padding: 22px;
+        gap: 18px;
+    }
+
+    .database-error-icon {
+        min-width: 42px;
+        width: 42px;
+        height: 42px;
+        font-size: 22px;
+    }
+
+    .database-error-content h2 {
+        font-size: 18px;
+    }
+}
