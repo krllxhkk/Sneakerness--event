@@ -7,7 +7,6 @@
 
     <title>Events | Sneakerness®</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/events.css') }}">
     @vite('resources/css/events.css')
 
     <link
