@@ -1,0 +1,242 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #080808;
+    color: #ffffff;
+}
+
+.login-pagina {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+/* Linkerkant met sneakerfoto */
+.login-afbeelding {
+    position: relative;
+    min-height: 100vh;
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.45)),
+        url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1400&q=85');
+
+    background-size: cover;
+    background-position: center;
+}
+
+.logo {
+    position: absolute;
+    top: 42px;
+    left: 42px;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+.logo span {
+    color: #eaff00;
+}
+
+.event-info {
+    position: absolute;
+    left: 42px;
+    bottom: 42px;
+}
+
+.event-info h2 {
+    font-size: 46px;
+    line-height: 1;
+    margin-bottom: 14px;
+}
+
+.event-info p {
+    color: #a0a0a0;
+    font-size: 14px;
+}
+
+/* Rechterkant login */
+.login-gedeelte {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background-color: #080808;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 430px;
+}
+
+.login-container h1 {
+    font-size: 34px;
+    margin-bottom: 8px;
+}
+
+.ondertitel {
+    color: #777777;
+    margin-bottom: 34px;
+}
+
+.veld {
+    margin-bottom: 20px;
+}
+
+.veld label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.veld input {
+    width: 100%;
+    height: 48px;
+    padding: 0 14px;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    outline: none;
+}
+
+.veld input:focus {
+    border-color: #eaff00;
+}
+
+.wachtwoord-vergeten {
+    display: block;
+    margin-top: -7px;
+    margin-bottom: 26px;
+    text-align: right;
+    color: #eaff00;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.inloggen-knop {
+    width: 100%;
+    height: 52px;
+    border: none;
+    border-radius: 5px;
+    background-color: #eaff00;
+    color: #000000;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.inloggen-knop:hover {
+    background-color: #d7ec00;
+}
+
+/* Foutmelding bij verkeerde inloggegevens */
+.foutmelding {
+    padding: 12px 14px;
+    margin-bottom: 20px;
+    border: 1px solid #8b2020;
+    border-radius: 5px;
+    background-color: #2a1010;
+    color: #ff7777;
+    font-size: 14px;
+}
+
+/* Demo accounts */
+.demo-accounts {
+    margin-top: 35px;
+    padding: 20px;
+    border: 1px solid #252525;
+    border-radius: 7px;
+    background-color: #111111;
+}
+
+.demo-titel {
+    margin-bottom: 14px;
+    color: #777777;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.demo-account {
+    padding: 13px;
+    margin-top: 10px;
+    border: 1px solid #202020;
+    border-radius: 5px;
+    background-color: #0c0c0c;
+}
+
+.demo-account strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.demo-account span {
+    color: #666666;
+    font-size: 12px;
+}
+
+/* Responsive voor tablet en telefoon */
+@media (max-width: 850px) {
+    .login-pagina {
+        grid-template-columns: 1fr;
+    }
+
+    .login-afbeelding {
+        min-height: 300px;
+    }
+
+    .login-gedeelte {
+        min-height: auto;
+        padding: 50px 25px;
+    }
+
+    .event-info h2 {
+        font-size: 34px;
+    }
+}
+
+/* Wachtwoord vergeten pagina */
+.success-message {
+    background-color: rgba(234, 255, 0, 0.1);
+    border: 1px solid #eaff00;
+    color: #eaff00;
+    padding: 12px 14px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.error-message {
+    background-color: rgba(255, 70, 70, 0.1);
+    border: 1px solid #ff4646;
+    color: #ff6464;
+    padding: 12px 14px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.login-subtitle {
+    color: #777777;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 5px;
+    margin-bottom: 25px;
+}
+
+.forgot-password {
+    color: #eaff00;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}

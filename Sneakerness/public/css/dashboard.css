@@ -1,0 +1,376 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #080808;
+    color: #ffffff;
+}
+
+/* Bovenste navigatie */
+.dashboard-header {
+    height: 75px;
+    display: flex;
+    align-items: center;
+    padding: 0 35px;
+    border-bottom: 1px solid #252525;
+    background-color: #0d0d0d;
+}
+
+.dashboard-logo {
+    margin-right: 55px;
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.dashboard-logo span {
+    color: #eaff00;
+}
+
+.dashboard-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    flex: 1;
+}
+
+.dashboard-nav a {
+    color: #888888;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.dashboard-nav a:hover,
+.dashboard-nav a.actief {
+    color: #eaff00;
+}
+
+.uitloggen-formulier {
+    margin-left: auto;
+}
+
+.uitloggen-knop {
+    border: 1px solid #333333;
+    padding: 10px 18px;
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.uitloggen-knop:hover {
+    border-color: #eaff00;
+    color: #eaff00;
+}
+
+/* Dashboard indeling */
+.dashboard-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    min-height: calc(100vh - 75px);
+}
+
+/* Beheer Panel links */
+.zijbalk {
+    padding: 30px 20px;
+    border-right: 1px solid #252525;
+    background-color: #0d0d0d;
+}
+
+.zijbalk-label {
+    margin-bottom: 7px;
+    color: #666666;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.zijbalk h2 {
+    margin-bottom: 30px;
+    font-size: 20px;
+}
+
+.beheer-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.beheer-menu a {
+    display: block;
+    padding: 13px 15px;
+    border-radius: 4px;
+    color: #8d8d8d;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.beheer-menu a:hover,
+.beheer-menu a.actief {
+    background-color: #eaff00;
+    color: #000000;
+}
+
+/* Dashboard inhoud */
+.dashboard-inhoud {
+    padding: 45px;
+}
+
+.dashboard-kop {
+    margin-bottom: 35px;
+}
+
+.dashboard-kop p {
+    margin-bottom: 8px;
+    color: #eaff00;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.dashboard-kop h1 {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.dashboard-kop span {
+    color: #777777;
+    font-size: 14px;
+}
+
+/* Statistieken */
+.statistieken {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 25px;
+}
+
+.statistiek-kaart {
+    position: relative;
+    min-height: 105px;
+    padding: 20px;
+    border: 1px solid #252525;
+    border-radius: 6px;
+    background-color: #111111;
+}
+
+.statistiek-kaart p {
+    margin-bottom: 16px;
+    color: #777777;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.statistiek-kaart h3 {
+    margin: 0;
+    color: #eaff00;
+    font-size: 27px;
+}
+
+.kaart-icoon {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    font-size: 14px;
+}
+
+/* Onderste dashboard gedeelte */
+.dashboard-blokken {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.dashboard-blok {
+    min-height: 220px;
+    padding: 25px;
+    border: 1px solid #252525;
+    border-radius: 6px;
+    background-color: #111111;
+}
+
+.dashboard-blok h2 {
+    margin-bottom: 12px;
+    font-size: 18px;
+}
+
+.dashboard-blok p {
+    color: #777777;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Tickets per tijdslot */
+.tickets-tijdsloten {
+    min-height: 250px;
+}
+
+.tickets-tijdsloten h2,
+.dashboard-blok h2 {
+    margin-bottom: 22px;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.tijdslot-rij {
+    display: grid;
+    grid-template-columns: 85px 1fr 45px;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.tijdslot-naam {
+    color: #888888;
+    font-size: 11px;
+}
+
+.tijdslot-balk-achtergrond {
+    width: 100%;
+    height: 9px;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: #1c1c1c;
+}
+
+.tijdslot-balk {
+    height: 100%;
+    min-width: 4px;
+    border-radius: 10px;
+    background-color: #eaff00;
+}
+
+.tijdslot-aantal {
+    color: #aaaaaa;
+    font-size: 11px;
+    text-align: right;
+}
+
+.geen-gegevens {
+    color: #777777;
+    font-size: 13px;
+}
+
+/* Recente ticketbestellingen */
+.recente-sectie {
+    margin-top: 25px;
+}
+
+.sectie-kop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.sectie-kop h2 {
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.sectie-kop a {
+    color: #eaff00;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.dashboard-tabel {
+    overflow-x: auto;
+    border: 1px solid #252525;
+    border-radius: 6px;
+}
+
+.dashboard-tabel table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #0d0d0d;
+}
+
+.dashboard-tabel th {
+    padding: 13px 15px;
+    border-bottom: 1px solid #252525;
+    color: #666666;
+    font-size: 10px;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.dashboard-tabel td {
+    padding: 14px 15px;
+    border-bottom: 1px solid #1d1d1d;
+    color: #bbbbbb;
+    font-size: 12px;
+}
+
+.dashboard-tabel .lege-tabel {
+    padding: 25px;
+    color: #777777;
+    text-align: center;
+}
+
+/* Tablet */
+@media (max-width: 1100px) {
+    .dashboard-nav {
+        gap: 15px;
+    }
+
+    .statistieken {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Telefoon */
+@media (max-width: 800px) {
+    .dashboard-header {
+        height: auto;
+        padding: 20px;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .dashboard-logo {
+        margin-right: 0;
+    }
+
+    .dashboard-nav {
+        width: 100%;
+        flex-wrap: wrap;
+        order: 3;
+    }
+
+    .dashboard-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .zijbalk {
+        border-right: none;
+        border-bottom: 1px solid #252525;
+    }
+
+    .beheer-menu {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-inhoud {
+        padding: 25px 20px;
+    }
+
+    .statistieken {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-blokken {
+        grid-template-columns: 1fr;
+    }
+}

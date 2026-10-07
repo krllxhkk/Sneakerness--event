@@ -1,47 +1,80 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="nl">
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+    <title>Inloggen | Sneakerness®</title>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+</head>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+<body>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+    <div class="login-pagina">
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+        <!-- Linkerkant -->
+        <section class="login-afbeelding">
+            <div class="logo">
+                SNEAKERNESS<span>®</span>
+            </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+            <div class="event-info">
+                <h2>ROTTERDAM<br>2025</h2>
+                <p>Van Nellefabriek · 14–15 Juni</p>
+            </div>
+        </section>
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+        <!-- Rechterkant -->
+        <section class="login-gedeelte">
+            <div class="login-container">
+
+                <h1>INLOGGEN</h1>
+
+                <p class="ondertitel">
+                    Log in met je Sneakerness®-account
+                </p>
+
+                <!-- Foutmelding -->
+                @if ($errors->any())
+                    <div class="foutmelding">
+                        E-mailadres of wachtwoord is onjuist. Probeer het opnieuw.
+                    </div>
+                @endif
+
+                <!-- Loginformulier -->
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+
+                    <div class="veld">
+                        <label for="email">E-mailadres</label>
+
+                        <input id="email" type="email" name="email" value="{{ old('email') }}"
+                            placeholder="naam@sneakerness.nl" required autofocus autocomplete="username">
+                    </div>
+
+                    <div class="veld">
+                        <label for="password">Wachtwoord</label>
+
+                        <input id="password" type="password" name="password" required autocomplete="current-password">
+                    </div>
+
+                    @if (Route::has('password.request'))
+                        <a href="{{ route('password.request') }}" class="wachtwoord-vergeten">
+                            Wachtwoord vergeten?
+                        </a>
+                    @endif
+
+                    <button type="submit" class="inloggen-knop">
+                        Inloggen
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+
+</html>

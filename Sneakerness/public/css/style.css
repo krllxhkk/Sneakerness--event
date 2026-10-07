@@ -715,6 +715,7 @@ main {
     box-shadow: 0 0 18px rgba(204, 255, 0, 0.4);
     transform: translateY(-2px);
 }
+
 /* ==========================================
    VERKOPERS PAGINA
    ========================================== */
@@ -809,6 +810,7 @@ main {
     color: var(--text-gray);
     font-size: 11px;
 }
+
 /* Naam van de verkoper */
 .verkoper-card h2 {
     font-size: 24px;
@@ -895,6 +897,7 @@ main {
         padding: 25px;
     }
 }
+
 /* ==========================================
    CONTACTPERSONEN TABEL
    ========================================== */
@@ -1008,6 +1011,7 @@ main {
         padding: 14px;
     }
 }
+
 /* ==========================================
    DATABASE ERROR
    ========================================== */
@@ -1045,7 +1049,7 @@ main {
     gap: 6px;
 }
 
-.database-error-content > span {
+.database-error-content>span {
     color: var(--yellow);
     font-size: 11px;
     font-weight: 700;
@@ -1093,4 +1097,16 @@ main {
     .database-error-content h2 {
         font-size: 18px;
     }
+}
+
+.logout-button {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    color: #eaff00;
 }

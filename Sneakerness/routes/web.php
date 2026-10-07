@@ -7,6 +7,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\VerkoperController;
 use App\Http\Controllers\ContactpersoonController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\OrganisatorDashboardController;
 
 // Homepagina
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -29,3 +30,11 @@ Route::get('/verkopers', [VerkoperController::class, 'index'])
 // Contactpersonen overzicht
 Route::get('/contactpersonen', [ContactpersoonController::class, 'index'])
     ->name('contactpersonen.index');
+
+// Organisator Dashboard
+Route::get(
+    '/organisator/dashboard',
+    [OrganisatorDashboardController::class, 'index']
+)->middleware(['auth', 'organisator'])->name('organisator.dashboard');
+
+require __DIR__ . '/auth.php';
