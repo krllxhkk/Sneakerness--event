@@ -22,6 +22,9 @@ Route::get('/stands', [StandController::class, 'index'])
 Route::get('/events', [EventController::class, 'index'])
     ->name('events.index');
 
+Route::post('/events', [EventController::class, 'store'])
+    ->name('events.store');
+
 // Verkopers overzicht
 Route::get('/verkopers', [VerkoperController::class, 'index'])
     ->name('verkopers.index');
@@ -29,3 +32,4 @@ Route::get('/verkopers', [VerkoperController::class, 'index'])
 // Contactpersonen overzicht
 Route::get('/contactpersonen', [ContactpersoonController::class, 'index'])
     ->name('contactpersonen.index');
+
