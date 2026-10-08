@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -25,6 +26,14 @@ class EventController extends Controller
     // Voeg een nieuw evenement toe.
     public function store(Request $request)
     {
+        // Controleer eerst of de gebruiker toestemming heeft.
+        if (
+            !Auth::check() ||
+            Auth::user()->email !== 'organisator@sneakerness.nl'
+        ) {
+            abort(403, 'Je hebt geen toestemming om evenementen toe te voegen.');
+        }
+
         // Controleer of alle velden goed zijn ingevuld.
         $validated = $request->validate([
             'Naam' => 'required|string|max:100',
@@ -41,20 +50,19 @@ class EventController extends Controller
         ]);
 
         try {
-
             // Kijk of er al een evenement is op dezelfde datum en tijd.
             $bestaatAl = Event::where('Datum', $validated['Datum'])
                 ->where('Tijd', $validated['Tijd'])
                 ->exists();
 
-            // Als het evenement al bestaat, geef een foutmelding.
+            // Als er al een event bestaat, geef een foutmelding.
             if ($bestaatAl) {
                 throw ValidationException::withMessages([
                     'Tijd' => 'Er staat al een event gepland op deze datum en tijd',
                 ]);
             }
 
-            // Sla het evenement op in de database.
+            // Sla het nieuwe evenement op in de database.
             DB::table('Evenement')->insert([
                 'Naam' => $validated['Naam'],
                 'Datum' => $validated['Datum'],
@@ -68,8 +76,9 @@ class EventController extends Controller
                 'Datumgewijzigd' => Carbon::now(),
             ]);
 
-            // Schrijf in de log dat het evenement is toegevoegd.
+            // Houd bij welke gebruiker het evenement heeft toegevoegd.
             Log::info('Event succesvol toegevoegd', [
+                'gebruiker_id' => Auth::id(),
                 'Naam' => $validated['Naam'],
                 'Datum' => $validated['Datum'],
                 'Tijd' => $validated['Tijd'],
@@ -84,17 +93,17 @@ class EventController extends Controller
 
         } catch (ValidationException $exception) {
 
-            // Laat de foutmelding zien als datum en tijd al bezet zijn.
+            // Laat de foutmelding zien bij een dubbele datum en tijd.
             throw $exception;
 
         } catch (Throwable $exception) {
 
-            // Schrijf technische fouten in de Laravel log.
+            // Sla technische fouten op in de Laravel log.
             Log::error('Fout bij toevoegen van event', [
                 'error' => $exception->getMessage(),
             ]);
 
-            // Ga terug naar het formulier met een foutmelding.
+            // Ga terug met een foutmelding en behoud de ingevulde gegevens.
             return back()
                 ->withInput()
                 ->withErrors([
