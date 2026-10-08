@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Events | Sneakerness®</title>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/events.css') }}">
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('css/events.css') }}">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
@@ -15,7 +15,7 @@
 </head>
 
 <body>
-@include('partials.navbar')
+    @include('partials.navbar')
     <main class="events-container">
 
         <section class="events-header">
@@ -30,6 +30,9 @@
             </p>
         </section>
 
+        <button type="button" class="add-event-btn" onclick="openEventModal()">
+            Event toevoegen
+        </button>
 
         {{-- HAPPY FLOW --}}
         @if ($events->count() > 0)
@@ -98,6 +101,62 @@
 
     </main>
 
+    <div id="eventModal" class="event-modal">
+
+        <div class="event-modal-content">
+
+            <button type="button" class="modal-close" onclick="closeEventModal()">
+                &times;
+            </button>
+
+            <h2>EVENT TOEVOEGEN</h2>
+
+            <form action="{{ route('events.store') }}" method="POST">
+
+                @csrf
+
+                <div class="form-group">
+                    <label for="naam">Naam</label>
+                    <input type="text" id="naam" name="Naam" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="datum">Datum</label>
+                    <input type="date" id="datum" name="Datum" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tijd">Tijd</label>
+                    <input type="time" id="tijd" name="Tijd" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="locatie">Locatie</label>
+                    <input type="text" id="locatie" name="Locatie" required>
+                </div>
+
+                <button type="submit" class="save-event-btn">
+                    Opslaan
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    @include('partials.footer')
+
+    <script>
+        function openEventModal() {
+            document.getElementById('eventModal').style.display = 'flex';
+        }
+
+        function closeEventModal() {
+            document.getElementById('eventModal').style.display = 'none';
+        }
+    </script>
+
 </body>
-@include('partials.footer')
+
 </html>

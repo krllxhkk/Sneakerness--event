@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
@@ -12,4 +13,9 @@ class EventController extends Controller
 
         return view('events.index', compact('events'));
     }
+
+    public function store(Request $request)
+{
+    // komt straks
+}
 }

@@ -23,6 +23,9 @@ Route::get('/stands', [StandController::class, 'index'])
 Route::get('/events', [EventController::class, 'index'])
     ->name('events.index');
 
+Route::post('/events', [EventController::class, 'store'])
+    ->name('events.store');
+
 // Verkopers overzicht
 Route::get('/verkopers', [VerkoperController::class, 'index'])
     ->name('verkopers.index');
@@ -31,6 +34,7 @@ Route::get('/verkopers', [VerkoperController::class, 'index'])
 Route::get('/contactpersonen', [ContactpersoonController::class, 'index'])
     ->name('contactpersonen.index');
 
+
 // Organisator Dashboard
 Route::get(
     '/organisator/dashboard',
@@ -38,3 +42,4 @@ Route::get(
 )->middleware(['auth', 'organisator'])->name('organisator.dashboard');
 
 require __DIR__ . '/auth.php';
+
