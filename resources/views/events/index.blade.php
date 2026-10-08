@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="nl">
 
@@ -35,10 +34,7 @@
         </section>
 
         <!-- EVENT TOEVOEGEN -->
-        <button
-            type="button"
-            class="add-event-btn"
-            onclick="openEventModal()">
+        <button type="button" class="add-event-btn" onclick="openEventModal()">
             Event toevoegen
         </button>
 
@@ -124,21 +120,12 @@
          EVENT TOEVOEGEN POP-UP
     ====================================== -->
 
-    <div
-        id="eventModal"
-        class="event-modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="eventModalTitle">
+    <div id="eventModal" class="event-modal" role="dialog" aria-modal="true" aria-labelledby="eventModalTitle">
 
         <div class="event-modal-content">
 
             <!-- SLUITKNOP -->
-            <button
-                type="button"
-                class="modal-close"
-                onclick="closeEventModal()"
-                aria-label="Sluiten">
+            <button type="button" class="modal-close" onclick="closeEventModal()" aria-label="Sluiten">
                 &times;
             </button>
 
@@ -164,52 +151,49 @@
                 <div class="form-group">
                     <label for="naam">Naam</label>
 
-                    <input
-                        type="text"
-                        id="naam"
-                        name="Naam"
-                        value="{{ old('Naam') }}"
-                        maxlength="100"
-                        required>
+                    <input type="text" id="naam" name="Naam" value="{{ old('Naam') }}" maxlength="100" required>
                 </div>
 
                 <!-- DATUM -->
                 <div class="form-group">
                     <label for="datum">Datum</label>
 
-                    <input
-                        type="date"
-                        id="datum"
-                        name="Datum"
-                        value="{{ old('Datum') }}"
-                        min="{{ now()->format('Y-m-d') }}"
-                        required>
+                    <input type="date" id="datum" name="Datum" value="{{ old('Datum') }}"
+                        min="{{ now()->format('Y-m-d') }}" required>
                 </div>
 
                 <!-- TIJD -->
                 <div class="form-group">
                     <label for="tijd">Tijd</label>
 
-                    <input
-                        type="time"
-                        id="tijd"
-                        name="Tijd"
-                        value="{{ old('Tijd') }}"
-                        required>
+                    <input type="time" id="tijd" name="Tijd" value="{{ old('Tijd') }}" required>
                 </div>
 
                 <!-- LOCATIE -->
                 <div class="form-group">
                     <label for="locatie">Locatie</label>
 
-                    <input
-                        type="text"
-                        id="locatie"
-                        name="Locatie"
-                        value="{{ old('Locatie') }}"
-                        maxlength="150"
+                    <input type="text" id="locatie" name="Locatie" value="{{ old('Locatie') }}" maxlength="150"
                         required>
                 </div>
+
+
+                <!-- Tickets per tijdslot -->
+                <div class="form-group">
+                    <label for="tickets">Tickets per tijdslot</label>
+
+                    <input type="number" id="tickets" name="AantalTicketsPerTijdslot"
+                        value="{{ old('AantalTicketsPerTijdslot', 0) }}" min="0" required>
+                </div>
+
+                <!-- Beschikbare stands -->
+                <div class="form-group">
+                    <label for="stands">Beschikbare stands</label>
+
+                    <input type="number" id="stands" name="BeschikbareStands" value="{{ old('BeschikbareStands', 0) }}"
+                        min="0" required>
+                </div>
+
 
                 <!-- OPSLAAN -->
                 <button type="submit" class="save-event-btn">
@@ -227,10 +211,7 @@
 
     @if (session('success'))
 
-        <div
-            id="successPopup"
-            class="success-popup-overlay"
-            role="status">
+        <div id="successPopup" class="success-popup-overlay" role="status">
 
             <div class="success-popup">
 
@@ -324,4 +305,5 @@
     </script>
 
 </body>
+
 </html>
