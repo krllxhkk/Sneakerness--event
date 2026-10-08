@@ -746,3 +746,125 @@ header {
         display: flex;
     }
 }
+
+/* Uitloggen zoals op Home */
+.nav-right .logout-button {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.nav-right .logout-button:hover {
+    color: #eaff00;
+}
+
+
+/* =========================================
+   NAVIGATIE - ZELFDE STIJL ALS HOME
+   ========================================= */
+
+header {
+    background-color: rgba(11, 11, 11, 0.95);
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid #1f1f1f;
+}
+
+.header-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 18px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: #888888;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 12px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    transition: all 0.25s ease;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+    color: #ccff00;
+    border: 1px solid #ccff00;
+    box-shadow: 0 0 10px rgba(204, 255, 0, 0.25);
+}
+
+/* LOGIN / UITLOGGEN */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-right .login-link,
+.nav-right .logout-button {
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: normal;
+    text-decoration: none;
+}
+
+.nav-right .logout-button {
+    appearance: none;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.nav-right .logout-button:hover,
+.nav-right .login-link:hover {
+    color: #eaff00;
+}
+
+/* GELE TICKETKNOP */
+.nav-right .btn-yellow-sm {
+    background-color: #ccff00;
+    color: #000000;
+    padding: 8px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    border-radius: 2px;
+    text-decoration: none;
+}
+
+/* Mobiele navigatie behouden */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+}

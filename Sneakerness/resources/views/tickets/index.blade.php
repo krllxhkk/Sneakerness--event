@@ -40,8 +40,28 @@
 
             <!-- Rechterkant van de navigatie -->
             <div class="nav-right">
-                <a href="#" class="login-link">LOGIN</a>
-                <a href="{{ route('tickets.index') }}" class="btn-yellow-sm">TICKET KOPEN</a>
+
+                @guest
+                    <a href="{{ route('login') }}" class="login-link">LOGIN</a>
+
+                    <a href="{{ route('register') }}" class="login-link">
+                        REGISTREREN
+                    </a>
+                @endguest
+
+                @auth
+                    <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="login-link logout-button">
+                            UITLOGGEN
+                        </button>
+                    </form>
+                @endauth
+
+                <a href="{{ route('tickets.index') }}" class="btn-yellow-sm">
+                    TICKET KOPEN
+                </a>
+
             </div>
         </div>
     </header>

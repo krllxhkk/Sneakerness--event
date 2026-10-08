@@ -69,6 +69,10 @@
                     <button type="submit" class="inloggen-knop">
                         Inloggen
                     </button>
+                    <p class="registratie-link">
+                        Nog geen account?
+                        <a href="{{ route('register') }}">Registreren</a>
+                    </p>
                 </form>
             </div>
         </section>
