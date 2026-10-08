@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="nl">
 
@@ -6,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Events | Sneakerness®</title>
+
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/events.css') }}">
 
@@ -15,7 +17,8 @@
 </head>
 
 <body>
-@include('partials.navbar')
+    @include('partials.navbar')
+
     <main class="events-container">
 
         <section class="events-header">
@@ -30,8 +33,22 @@
             </p>
         </section>
 
+        <button type="button" class="add-event-btn" onclick="openEventModal()">
+            Event toevoegen
+        </button>
 
-        {{-- HAPPY FLOW --}}
+        @if (session('success'))
+            <p class="event-success">{{ session('success') }}</p>
+        @endif
+
+        @if ($errors->any())
+            <div class="event-errors">
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
+
         @if ($events->count() > 0)
 
             <section class="events-grid">
@@ -45,9 +62,7 @@
                                 {{ \Carbon\Carbon::parse($event->Datum)->format('d-m-Y') }}
                             </span>
 
-                            <span class="event-status">
-                                EVENT
-                            </span>
+                            <span class="event-status">EVENT</span>
                         </div>
 
                         <h2>{{ $event->Naam }}</h2>
@@ -77,8 +92,6 @@
 
             </section>
 
-
-            {{-- UNHAPPY FLOW --}}
         @else
 
             <section class="no-events">
@@ -98,6 +111,65 @@
 
     </main>
 
+    <div id="eventModal" class="event-modal">
+
+        <div class="event-modal-content">
+
+            <button type="button" class="modal-close" onclick="closeEventModal()">
+                &times;
+            </button>
+
+            <h2>EVENT TOEVOEGEN</h2>
+
+            <form action="{{ route('events.store') }}" method="POST">
+
+                @csrf
+
+                <div class="form-group">
+                    <label for="naam">Naam</label>
+                    <input type="text" id="naam" name="Naam"
+                        value="{{ old('Naam') }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="datum">Datum</label>
+                    <input type="date" id="datum" name="Datum"
+                        value="{{ old('Datum') }}" required>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="locatie">Locatie</label>
+                    <input type="text" id="locatie" name="Locatie"
+                        value="{{ old('Locatie') }}" required>
+                </div>
+
+                <button type="submit" class="save-event-btn">
+                    Opslaan
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    @include('partials.footer')
+
+    <script>
+        function openEventModal() {
+            document.getElementById('eventModal').style.display = 'flex';
+        }
+
+        function closeEventModal() {
+            document.getElementById('eventModal').style.display = 'none';
+        }
+
+        @if ($errors->any())
+            openEventModal();
+        @endif
+    </script>
+
 </body>
-@include('partials.footer')
+
 </html>
