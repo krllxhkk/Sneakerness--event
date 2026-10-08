@@ -74,6 +74,13 @@
                             </div>
 
                             <div class="event-detail">
+                                <span class="detail-label">TIJD</span>
+                                <strong>
+                                    {{ $event->Tijd ? substr($event->Tijd, 0, 5) : 'Niet ingesteld' }}
+                                </strong>
+                            </div>
+
+                            <div class="event-detail">
                                 <span class="detail-label">TICKETS PER TIJDSLOT</span>
                                 <strong>{{ $event->AantalTicketsPerTijdslot }}</strong>
                             </div>
@@ -119,6 +126,14 @@
             </button>
 
             <h2>EVENT TOEVOEGEN</h2>
+
+            @if ($errors->any())
+                <div class="event-errors">
+                    @foreach ($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
 
             <form action="{{ route('events.store') }}" method="POST">
 
