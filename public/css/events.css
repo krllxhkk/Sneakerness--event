@@ -455,6 +455,9 @@ body {
 }
 
 
+
+
+
 /* =========================
    TABLET
    ========================= */
@@ -572,4 +575,31 @@ body {
         font-size: 12px;
     }
 }
+
+
+
+}
+
+.add-event-btn {
+    background-color: #d4ff00;
+    color: black;
+    border: 1px solid #d4ff00;
+    border-radius: 4px;
+    padding: 14px 28px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.2s ease;
+    margin-bottom: 30px;
+}
+
+.add-event-btn:hover {
+    background-color: transparent;
+    color: #d4ff00;
+}
+
+.add-event-btn:active {
+    transform: scale(0.98);
 }
