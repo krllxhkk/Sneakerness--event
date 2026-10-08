@@ -15,24 +15,21 @@
 
             {{-- HOME --}}
             <li>
-                <a href="{{ route('home') }}"
-                   class="{{ request()->routeIs('home') ? 'active' : '' }}">
+                <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">
                     Home
                 </a>
             </li>
 
             {{-- EVENTS --}}
             <li>
-                <a href="{{ route('events.index') }}"
-                   class="{{ request()->routeIs('events.*') ? 'active' : '' }}">
+                <a href="{{ route('events.index') }}" class="{{ request()->routeIs('events.*') ? 'active' : '' }}">
                     Events
                 </a>
             </li>
 
             {{-- TICKETS --}}
             <li>
-                <a href="{{ route('tickets.index') }}"
-                   class="{{ request()->routeIs('tickets.*') ? 'active' : '' }}">
+                <a href="{{ route('tickets.index') }}" class="{{ request()->routeIs('tickets.*') ? 'active' : '' }}">
                     Tickets
                 </a>
             </li>
@@ -40,15 +37,14 @@
             {{-- VERKOPERS --}}
             <li>
                 <a href="{{ route('verkopers.index') }}"
-                   class="{{ request()->routeIs('verkopers.*') ? 'active' : '' }}">
+                    class="{{ request()->routeIs('verkopers.*') ? 'active' : '' }}">
                     Verkopers
                 </a>
             </li>
 
             {{-- STANDS --}}
             <li>
-                <a href="{{ route('stands.index') }}"
-                   class="{{ request()->routeIs('stands.*') ? 'active' : '' }}">
+                <a href="{{ route('stands.index') }}" class="{{ request()->routeIs('stands.*') ? 'active' : '' }}">
                     Stands
                 </a>
             </li>
@@ -58,9 +54,19 @@
 
         <div class="nav-right">
 
-            <a href="#" class="login-link">
-                LOGIN
-            </a>
+            @auth
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+
+                    <button type="submit" class="login-link logout-button">
+                        UITLOGGEN
+                    </button>
+                </form>
+            @else
+                <a href="{{ route('login') }}" class="login-link">
+                    LOGIN
+                </a>
+            @endauth
 
             <a href="{{ route('tickets.index') }}" class="btn-yellow-sm">
                 TICKET KOPEN
