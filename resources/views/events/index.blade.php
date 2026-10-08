@@ -126,21 +126,23 @@
 
                 <div class="form-group">
                     <label for="naam">Naam</label>
-                    <input type="text" id="naam" name="Naam"
-                        value="{{ old('Naam') }}" required>
+                    <input type="text" id="naam" name="Naam" value="{{ old('Naam') }}" required>
                 </div>
 
                 <div class="form-group">
                     <label for="datum">Datum</label>
-                    <input type="date" id="datum" name="Datum"
-                        value="{{ old('Datum') }}" required>
+                    <input type="date" id="datum" name="Datum" value="{{ old('Datum') }}" required>
                 </div>
 
+                <div class="form-group">
+                    <label for="tijd">Tijd</label>
+
+                    <input type="time" id="tijd" name="Tijd" value="{{ old('Tijd') }}" required>
+                </div>
 
                 <div class="form-group">
                     <label for="locatie">Locatie</label>
-                    <input type="text" id="locatie" name="Locatie"
-                        value="{{ old('Locatie') }}" required>
+                    <input type="text" id="locatie" name="Locatie" value="{{ old('Locatie') }}" required>
                 </div>
 
                 <button type="submit" class="save-event-btn">
