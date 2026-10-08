@@ -51,19 +51,37 @@
                     </a>
                 </li>
 
-               <li><a href="{{ route('stands.index') }}">Stands</a></li>
+                <li><a href="{{ route('stands.index') }}">Stands</a></li>
 
             </ul>
 
             <!-- Rechterkant van de navigatie -->
-            <div class="nav-right">
-                <a href="#" class="login-link">LOGIN</a>
 
-                <a href="{{ route('home') }}#tickets" class="btn-yellow-sm">
+            <!-- Rechterkant van de navigatie -->
+            <div class="nav-right">
+
+                @guest
+                    <a href="{{ route('login') }}" class="login-link">LOGIN</a>
+
+                    <a href="{{ route('register') }}" class="login-link">
+                        REGISTREREN
+                    </a>
+                @endguest
+
+                @auth
+                    <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="login-link logout-button">
+                            UITLOGGEN
+                        </button>
+                    </form>
+                @endauth
+
+                <a href="{{ route('tickets.index') }}" class="btn-yellow-sm">
                     TICKET KOPEN
                 </a>
-            </div>
 
+            </div>
         </div>
     </header>
 
@@ -92,89 +110,85 @@
 
 
         <!-- Overzicht van verkopers -->
-<section class="verkopers-overzicht">
+        <section class="verkopers-overzicht">
 
-    @if($verkopersFout)
+            @if ($verkopersFout)
 
-        <!-- Foutmelding bij databasefout -->
-        <div class="database-error">
-    <div class="database-error-icon">
-        !
-    </div>
-
-    <div class="database-error-content">
-        <span>DATABASE ERROR</span>
-
-        <h2>VERKOPERS KUNNEN NIET WORDEN OPGEHAALD</h2>
-
-        <p>{{ $verkopersFout }}</p>
-
-        <small>
-            Probeer het later opnieuw.
-        </small>
-    </div>
-</div>
-
-    @else
-
-        @forelse($verkopers as $verkoper)
-
-            <!-- Kaart van een verkoper -->
-            <article class="verkoper-card">
-
-                <!-- Naam -->
-                <h2>{{ $verkoper->Naam }}</h2>
-
-                <!-- Gegevens -->
-                <div class="verkoper-info">
-
-                    <div>
-                        <span>VERKOOPT</span>
-                        <p>{{ $verkoper->VerkooptSoort }}</p>
+                <!-- Foutmelding bij databasefout -->
+                <div class="database-error">
+                    <div class="database-error-icon">
+                        !
                     </div>
 
-                    <div>
-                        <span>STAND TYPE</span>
-                        <p>{{ $verkoper->StandType }}</p>
-                    </div>
+                    <div class="database-error-content">
+                        <span>DATABASE ERROR</span>
 
-                    <div>
-                        <span>DAGEN</span>
-                        <p>{{ $verkoper->Dagen }}</p>
-                    </div>
+                        <h2>VERKOPERS KUNNEN NIET WORDEN OPGEHAALD</h2>
 
-                    <div>
-                        <span>STATUS</span>
-                        <p>{{ $verkoper->SpecialeStatus ?? 'Geen' }}</p>
-                    </div>
+                        <p>{{ $verkopersFout }}</p>
 
+                        <small>
+                            Probeer het later opnieuw.
+                        </small>
+                    </div>
                 </div>
+            @else
+                @forelse($verkopers as $verkoper)
+                    <!-- Kaart van een verkoper -->
+                    <article class="verkoper-card">
 
-                <!-- Opmerking indien aanwezig -->
-                @if($verkoper->Opmerking)
-                    <div class="verkoper-opmerking">
-                        {{ $verkoper->Opmerking }}
+                        <!-- Naam -->
+                        <h2>{{ $verkoper->Naam }}</h2>
+
+                        <!-- Gegevens -->
+                        <div class="verkoper-info">
+
+                            <div>
+                                <span>VERKOOPT</span>
+                                <p>{{ $verkoper->VerkooptSoort }}</p>
+                            </div>
+
+                            <div>
+                                <span>STAND TYPE</span>
+                                <p>{{ $verkoper->StandType }}</p>
+                            </div>
+
+                            <div>
+                                <span>DAGEN</span>
+                                <p>{{ $verkoper->Dagen }}</p>
+                            </div>
+
+                            <div>
+                                <span>STATUS</span>
+                                <p>{{ $verkoper->SpecialeStatus ?? 'Geen' }}</p>
+                            </div>
+
+                        </div>
+
+                        <!-- Opmerking indien aanwezig -->
+                        @if ($verkoper->Opmerking)
+                            <div class="verkoper-opmerking">
+                                {{ $verkoper->Opmerking }}
+                            </div>
+                        @endif
+
+                    </article>
+
+                @empty
+
+                    <!-- Geen verkopers gevonden -->
+                    <div class="no-verkopers">
+                        <h2>GEEN VERKOPERS GEVONDEN</h2>
+                        <p>
+                            Er zijn momenteel geen actieve verkopers beschikbaar.
+                        </p>
                     </div>
-                @endif
+                @endforelse
 
-            </article>
+            @endif
 
-        @empty
-
-            <!-- Geen verkopers gevonden -->
-            <div class="no-verkopers">
-                <h2>GEEN VERKOPERS GEVONDEN</h2>
-                <p>
-                    Er zijn momenteel geen actieve verkopers beschikbaar.
-                </p>
-            </div>
-
-        @endforelse
-
-    @endif
-
-</section>
-     <!-- Overzicht van contactpersonen -->
+        </section>
+        <!-- Overzicht van contactpersonen -->
         <section class="contactpersonen-section">
 
             <!-- Titel van de tabel -->
@@ -184,96 +198,92 @@
 
             <h2>CONTACTPERSONEN</h2>
 
-@if($contactpersonenFout)
+            @if ($contactpersonenFout)
 
-    <!-- Foutmelding bij databasefout -->
-    <div class="database-error">
-    <div class="database-error-icon">
-        !
-    </div>
+                <!-- Foutmelding bij databasefout -->
+                <div class="database-error">
+                    <div class="database-error-icon">
+                        !
+                    </div>
 
-    <div class="database-error-content">
-        <span>DATABASE ERROR</span>
+                    <div class="database-error-content">
+                        <span>DATABASE ERROR</span>
 
-        <h2>CONTACTPERSONEN KUNNEN NIET WORDEN OPGEHAALD</h2>
+                        <h2>CONTACTPERSONEN KUNNEN NIET WORDEN OPGEHAALD</h2>
 
-        <p>{{ $contactpersonenFout }}</p>
+                        <p>{{ $contactpersonenFout }}</p>
 
-        <small>
-            Probeer het later opnieuw.
-        </small>
-    </div>
-</div>
+                        <small>
+                            Probeer het later opnieuw.
+                        </small>
+                    </div>
+                </div>
+            @else
+                <!-- Tabel met contactpersonen -->
+                <div class="contactpersonen-table-wrapper">
 
-@else
+                    <table class="contactpersonen-table">
 
-    <!-- Tabel met contactpersonen -->
-    <div class="contactpersonen-table-wrapper">
+                        <thead>
+                            <tr>
+                                <th>NAAM</th>
+                                <th>VERKOPER</th>
+                                <th>E-MAILADRES</th>
+                                <th>TELEFOON</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
 
-        <table class="contactpersonen-table">
+                        <tbody>
 
-            <thead>
-                <tr>
-                    <th>NAAM</th>
-                    <th>VERKOPER</th>
-                    <th>E-MAILADRES</th>
-                    <th>TELEFOON</th>
-                    <th>STATUS</th>
-                </tr>
-            </thead>
+                            <!-- Toon alle contactpersonen -->
+                            @foreach ($contactpersonen as $contactpersoon)
+                                <tr>
 
-            <tbody>
+                                    <!-- Naam -->
+                                    <td class="contactpersoon-naam">
 
-                <!-- Toon alle contactpersonen -->
-                @foreach($contactpersonen as $contactpersoon)
+                                        <span class="contactpersoon-icon">
+                                            {{ strtoupper(substr($contactpersoon->Naam, 0, 1)) }}
+                                        </span>
 
-                    <tr>
+                                        {{ $contactpersoon->Naam }}
 
-                        <!-- Naam -->
-                        <td class="contactpersoon-naam">
+                                    </td>
 
-                            <span class="contactpersoon-icon">
-                                {{ strtoupper(substr($contactpersoon->Naam, 0, 1)) }}
-                            </span>
+                                    <!-- Verkoper -->
+                                    <td>
+                                        {{ $contactpersoon->VerkoperNaam ?? '-' }}
+                                    </td>
 
-                            {{ $contactpersoon->Naam }}
+                                    <!-- E-mailadres -->
+                                    <td>
+                                        {{ $contactpersoon->{'E-mailadres'} }}
+                                    </td>
 
-                        </td>
+                                    <!-- Telefoonnummer -->
+                                    <td>
+                                        {{ $contactpersoon->Telefoonnummer }}
+                                    </td>
 
-                        <!-- Verkoper -->
-                        <td>
-                            {{ $contactpersoon->VerkoperNaam ?? '-' }}
-                        </td>
+                                    <!-- Status -->
+                                    <td class="status-actief">
+                                        <span>●</span> Actief
+                                    </td>
 
-                        <!-- E-mailadres -->
-                        <td>
-                            {{ $contactpersoon->{'E-mailadres'} }}
-                        </td>
+                                </tr>
+                            @endforeach
 
-                        <!-- Telefoonnummer -->
-                        <td>
-                            {{ $contactpersoon->Telefoonnummer }}
-                        </td>
+                        </tbody>
 
-                        <!-- Status -->
-                        <td class="status-actief">
-                            <span>●</span> Actief
-                        </td>
+                    </table>
 
-                    </tr>
+                </div>
 
-                @endforeach
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-@endif
+            @endif
 
         </section>
-        </main>
+    </main>
 
 
     <!-- FOOTER -->

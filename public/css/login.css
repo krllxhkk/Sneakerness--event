@@ -240,3 +240,21 @@ body {
 .forgot-password:hover {
     text-decoration: underline;
 }
+
+/* Link naar registratiepagina */
+.registratie-link {
+    margin-top: 22px;
+    text-align: center;
+    color: #999999;
+    font-size: 12px;
+}
+
+.registratie-link a {
+    color: #eaff00;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.registratie-link a:hover {
+    text-decoration: underline;
+}

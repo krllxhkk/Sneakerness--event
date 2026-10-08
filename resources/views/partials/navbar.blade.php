@@ -49,23 +49,30 @@
                 </a>
             </li>
 
-
         </ul>
 
         <div class="nav-right">
 
-            @auth
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-
-                    <button type="submit" class="login-link logout-button">
-                        UITLOGGEN
-                    </button>
-                </form>
-            @else
+            {{-- Niet ingelogd: LOGIN tonen --}}
+            @guest
                 <a href="{{ route('login') }}" class="login-link">
                     LOGIN
                 </a>
+
+                <a href="{{ route('register') }}" class="login-link">
+                    REGISTREREN
+                </a>
+            @endguest
+
+            {{-- Wel ingelogd: UITLOGGEN tonen --}}
+            @auth
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+                    <button type="submit" class="login-link uitloggen-knop">
+                        UITLOGGEN
+                    </button>
+                </form>
             @endauth
 
             <a href="{{ route('tickets.index') }}" class="btn-yellow-sm">

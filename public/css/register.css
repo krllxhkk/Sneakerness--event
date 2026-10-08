@@ -1,0 +1,52 @@
+/* ========================================
+   SNEAKERNESS® - REGISTRATIEPAGINA
+   ======================================== */
+
+/* Foutmeldingen bij registratie */
+.registratie-fout {
+    color: #ff6464;
+    font-size: 12px;
+    margin-top: 6px;
+    line-height: 1.5;
+}
+
+/* Link naar de loginpagina */
+.registratie-login-link {
+    margin-top: 24px;
+    text-align: center;
+    color: #999999;
+    font-size: 13px;
+}
+
+.registratie-login-link a {
+    color: #eaff00;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.registratie-login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Registratieformulier */
+.login-gedeelte {
+    overflow-y: auto;
+}
+
+/* Sneakerness logo
+   Grootte en positie komen uit login.css */
+.login-afbeelding .logo {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.login-afbeelding .logo span {
+    color: #eaff00;
+}
+
+/* Responsive voor telefoon */
+@media (max-width: 768px) {
+    .registratie-login-link {
+        margin-bottom: 20px;
+    }
+}

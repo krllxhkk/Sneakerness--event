@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="nl">
 
@@ -20,6 +21,7 @@
 
     <main class="events-container">
 
+        <!-- EVENTS HEADER -->
         <section class="events-header">
             <span class="events-label">SNEAKERNESS® EVENTS</span>
 
@@ -32,22 +34,15 @@
             </p>
         </section>
 
-        <button type="button" class="add-event-btn" onclick="openEventModal()">
+        <!-- EVENT TOEVOEGEN -->
+        <button
+            type="button"
+            class="add-event-btn"
+            onclick="openEventModal()">
             Event toevoegen
         </button>
 
-        @if (session('success'))
-            <p class="event-success">{{ session('success') }}</p>
-        @endif
-
-        @if ($errors->any())
-            <div class="event-errors">
-                @foreach ($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                @endforeach
-            </div>
-        @endif
-
+        <!-- EVENEMENTEN OVERZICHT -->
         @if ($events->count() > 0)
 
             <section class="events-grid">
@@ -81,13 +76,23 @@
                             </div>
 
                             <div class="event-detail">
-                                <span class="detail-label">TICKETS PER TIJDSLOT</span>
-                                <strong>{{ $event->AantalTicketsPerTijdslot }}</strong>
+                                <span class="detail-label">
+                                    TICKETS PER TIJDSLOT
+                                </span>
+
+                                <strong>
+                                    {{ $event->AantalTicketsPerTijdslot }}
+                                </strong>
                             </div>
 
                             <div class="event-detail">
-                                <span class="detail-label">BESCHIKBARE STANDS</span>
-                                <strong>{{ $event->BeschikbareStands }}</strong>
+                                <span class="detail-label">
+                                    BESCHIKBARE STANDS
+                                </span>
+
+                                <strong>
+                                    {{ $event->BeschikbareStands }}
+                                </strong>
                             </div>
 
                         </div>
@@ -101,7 +106,6 @@
         @else
 
             <section class="no-events">
-
                 <div class="no-events-icon">!</div>
 
                 <h2>GEEN EVENTS BESCHIKBAAR</h2>
@@ -110,82 +114,214 @@
                     Er zijn momenteel geen evenementen beschikbaar.
                     Bekijk deze pagina later opnieuw.
                 </p>
-
             </section>
 
         @endif
 
     </main>
 
-    <div id="eventModal" class="event-modal">
+    <!-- =====================================
+         EVENT TOEVOEGEN POP-UP
+    ====================================== -->
+
+    <div
+        id="eventModal"
+        class="event-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="eventModalTitle">
 
         <div class="event-modal-content">
 
-            <button type="button" class="modal-close" onclick="closeEventModal()">
+            <!-- SLUITKNOP -->
+            <button
+                type="button"
+                class="modal-close"
+                onclick="closeEventModal()"
+                aria-label="Sluiten">
                 &times;
             </button>
 
-            <h2>EVENT TOEVOEGEN</h2>
+            <h2 id="eventModalTitle">EVENT TOEVOEGEN</h2>
 
+            <!-- FOUTMELDING BINNEN POP-UP -->
             @if ($errors->any())
-                <div class="event-errors">
+                <div class="event-errors" role="alert">
+
                     @foreach ($errors->all() as $error)
                         <p>{{ $error }}</p>
                     @endforeach
+
                 </div>
             @endif
 
+            <!-- FORMULIER -->
             <form action="{{ route('events.store') }}" method="POST">
 
                 @csrf
 
+                <!-- NAAM -->
                 <div class="form-group">
                     <label for="naam">Naam</label>
-                    <input type="text" id="naam" name="Naam" value="{{ old('Naam') }}" required>
+
+                    <input
+                        type="text"
+                        id="naam"
+                        name="Naam"
+                        value="{{ old('Naam') }}"
+                        maxlength="100"
+                        required>
                 </div>
 
+                <!-- DATUM -->
                 <div class="form-group">
                     <label for="datum">Datum</label>
-                    <input type="date" id="datum" name="Datum" value="{{ old('Datum') }}" required>
+
+                    <input
+                        type="date"
+                        id="datum"
+                        name="Datum"
+                        value="{{ old('Datum') }}"
+                        min="{{ now()->format('Y-m-d') }}"
+                        required>
                 </div>
 
+                <!-- TIJD -->
                 <div class="form-group">
                     <label for="tijd">Tijd</label>
 
-                    <input type="time" id="tijd" name="Tijd" value="{{ old('Tijd') }}" required>
+                    <input
+                        type="time"
+                        id="tijd"
+                        name="Tijd"
+                        value="{{ old('Tijd') }}"
+                        required>
                 </div>
 
+                <!-- LOCATIE -->
                 <div class="form-group">
                     <label for="locatie">Locatie</label>
-                    <input type="text" id="locatie" name="Locatie" value="{{ old('Locatie') }}" required>
+
+                    <input
+                        type="text"
+                        id="locatie"
+                        name="Locatie"
+                        value="{{ old('Locatie') }}"
+                        maxlength="150"
+                        required>
                 </div>
 
+                <!-- OPSLAAN -->
                 <button type="submit" class="save-event-btn">
-                    Opslaan
+                    OPSLAAN
                 </button>
 
             </form>
 
         </div>
-
     </div>
+
+    <!-- =====================================
+         SUCCES POP-UP
+    ====================================== -->
+
+    @if (session('success'))
+
+        <div
+            id="successPopup"
+            class="success-popup-overlay"
+            role="status">
+
+            <div class="success-popup">
+
+                <div class="success-icon">✓</div>
+
+                <h2>EVENT TOEGEVOEGD!</h2>
+
+                <p>{{ session('success') }}</p>
+
+                <span>
+                    Het evenement staat nu in het overzicht.
+                </span>
+
+            </div>
+
+        </div>
+
+    @endif
 
     @include('partials.footer')
 
+    <!-- =====================================
+         JAVASCRIPT
+    ====================================== -->
+
     <script>
+
+        // Open het formulier.
         function openEventModal() {
-            document.getElementById('eventModal').style.display = 'flex';
+            const modal = document.getElementById('eventModal');
+
+            modal.style.display = 'flex';
         }
 
+        // Sluit het formulier.
         function closeEventModal() {
-            document.getElementById('eventModal').style.display = 'none';
+            const modal = document.getElementById('eventModal');
+
+            modal.style.display = 'none';
         }
 
-        @if ($errors->any())
-            openEventModal();
-        @endif
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const eventModal = document.getElementById('eventModal');
+
+            // Bij validatiefouten wordt de pop-up
+            // automatisch opnieuw geopend.
+            @if ($errors->any())
+                openEventModal();
+            @endif
+
+            // Sluit het formulier als de gebruiker
+            // op de donkere achtergrond klikt.
+            eventModal.addEventListener('click', function (event) {
+
+                if (event.target === eventModal) {
+                    closeEventModal();
+                }
+
+            });
+
+            // Sluit het formulier met Escape.
+            document.addEventListener('keydown', function (event) {
+
+                if (event.key === 'Escape') {
+                    closeEventModal();
+                }
+
+            });
+
+            // Succesmelding automatisch verwijderen.
+            const successPopup = document.getElementById('successPopup');
+
+            if (successPopup) {
+
+                setTimeout(function () {
+
+                    successPopup.style.transition = 'opacity 0.3s ease';
+                    successPopup.style.opacity = '0';
+
+                    setTimeout(function () {
+                        successPopup.remove();
+                    }, 300);
+
+                }, 2500);
+
+            }
+
+        });
+
     </script>
 
 </body>
-
 </html>

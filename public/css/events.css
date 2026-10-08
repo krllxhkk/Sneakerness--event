@@ -1,3 +1,4 @@
+/* Algemene instellingen */
 
 * {
     box-sizing: border-box;
@@ -13,71 +14,104 @@ body {
 
 body {
     background: #080808;
-    color: #fff;
+    color: white;
     font-family: 'Inter', sans-serif;
 }
 
-/* EVENTS PAGINA */
+
+/* Events pagina */
 
 .events-container {
     width: 90%;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 80px 0;
+    padding: 20px 0 80px;
 }
 
-/* HEADER */
+
+/* Titel en beschrijving */
 
 .events-header {
-    max-width: 700px;
-    margin-bottom: 55px;
+    max-width: 750px;
+    margin-bottom: 60px;
 }
 
 .events-label {
-    color: #c6ff00;
+    color: #d4ff00;
     font-family: 'Oswald', sans-serif;
+    font-size: 18px;
     font-weight: 700;
     letter-spacing: 1px;
 }
 
 .events-header h1 {
-    margin: 10px 0 20px;
+    margin: 15px 0 25px;
     font-family: 'Oswald', sans-serif;
-    font-size: 64px;
+    font-size: 72px;
     line-height: 0.95;
     letter-spacing: 1px;
 }
 
 .events-header p {
     margin: 0;
-    color: #9b9b9b;
-    font-size: 16px;
-    line-height: 1.7;
+    color: #aaa;
+    font-size: 17px;
+    line-height: 1.8;
 }
 
-/* EVENTS GRID */
+
+/* Event toevoegen knop */
+
+.add-event-btn {
+    padding: 16px 32px;
+    margin-bottom: 55px;
+
+    background: #d4ff00;
+    color: black;
+
+    border: 1px solid #d4ff00;
+    border-radius: 5px;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.add-event-btn:hover {
+    background: transparent;
+    color: #d4ff00;
+}
+
+
+/* Events overzicht */
 
 .events-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 30px;
     width: 100%;
 }
 
-/* EVENT CARD */
+
+/* Event kaarten */
 
 .event-card {
-    width: 100%;
     min-width: 0;
-    padding: 28px;
+    padding: 32px;
+
     background: #111;
-    border: 1px solid #252525;
+    border: 1px solid #292929;
     border-radius: 8px;
+
     transition: 0.2s;
 }
 
 .event-card:hover {
-    border-color: #c6ff00;
+    border-color: #d4ff00;
     transform: translateY(-4px);
 }
 
@@ -86,31 +120,34 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .event-date {
-    color: #c6ff00;
+    color: #d4ff00;
+    font-size: 18px;
     font-weight: 700;
 }
 
 .event-status {
-    padding: 6px 10px;
-    background: #c6ff00;
-    color: #080808;
-    font-size: 11px;
+    padding: 8px 12px;
+    background: #d4ff00;
+    color: black;
+    font-size: 12px;
     font-weight: 700;
 }
 
 .event-card h2 {
-    margin: 0 0 25px;
+    margin: 0 0 30px;
     font-family: 'Oswald', sans-serif;
-    font-size: 30px;
+    font-size: 34px;
+    line-height: 1.4;
     text-transform: uppercase;
     overflow-wrap: break-word;
 }
 
-/* EVENT DETAILS */
+
+/* Informatie in de event kaarten */
 
 .event-details {
     border-top: 1px solid #292929;
@@ -121,275 +158,62 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: 15px;
-    padding: 16px 0;
+
+    padding: 18px 0;
     border-bottom: 1px solid #292929;
 }
 
 .detail-label {
-    color: #777;
-    font-size: 11px;
+    color: #888;
+    font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.5px;
 }
 
 .event-detail strong {
-    text-align: right;
     font-size: 14px;
+    text-align: right;
     overflow-wrap: anywhere;
 }
 
-/* GEEN EVENTS */
+
+/* Geen events beschikbaar */
 
 .no-events {
     padding: 70px 30px;
-    text-align: center;
     background: #111;
-    border: 1px solid #252525;
+    border: 1px solid #292929;
     border-radius: 8px;
+    text-align: center;
 }
 
 .no-events-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
+
+    width: 55px;
+    height: 55px;
     margin: 0 auto 20px;
-    background: #c6ff00;
-    color: #080808;
-    font-size: 25px;
+
+    background: #d4ff00;
+    color: black;
+    font-size: 26px;
     font-weight: bold;
 }
 
 .no-events h2 {
-    margin: 0 0 10px;
+    margin-bottom: 15px;
     font-family: 'Oswald', sans-serif;
     font-size: 30px;
 }
 
 .no-events p {
-    margin: 0;
-    color: #888;
+    color: #999;
 }
 
-/* EVENT TOEVOEGEN KNOP */
 
-.add-event-btn {
-    background: #d4ff00;
-    color: #000;
-    border: 1px solid #d4ff00;
-    border-radius: 4px;
-    padding: 14px 28px;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: 0.2s ease;
-    margin-bottom: 30px;
-}
-
-.add-event-btn:hover {
-    background: transparent;
-    color: #d4ff00;
-}
-
-.add-event-btn:active {
-    transform: scale(0.98);
-}
-
-/* POP-UP */
-
-.event-modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    background: rgba(0, 0, 0, 0.85);
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.event-modal-content {
-    position: relative;
-    width: 100%;
-    max-width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
-    padding: 35px;
-    background: #111;
-    border: 1px solid #333;
-    border-radius: 8px;
-}
-
-.event-modal-content h2 {
-    margin: 0 0 25px;
-    font-family: 'Oswald', sans-serif;
-    font-size: 32px;
-}
-
-.modal-close {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 30px;
-    cursor: pointer;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 12px;
-    background: #080808;
-    color: white;
-    border: 1px solid #333;
-    border-radius: 4px;
-    font-family: 'Inter', sans-serif;
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: #c6ff00;
-}
-
-.save-event-btn {
-    width: 100%;
-    padding: 14px;
-    background: #c6ff00;
-    color: black;
-    border: none;
-    border-radius: 4px;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.save-event-btn:hover {
-    background: #d4ff00;
-}
-
-.event-success {
-    color: #c6ff00;
-    margin-bottom: 20px;
-}
-
-.event-errors {
-    color: #ff7777;
-    margin-bottom: 20px;
-}
-
-/* TABLET */
-
-@media (max-width: 700px) {
-    .events-container {
-        width: 92%;
-        padding: 50px 0;
-    }
-
-    .events-header {
-        max-width: 100%;
-        margin-bottom: 40px;
-    }
-
-    .events-header h1 {
-        font-size: 46px;
-    }
-
-    .events-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .event-card {
-        padding: 24px;
-    }
-
-    .event-detail {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    .event-detail strong {
-        text-align: left;
-    }
-}
-
-/* MOBIEL */
-
-@media (max-width: 600px) {
-    .events-container {
-        padding: 40px 0;
-    }
-
-    .events-header h1 {
-        font-size: 40px;
-    }
-
-    .events-header p {
-        font-size: 14px;
-    }
-
-    .events-grid {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 16px;
-    }
-
-    .event-card {
-        padding: 20px;
-    }
-
-    .event-card h2 {
-        font-size: 26px;
-    }
-
-    .no-events {
-        padding: 50px 20px;
-    }
-
-    .event-modal-content {
-        padding: 25px;
-    }
-}
-
-/* KLEINE SCHERMEN */
-
-@media (max-width: 400px) {
-    .events-container {
-        width: 94%;
-        padding: 35px 0;
-    }
-
-    .events-header h1 {
-        font-size: 34px;
-    }
-
-    .event-card {
-        padding: 16px;
-    }
-
-    .event-card h2 {
-        font-size: 23px;
-    }
-}
-
-/* =========================================
-   EVENT TOEVOEGEN - MODAL
-========================================= */
+/* Event toevoegen pop-up */
 
 .event-modal {
     display: none;
@@ -402,7 +226,7 @@ body {
 
     padding: 20px;
     background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(5px);
 
     overflow-y: auto;
 }
@@ -419,81 +243,73 @@ body {
 
     background: #171717;
     border: 1px solid #333;
-    border-radius: 14px;
+    border-radius: 12px;
 
-    color: #fff;
-
-    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
 .event-modal-content h2 {
+    margin: 0 0 30px;
+    color: #d4ff00;
     font-family: 'Oswald', sans-serif;
     font-size: 32px;
-    font-weight: 700;
-    margin: 0 0 30px;
-    color: #dfff00;
 }
 
-/* Sluitknop */
+
+/* Pop-up sluiten */
 
 .modal-close {
     position: absolute;
-    top: 18px;
+    top: 15px;
     right: 20px;
 
-    background: transparent;
+    background: none;
     border: none;
-
     color: #aaa;
+
     font-size: 30px;
     cursor: pointer;
-
-    transition: color 0.2s;
 }
 
 .modal-close:hover {
-    color: #dfff00;
+    color: #d4ff00;
 }
+
 
 /* Formulier */
 
 .event-modal .form-group {
     display: flex;
     flex-direction: column;
-    gap: 9px;
+    gap: 8px;
     margin-bottom: 22px;
 }
 
 .event-modal .form-group label {
     color: #ccc;
-    font-family: 'Inter', sans-serif;
     font-size: 13px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
 .event-modal .form-group input {
     width: 100%;
     min-width: 0;
-    box-sizing: border-box;
-
     padding: 14px 16px;
 
     background: #242424;
-    border: 1px solid #444;
-    border-radius: 7px;
-
     color: white;
+
+    border: 1px solid #444;
+    border-radius: 6px;
+
     font-family: 'Inter', sans-serif;
     font-size: 15px;
-
-    outline: none;
-    transition: border-color 0.2s;
 }
 
 .event-modal .form-group input:focus {
-    border-color: #dfff00;
+    outline: none;
+    border-color: #d4ff00;
 }
 
 .event-modal input[type="date"],
@@ -501,97 +317,242 @@ body {
     color-scheme: dark;
 }
 
+
 /* Opslaan knop */
 
 .save-event-btn {
     width: 100%;
     padding: 16px;
 
-    background: #dfff00;
-    color: #111;
+    background: #d4ff00;
+    color: black;
 
     border: none;
-    border-radius: 7px;
+    border-radius: 6px;
 
     font-family: 'Oswald', sans-serif;
     font-size: 18px;
     font-weight: 700;
-    text-transform: uppercase;
 
     cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
+    transition: 0.2s;
 }
 
 .save-event-btn:hover {
-    background: #c7e600;
-    transform: translateY(-2px);
+    background: #c2eb00;
 }
 
-/* Foutmeldingen */
+
+/* Foutmelding bij een dubbel event */
 
 .event-errors {
     padding: 15px;
-    margin-bottom: 22px;
+    margin-bottom: 25px;
 
-    background: rgba(255, 60, 60, 0.1);
+    background: rgba(255, 50, 50, 0.1);
     border: 1px solid #ff4444;
-    border-radius: 7px;
+    border-radius: 6px;
 }
 
 .event-errors p {
     margin: 5px 0;
     color: #ff7777;
     font-size: 14px;
+    line-height: 1.5;
 }
 
-/* Succesmelding */
 
-.event-success {
-    padding: 15px 20px;
-    margin: 20px 0;
+/* Succes pop-up */
 
-    background: rgba(223, 255, 0, 0.08);
-    border: 1px solid #dfff00;
-    border-radius: 7px;
+.success-popup-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
 
-    color: #dfff00;
-    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+
+    animation: fadeIn 0.3s ease;
 }
 
-/* =========================================
-   RESPONSIVE DESIGN
-========================================= */
+.success-popup {
+    width: 100%;
+    max-width: 430px;
+    padding: 40px 30px;
 
-@media (max-width: 768px) {
+    background: #171717;
+    border: 1px solid #d4ff00;
+    border-radius: 12px;
 
-    .events-container {
-        padding-left: 20px;
-        padding-right: 20px;
+    text-align: center;
+
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.6);
+    animation: slideIn 0.3s ease;
+}
+
+.success-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+
+    background: #d4ff00;
+    color: black;
+
+    border-radius: 50%;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.success-popup h2 {
+    margin: 0 0 15px;
+    color: #d4ff00;
+    font-family: 'Oswald', sans-serif;
+    font-size: 30px;
+}
+
+.success-popup p {
+    margin: 0 0 12px;
+    color: white;
+    font-size: 16px;
+}
+
+.success-popup span {
+    color: #aaa;
+    font-size: 13px;
+}
+
+
+/* Animaties voor de succesmelding */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Tablet */
+
+@media (max-width: 1000px) {
+
+    .events-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
     }
 
     .events-header h1 {
-        font-size: clamp(38px, 9vw, 64px);
+        font-size: 60px;
+    }
+
+    .event-card {
+        padding: 25px;
+    }
+
+    .event-card h2 {
+        font-size: 30px;
+    }
+}
+
+
+/* Mobiel */
+
+@media (max-width: 700px) {
+
+    .events-container {
+        width: 92%;
+        padding: 40px 0 60px;
+    }
+
+    .events-header {
+        margin-bottom: 40px;
+    }
+
+    .events-header h1 {
+        font-size: 46px;
+    }
+
+    .events-header p {
+        font-size: 15px;
     }
 
     .events-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
 
-    .event-modal-content {
-        max-width: 100%;
-        padding: 28px 22px;
+    .event-card {
+        padding: 24px;
     }
 
-    .event-modal-content h2 {
-        font-size: 27px;
+    .event-card h2 {
+        font-size: 28px;
+    }
+
+    .event-detail {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .event-detail strong {
+        text-align: left;
     }
 
     .add-event-btn {
-        max-width: 100%;
+        width: 100%;
+        margin-bottom: 35px;
+    }
+
+    .event-modal-content {
+        padding: 30px 22px;
+    }
+
+    .event-modal-content h2 {
+        font-size: 28px;
     }
 }
 
-@media (max-width: 480px) {
+
+/* Kleine telefoons */
+
+@media (max-width: 400px) {
+
+    .events-header h1 {
+        font-size: 38px;
+    }
+
+    .event-card {
+        padding: 18px;
+    }
+
+    .event-card h2 {
+        font-size: 24px;
+    }
 
     .event-modal {
         padding: 12px;
@@ -606,11 +567,11 @@ body {
         font-size: 16px;
     }
 
-    .save-event-btn {
-        padding: 14px;
+    .success-popup {
+        padding: 30px 20px;
     }
 
-    .event-card {
-        min-width: 0;
+    .success-popup h2 {
+        font-size: 25px;
     }
 }
