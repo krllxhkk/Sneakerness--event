@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Events | Sneakerness®</title>
-<link rel="stylesheet" href="{{ asset('css/style.css') }}">
-<link rel="stylesheet" href="{{ asset('css/events.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/events.css') }}">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap"
@@ -16,6 +17,7 @@
 
 <body>
     @include('partials.navbar')
+
     <main class="events-container">
 
         <section class="events-header">
@@ -34,7 +36,18 @@
             Event toevoegen
         </button>
 
-        {{-- HAPPY FLOW --}}
+        @if (session('success'))
+            <p class="event-success">{{ session('success') }}</p>
+        @endif
+
+        @if ($errors->any())
+            <div class="event-errors">
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
+
         @if ($events->count() > 0)
 
             <section class="events-grid">
@@ -48,9 +61,7 @@
                                 {{ \Carbon\Carbon::parse($event->Datum)->format('d-m-Y') }}
                             </span>
 
-                            <span class="event-status">
-                                EVENT
-                            </span>
+                            <span class="event-status">EVENT</span>
                         </div>
 
                         <h2>{{ $event->Naam }}</h2>
@@ -80,8 +91,6 @@
 
             </section>
 
-
-            {{-- UNHAPPY FLOW --}}
         @else
 
             <section class="no-events">
@@ -117,22 +126,21 @@
 
                 <div class="form-group">
                     <label for="naam">Naam</label>
-                    <input type="text" id="naam" name="Naam" required>
+                    <input type="text" id="naam" name="Naam"
+                        value="{{ old('Naam') }}" required>
                 </div>
 
                 <div class="form-group">
                     <label for="datum">Datum</label>
-                    <input type="date" id="datum" name="Datum" required>
+                    <input type="date" id="datum" name="Datum"
+                        value="{{ old('Datum') }}" required>
                 </div>
 
-                <div class="form-group">
-                    <label for="tijd">Tijd</label>
-                    <input type="time" id="tijd" name="Tijd" required>
-                </div>
 
                 <div class="form-group">
                     <label for="locatie">Locatie</label>
-                    <input type="text" id="locatie" name="Locatie" required>
+                    <input type="text" id="locatie" name="Locatie"
+                        value="{{ old('Locatie') }}" required>
                 </div>
 
                 <button type="submit" class="save-event-btn">
@@ -155,6 +163,10 @@
         function closeEventModal() {
             document.getElementById('eventModal').style.display = 'none';
         }
+
+        @if ($errors->any())
+            openEventModal();
+        @endif
     </script>
 
 </body>
