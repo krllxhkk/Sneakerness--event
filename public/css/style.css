@@ -1110,3 +1110,64 @@ main {
 .logout-button:hover {
     color: #eaff00;
 }
+
+/* Uitloggen hetzelfde formaat als Home */
+.nav-right .uitloggen-knop {
+    appearance: none;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: normal;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.nav-right .uitloggen-knop:hover {
+    color: #eaff00;
+}
+
+
+/* Succesmelding na registratie */
+.registratie-succes {
+    position: fixed;
+    top: 90px;
+    right: 25px;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 420px;
+    padding: 16px 22px;
+    background-color: #161a0b;
+    color: #ffffff;
+    border: 1px solid #ccff00;
+    border-left: 5px solid #ccff00;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.succes-icoon {
+    color: #ccff00;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.registratie-succes.verdwijnen {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+@media (max-width: 600px) {
+    .registratie-succes {
+        left: 15px;
+        right: 15px;
+        max-width: none;
+    }
+}

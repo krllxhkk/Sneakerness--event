@@ -1,52 +1,103 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+<!DOCTYPE html>
+<html lang="nl">
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+    <title>Registreren | Sneakerness®</title>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/register.css') }}">
+</head>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+<body>
+    <main class="login-pagina">
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
+        <!-- Linkerkant: afbeelding en evenementinformatie -->
+        <section class="login-afbeelding">
+            <a href="{{ route('home') }}" class="logo">
+                SNEAKERNESS<span>®</span>
             </a>
 
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+            <div class="event-info">
+                <h2>ROTTERDAM<br>2025</h2>
+                <p>Van Nellefabriek · 14–15 Juni</p>
+            </div>
+        </section>
+
+        <!-- Rechterkant: registratieformulier -->
+        <section class="login-gedeelte">
+            <div class="login-container">
+
+                <h1>REGISTREREN</h1>
+                <p class="ondertitel">
+                    Maak je Sneakerness®-account aan
+                </p>
+
+                <form method="POST" action="{{ route('register') }}">
+                    @csrf
+
+                    <!-- Naam -->
+                    <div class="veld">
+                        <label for="name">Naam</label>
+                        <input id="name" type="text" name="name" value="{{ old('name') }}"
+                            placeholder="Vul je naam in" autocomplete="name" maxlength="255" required autofocus>
+
+                        @error('name')
+                            <p class="registratie-fout">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- E-mailadres -->
+                    <div class="veld">
+                        <label for="email">E-mailadres</label>
+                        <input id="email" type="email" name="email" value="{{ old('email') }}"
+                            placeholder="Vul je e-mailadres in" autocomplete="email" maxlength="255" required>
+
+                        @error('email')
+                            <p class="registratie-fout">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Wachtwoord -->
+                    <div class="veld">
+                        <label for="password">Wachtwoord</label>
+                        <input id="password" type="password" name="password" placeholder="Maak een wachtwoord"
+                            autocomplete="new-password" required>
+
+                        @error('password')
+                            <p class="registratie-fout">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Wachtwoord bevestigen -->
+                    <div class="veld">
+                        <label for="password_confirmation">
+                            Wachtwoord bevestigen
+                        </label>
+                        <input id="password_confirmation" type="password" name="password_confirmation"
+                            placeholder="Herhaal je wachtwoord" autocomplete="new-password" required>
+
+                        @error('password_confirmation')
+                            <p class="registratie-fout">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <button type="submit" class="inloggen-knop">
+                        REGISTREREN
+                    </button>
+                </form>
+
+                <p class="registratie-login-link">
+                    Heb je al een account?
+                    <a href="{{ route('login') }}">Inloggen</a>
+                </p>
+
+            </div>
+        </section>
+
+    </main>
+</body>
+
+</html>

@@ -47,6 +47,10 @@
             <div class="nav-right">
                 @guest
                     <a href="{{ route('login') }}" class="login-link">LOGIN</a>
+
+                    <a href="{{ route('register') }}" class="login-link">
+                        REGISTREREN
+                    </a>
                 @endguest
 
                 @auth
@@ -67,6 +71,30 @@
             {{ $errorMessage }}
         </div>
     @endif
+
+
+    {{-- Succesmelding na registratie --}}
+    @if (session('success'))
+        <div id="registratie-succes" class="registratie-succes" role="status">
+            <span class="succes-icoon">✓</span>
+            <span>{{ session('success') }}</span>
+        </div>
+
+        <script>
+            setTimeout(function() {
+                const melding = document.getElementById('registratie-succes');
+
+                if (melding) {
+                    melding.classList.add('verdwijnen');
+
+                    setTimeout(function() {
+                        melding.remove();
+                    }, 400);
+                }
+            }, 5000);
+        </script>
+    @endif
+
 
     <!-- 1. HERO BANNER SECTIE -->
     <!-- HERO SECTIE DIREK IN HET MIDDEN (NIET BINNEN EEN SMALLE CONTAINER) -->
