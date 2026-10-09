@@ -57,7 +57,7 @@
                     <div class="veld">
                         <label for="password">Wachtwoord</label>
 
-                        <input id="password" type="password" name="password" required autocomplete="current-password">
+                        <input id="password" type="password" name="password" required autocomplete="current-password" placeholder="Wachtwoord">
                     </div>
 
                     @if (Route::has('password.request'))
