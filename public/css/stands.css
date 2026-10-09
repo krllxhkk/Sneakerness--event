@@ -19,7 +19,6 @@ body {
     font-family: "Inter", sans-serif;
 }
 
-
 /* =========================
    STANDS
    ========================= */
@@ -57,7 +56,7 @@ body {
 
 .stands-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
     gap: 25px;
 
     width: 100%;
@@ -185,7 +184,6 @@ body {
     color: #888;
 }
 
-
 /* =========================
    EVENTS
    ========================= */
@@ -253,13 +251,11 @@ body {
     overflow-wrap: break-word;
 }
 
-
 /* =========================
    TABLET
    ========================= */
 
 @media (max-width: 700px) {
-
     .stands-container,
     .events-container {
         width: 92%;
@@ -294,13 +290,11 @@ body {
     }
 }
 
-
 /* =========================
    MOBILE
    ========================= */
 
 @media (max-width: 600px) {
-
     .stands-container,
     .events-container {
         width: 92%;
@@ -357,13 +351,11 @@ body {
     }
 }
 
-
 /* =========================
    KLEINE MOBIEL
    ========================= */
 
 @media (max-width: 400px) {
-
     .stands-container,
     .events-container {
         width: 94%;
@@ -390,7 +382,6 @@ body {
     }
 }
 
-
 /* STAND TOEVOEGEN KNOP */
 
 .add-stand-btn {
@@ -414,27 +405,43 @@ body {
 
 /* POP-UP */
 
+/* POP-UP ACHTERGROND */
+
 .stand-modal {
     display: none;
     position: fixed;
     inset: 0;
     z-index: 1000;
-    padding: 20px;
+
+    width: 100%;
+    height: 100dvh;
+
     background: rgba(0, 0, 0, 0.85);
+
     align-items: center;
     justify-content: center;
-}
+
+    padding: 20px;
+    overflow-y: auto;
+}   
+
+/* POP-UP IN HET MIDDEN */
 
 .stand-modal-content {
     position: relative;
+
     width: 100%;
     max-width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
+    max-height: calc(100dvh - 40px);
+
+    margin: auto;
     padding: 35px;
+
     background: #111;
     border: 1px solid #333;
     border-radius: 8px;
+
+    overflow-y: auto;
 }
 
 .stand-modal-content h2 {
