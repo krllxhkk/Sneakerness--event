@@ -47,6 +47,20 @@
         </section>
 
 
+        <!-- Knop om een nieuwe stand toe te voegen -->
+        <button type="button" class="add-stand-btn" onclick="openStandModal()">
+            Stand toevoegen
+        </button>
+
+        @if (session('success'))
+            <p class="stand-success">{{ session('success') }}</p>
+        @endif
+
+        @if ($errors->has('stand'))
+            <p class="stand-error">{{ $errors->first('stand') }}</p>
+        @endif
+
+
         {{-- HAPPY FLOW --}}
         @if ($stands->count() > 0)
 
@@ -82,23 +96,33 @@
 
 
                         <!-- Naam -->
+
+                        <!-- Laat de standnaam zien, of de verkoper als er geen naam is -->
                         <h2>
-
-                            @if ($stand->VerhuurdStatus && $stand->verkoper)
-
+                            @if ($stand->Standnaam)
+                                {{ $stand->Standnaam }}
+                            @elseif ($stand->VerhuurdStatus && $stand->verkoper)
                                 {{ $stand->verkoper->Naam }}
-
                             @else
-
                                 VRIJE STAND
-
                             @endif
-
                         </h2>
+
 
 
                         <!-- Informatie -->
                         <div class="stand-details">
+
+
+                            <div class="stand-detail">
+                                <span>STANDNUMMER</span>
+                                <strong>{{ $stand->Standnummer ?? '-' }}</strong>
+                            </div>
+
+                            <div class="stand-detail">
+                                <span>LOCATIE</span>
+                                <strong>{{ $stand->Locatie ?? '-' }}</strong>
+                            </div>
 
 
                             <!-- Status -->
@@ -203,7 +227,7 @@
             </section>
 
 
-        {{-- UNHAPPY FLOW --}}
+            {{-- UNHAPPY FLOW --}}
         @else
 
             <section class="no-stands">
@@ -228,8 +252,99 @@
     </main>
 
 
+    <!-- Pop-up voor het toevoegen van een stand -->
+    <div id="standModal" class="stand-modal" role="dialog" aria-modal="true" aria-labelledby="standModalTitle">
+
+        <div class="stand-modal-content">
+
+            <button type="button" class="stand-modal-close" onclick="closeStandModal()" aria-label="Sluiten">
+                &times;
+            </button>
+
+            <h2 id="standModalTitle">STAND TOEVOEGEN</h2>
+
+            <form action="{{ route('stands.store') }}" method="POST">
+                @csrf
+
+                <div class="stand-form-group">
+                    <label for="standnummer">Standnummer *</label>
+                    <input type="text" id="standnummer" name="Standnummer" value="{{ old('Standnummer') }}"
+                        maxlength="20" required>
+
+                    @error('Standnummer')
+                        <span class="stand-field-error">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="stand-form-group">
+                    <label for="standnaam">Standnaam *</label>
+                    <input type="text" id="standnaam" name="Standnaam" value="{{ old('Standnaam') }}" maxlength="100"
+                        required>
+
+                    @error('Standnaam')
+                        <span class="stand-field-error">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="stand-form-group">
+                    <label for="locatie">Locatie *</label>
+                    <input type="text" id="locatie" name="Locatie" value="{{ old('Locatie') }}" maxlength="100"
+                        required>
+
+                    @error('Locatie')
+                        <span class="stand-field-error">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="stand-form-group">
+                    <label for="prijs">Prijs (€) *</label>
+                    <input type="number" id="prijs" name="Prijs" value="{{ old('Prijs') }}" min="0" max="999999.99"
+                        step="0.01" required>
+
+                    @error('Prijs')
+                        <span class="stand-field-error">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="stand-form-group">
+                    <label for="kwaliteitsklasse">Kwaliteitsklasse</label>
+                    <input type="text" id="kwaliteitsklasse" name="Kwaliteitsklasse"
+                        value="{{ old('Kwaliteitsklasse') }}" maxlength="30">
+
+                    @error('Kwaliteitsklasse')
+                        <span class="stand-field-error">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <button type="submit" class="save-stand-btn">
+                    Opslaan
+                </button>
+            </form>
+        </div>
+    </div>
+
+
     <!-- Footer -->
     @include('partials.footer')
+
+
+    <script>
+        // Open de pop-up
+        function openStandModal() {
+            document.getElementById('standModal').style.display = 'flex';
+        }
+
+        // Sluit de pop-up
+        function closeStandModal() {
+            document.getElementById('standModal').style.display = 'none';
+        }
+
+        // Open de pop-up opnieuw als er fouten zijn
+        @if ($errors->any())
+            openStandModal();
+        @endif
+    </script>
+
 
 </body>
 

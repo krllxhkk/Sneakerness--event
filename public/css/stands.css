@@ -389,3 +389,132 @@ body {
         font-size: 12px;
     }
 }
+
+
+/* STAND TOEVOEGEN KNOP */
+
+.add-stand-btn {
+    background: #c6ff00;
+    color: #080808;
+    border: 1px solid #c6ff00;
+    border-radius: 4px;
+    padding: 14px 28px;
+    margin-bottom: 30px;
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.add-stand-btn:hover {
+    background: transparent;
+    color: #c6ff00;
+}
+
+/* POP-UP */
+
+.stand-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.85);
+    align-items: center;
+    justify-content: center;
+}
+
+.stand-modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 35px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 8px;
+}
+
+.stand-modal-content h2 {
+    margin: 0 0 25px;
+    font-family: "Oswald", sans-serif;
+    font-size: 32px;
+}
+
+.stand-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+/* FORMULIER */
+
+.stand-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.stand-form-group label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.stand-form-group input {
+    width: 100%;
+    padding: 12px;
+    background: #080808;
+    color: #fff;
+    border: 1px solid #333;
+    border-radius: 4px;
+    font-family: "Inter", sans-serif;
+}
+
+.stand-form-group input:focus {
+    outline: none;
+    border-color: #c6ff00;
+}
+
+.save-stand-btn {
+    width: 100%;
+    padding: 14px;
+    background: #c6ff00;
+    color: #080808;
+    border: none;
+    border-radius: 4px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.save-stand-btn:hover {
+    background: #d4ff00;
+}
+
+.stand-success {
+    color: #c6ff00;
+    margin-bottom: 20px;
+}
+
+.stand-error,
+.stand-field-error {
+    color: #ff7777;
+    font-size: 13px;
+}
+
+@media (max-width: 600px) {
+    .stand-modal-content {
+        padding: 25px;
+    }
+
+    .add-stand-btn {
+        width: 100%;
+    }
+}

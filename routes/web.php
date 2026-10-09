@@ -41,5 +41,9 @@ Route::get(
     [OrganisatorDashboardController::class, 'index']
 )->middleware(['auth', 'organisator'])->name('organisator.dashboard');
 
+// Stand toevoegen
+Route::post('/stands', [StandController::class, 'store'])
+    ->name('stands.store');
+
 require __DIR__ . '/auth.php';
 
