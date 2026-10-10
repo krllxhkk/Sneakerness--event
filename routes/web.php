@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -30,6 +29,15 @@ Route::get('/', [HomeController::class, 'index'])
 // Toon de stappenpagina voor het kiezen van een dag en tijdslot.
 Route::get('/tickets', [TicketController::class, 'index'])
     ->name('tickets.index');
+
+
+// Controleer de ingevulde gegevens van de bezoeker.
+Route::post('/tickets/gegevens', [TicketController::class, 'gegevensOpslaan'])
+    ->name('tickets.gegevens');
+
+// Toon het besteloverzicht van de bezoeker.
+Route::get('/tickets/overzicht', [TicketController::class, 'overzicht'])
+    ->name('tickets.overzicht');
 
 /*
 |--------------------------------------------------------------------------
