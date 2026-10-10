@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="nl">
 
@@ -19,6 +20,7 @@
         </div>
 
         <nav class="dashboard-nav">
+
             <a href="{{ route('organisator.dashboard') }}" class="actief">
                 Dashboard
             </a>
@@ -27,12 +29,8 @@
                 Evenementen
             </a>
 
-            <a href="#">
+            <a href="{{ route('organisator.tickets.index') }}">
                 Tickets
-            </a>
-
-            <a href="#">
-                Bezoekers
             </a>
 
             <a href="{{ route('verkopers.index') }}">
@@ -43,21 +41,21 @@
                 Stands
             </a>
 
-            <a href="#">
-                Prijzen
-            </a>
         </nav>
 
-        <form method="POST" action="{{ route('logout') }}" class="uitloggen-formulier">
+        <form method="POST"
+              action="{{ route('logout') }}"
+              class="uitloggen-formulier">
+
             @csrf
 
             <button type="submit" class="uitloggen-knop">
                 UITLOGGEN
             </button>
+
         </form>
 
     </header>
-
 
     <div class="dashboard-layout">
 
@@ -80,12 +78,8 @@
                     Evenementen
                 </a>
 
-                <a href="#">
+                <a href="{{ route('organisator.tickets.index') }}">
                     Tickets
-                </a>
-
-                <a href="#">
-                    Bezoekers
                 </a>
 
                 <a href="{{ route('verkopers.index') }}">
@@ -96,14 +90,9 @@
                     Stands
                 </a>
 
-                <a href="#">
-                    Prijzen
-                </a>
-
             </nav>
 
         </aside>
-
 
         <!-- Dashboard inhoud -->
         <main class="dashboard-inhoud">
@@ -119,7 +108,6 @@
                 </span>
 
             </div>
-
 
             <!-- Statistieken -->
             <section class="statistieken">
@@ -174,12 +162,15 @@
 
             </section>
 
+            <!-- Dashboard blokken -->
             <section class="dashboard-blokken">
 
                 <div class="dashboard-blok tickets-tijdsloten">
+
                     <h2>Tickets per tijdslot</h2>
 
                     @foreach ($tickets as $ticket)
+
                         <div class="tijdslot-rij">
 
                             <span class="tijdslot-naam">
@@ -188,9 +179,11 @@
                             </span>
 
                             <div class="tijdslot-balk-achtergrond">
+
                                 <div class="tijdslot-balk"
-                                    style="width: {{ ($ticket->aantal_tickets_per_tijdslot / 410) * 100 }}%;">
+                                     style="width: {{ ($ticket->aantal_tickets_per_tijdslot / 410) * 100 }}%;">
                                 </div>
+
                             </div>
 
                             <span class="tijdslot-aantal">
@@ -198,16 +191,19 @@
                             </span>
 
                         </div>
+
                     @endforeach
 
                 </div>
 
                 <div class="dashboard-blok">
+
                     <h2>Verhuurde stands per type</h2>
 
                     <p class="geen-gegevens">
                         Er zijn nog geen standgegevens beschikbaar.
                     </p>
+
                 </div>
 
             </section>
@@ -216,15 +212,19 @@
             <section class="recente-sectie">
 
                 <div class="sectie-kop">
+
                     <h2>Recente ticketbestellingen</h2>
 
-                    <a href="#">
+                    <a href="{{ route('organisator.tickets.index') }}">
                         Alle tickets →
                     </a>
+
                 </div>
 
                 <div class="dashboard-tabel">
+
                     <table>
+
                         <thead>
                             <tr>
                                 <th>Naam</th>
@@ -244,7 +244,9 @@
                                 </td>
                             </tr>
                         </tbody>
+
                     </table>
+
                 </div>
 
             </section>
