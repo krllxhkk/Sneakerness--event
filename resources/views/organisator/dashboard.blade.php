@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="nl">
 
@@ -45,9 +44,7 @@
 
         </nav>
 
-        <form method="POST"
-              action="{{ route('logout') }}"
-              class="uitloggen-formulier">
+        <form method="POST" action="{{ route('logout') }}" class="uitloggen-formulier">
 
             @csrf
 
@@ -172,7 +169,6 @@
                     <h2>Tickets per tijdslot</h2>
 
                     @foreach ($tickets as $ticket)
-
                         <div class="tijdslot-rij">
 
                             <span class="tijdslot-naam">
@@ -183,7 +179,7 @@
                             <div class="tijdslot-balk-achtergrond">
 
                                 <div class="tijdslot-balk"
-                                     style="width: {{ ($ticket->aantal_tickets_per_tijdslot / 410) * 100 }}%;">
+                                    style="width: {{ min(100, ($ticket->aantal_tickets_per_tijdslot / 410) * 100) }}%;">
                                 </div>
 
                             </div>
@@ -193,7 +189,6 @@
                             </span>
 
                         </div>
-
                     @endforeach
 
                 </div>
@@ -240,11 +235,37 @@
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td colspan="7" class="lege-tabel">
-                                    Er zijn nog geen ticketbestellingen.
-                                </td>
-                            </tr>
+                            @forelse ($recenteBestellingen as $bestelling)
+                                <tr>
+                                    <td>{{ $bestelling->naam }}</td>
+
+                                    <td>{{ $bestelling->email }}</td>
+
+                                    <td>
+                                        {{ \Carbon\Carbon::parse($bestelling->datum)->translatedFormat('l d-m-Y') }}
+                                    </td>
+
+                                    <td>
+                                        {{ \Carbon\Carbon::parse($bestelling->tijdslot)->format('H:i') }}
+                                    </td>
+
+                                    <td>{{ $bestelling->aantal }}</td>
+
+                                    <td>
+                                        €{{ number_format($bestelling->totaalprijs, 2, ',', '.') }}
+                                    </td>
+
+                                    <td>
+                                        {{ ucfirst($bestelling->status) }}
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="lege-tabel">
+                                        Er zijn nog geen ticketbestellingen.
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
 
                     </table>

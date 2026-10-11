@@ -19,11 +19,44 @@ class OrganisatorDashboardController extends Controller
             ->orderBy('tijdslot')
             ->get();
 
-        // Ticketgegevens.
-        $totaalTickets = $tickets->sum('aantal_tickets_per_tijdslot');
-        $verkochteTickets = 0;
-        $beschikbareTickets = $totaalTickets - $verkochteTickets;
-        $totaleOmzet = 0;
+        // Huidige beschikbare voorraad.
+        $beschikbareTickets = (int) $tickets
+            ->sum('aantal_tickets_per_tijdslot');
+
+        // Verkochte tickets uit bevestigde bestellingen.
+        $verkochteTickets = (int) DB::table('bestellingen')
+            ->where('status', 'bevestigd')
+            ->sum('aantal');
+
+        // Totale capaciteit op basis van voorraad en verkopen.
+        $totaalTickets = $beschikbareTickets + $verkochteTickets;
+
+        // Totale omzet uit bevestigde bestellingen.
+        $totaleOmzet = (float) DB::table('bestellingen')
+            ->where('status', 'bevestigd')
+            ->sum('totaalprijs');
+
+        // De 5 nieuwste ticketbestellingen.
+        $recenteBestellingen = DB::table('bestellingen')
+            ->join(
+                'tickets',
+                'bestellingen.ticket_id',
+                '=',
+                'tickets.id'
+            )
+            ->select(
+                'bestellingen.id',
+                'bestellingen.naam',
+                'bestellingen.email',
+                'bestellingen.aantal',
+                'bestellingen.totaalprijs',
+                'bestellingen.status',
+                'tickets.datum',
+                'tickets.tijdslot'
+            )
+            ->orderByDesc('bestellingen.id')
+            ->limit(5)
+            ->get();
 
         // Standgegevens.
         $totaalStands = DB::table('stand')
@@ -48,6 +81,7 @@ class OrganisatorDashboardController extends Controller
             'verkochteTickets' => $verkochteTickets,
             'beschikbareTickets' => $beschikbareTickets,
             'totaleOmzet' => $totaleOmzet,
+            'recenteBestellingen' => $recenteBestellingen,
             'totaalStands' => $totaalStands,
             'verhuurdeStands' => $verhuurdeStands,
             'beschikbareStands' => $beschikbareStands,

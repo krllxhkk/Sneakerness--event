@@ -1178,3 +1178,141 @@ header .logo {
         text-align: left;
     }
 }
+
+.besteloverzicht-foutmelding {
+    color: #b91c1c;
+    font-weight: 700;
+    margin-top: 15px;
+}
+
+/* Bevestigingspagina in Sneakerness-stijl */
+.bevestiging-pagina {
+    min-height: 100vh;
+    background: #101010;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    font-family: 'Inter', Arial, sans-serif;
+}
+
+.bevestiging-kaart {
+    width: 100%;
+    max-width: 650px;
+    text-align: center;
+}
+
+.bevestiging-vinkje {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 25px;
+    background: #eaff00;
+    color: #111111;
+    border-radius: 50%;
+    font-size: 45px;
+    font-weight: bold;
+}
+
+.bevestiging-kaart h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.bevestiging-ticket {
+    background: #1c1c1c;
+    border: 1px solid #eaff00;
+    border-radius: 12px;
+    padding: 30px;
+    margin-top: 30px;
+    text-align: left;
+}
+
+.bevestiging-ticket h2,
+.bevestiging-ticket h3 {
+    color: #eaff00;
+    margin-bottom: 20px;
+}
+
+.bevestiging-ticket p {
+    margin: 12px 0;
+}
+
+.bevestiging-ticketnummer {
+    padding: 12px;
+    background: #303030;
+    border-radius: 6px;
+    overflow-wrap: anywhere;
+}
+
+.bevestiging-knoppen {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.bevestiging-knop {
+    background: #eaff00;
+    color: #111111;
+    padding: 15px 22px;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 5px;
+}
+
+.bevestiging-knop:hover {
+    background: #ffffff;
+}
+
+
+/* Foutmelding bovenaan het besteloverzicht */
+.ticket-error-alert {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto 30px;
+    padding: 16px 20px;
+    background-color: #2b1010;
+    border: 1px solid #ff4040;
+    border-radius: 8px;
+    color: #ffaaaa;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.ticket-error-icon {
+    width: 28px;
+    height: 28px;
+    border: 2px solid #ff5555;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff5555;
+    font-size: 17px;
+    font-weight: 900;
+    flex-shrink: 0;
+}
+
+.ticket-error-content {
+    flex: 1;
+}
+
+.ticket-error-content strong {
+    display: block;
+    color: #ff6666;
+    font-size: 13px;
+    font-weight: 900;
+    margin-bottom: 5px;
+}
+
+.ticket-error-content p {
+    margin: 0;
+    color: #ffaaaa;
+    font-size: 13px;
+    line-height: 1.5;
+}
