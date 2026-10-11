@@ -229,6 +229,100 @@
         <!-- Verkopers inhoud -->
         <main class="dashboard-inhoud">
 
+<!-- Modal contactpersoon toevoegen -->
+<div id="contactpersoonModal" class="modal">
+    <div class="modal-inhoud">
+        <div class="modal-kop">
+            <div>
+                <p>Organisator Dashboard</p>
+                <h2>Contactpersoon toevoegen</h2>
+            </div>
+
+            <button type="button"
+                    class="modal-sluiten"
+                    id="closeContactpersoonModal">
+                &times;
+            </button>
+        </div>
+
+        <form method="POST" action="{{ route('contactpersonen.store') }}">
+            @csrf
+
+            <div class="form-groep">
+                <label for="ContactpersoonNaam">Naam *</label>
+                <input type="text"
+                       id="ContactpersoonNaam"
+                       name="Naam"
+                       value="{{ old('Naam') }}"
+                       maxlength="100"
+                       required>
+            </div>
+
+            <div class="form-groep">
+                <label for="ContactpersoonEmail">E-mailadres *</label>
+                <input type="email"
+                       id="ContactpersoonEmail"
+                       name="E-mailadres"
+                       value="{{ old('E-mailadres') }}"
+                       maxlength="150"
+                       required>
+            </div>
+
+            <div class="form-groep">
+                <label for="ContactpersoonTelefoon">Telefoonnummer *</label>
+                <input type="text"
+                       id="ContactpersoonTelefoon"
+                       name="Telefoonnummer"
+                       value="{{ old('Telefoonnummer') }}"
+                       maxlength="20"
+                       required>
+            </div>
+
+            <div class="form-groep">
+                <label for="ContactpersoonVerkoper">Verkoper *</label>
+                <select id="ContactpersoonVerkoper"
+                        name="VerkoperId"
+                        required>
+                    <option value="">Kies een verkoper</option>
+
+                    @foreach ($verkopers as $verkoper)
+                        <option value="{{ $verkoper->Id }}"
+                            {{ old('VerkoperId') == $verkoper->Id ? 'selected' : '' }}>
+                            {{ $verkoper->Naam }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+          
+<div class="form-groep">
+    <label for="ContactpersoonStatus">Status *</label>
+    <select id="ContactpersoonStatus" name="Isactief" required>
+        <option value="1" {{ old('Isactief', '1') == '1' ? 'selected' : '' }}>
+            Actief
+        </option>
+        <option value="0" {{ old('Isactief') == '0' ? 'selected' : '' }}>
+            Inactief
+        </option>
+    </select>
+</div>
+
+
+            <div class="modal-knoppen">
+                <button type="button"
+                        class="annuleer-knop"
+                        id="cancelContactpersoonModal">
+                    ANNULEREN
+                </button>
+
+                <button type="submit" class="opslaan-knop">
+                    CONTACTPERSOON TOEVOEGEN
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
             <div class="dashboard-kop">
 
                 <p>Organisator Dashboard</p>
@@ -357,14 +451,20 @@
             <!-- Contactpersonen -->
             <section class="contactpersonen-section">
 
-                <div class="sectie-kop">
+                
+<div class="sectie-kop">
+    <div>
+        <p>STANDHOUDERS</p>
+        <h2>CONTACTPERSONEN</h2>
+    </div>
 
-                    <div>
-                        <p>STANDHOUDERS</p>
-                        <h2>CONTACTPERSONEN</h2>
-                    </div>
+    <button type="button"
+            class="toevoegen-knop"
+            id="openContactpersoonModal">
+        + TOEVOEGEN
+    </button>
+</div>
 
-                </div>
 
 
                 @if ($contactpersonenFout)
@@ -504,6 +604,29 @@ setTimeout(function () {
         }, 500);
     });
 }, 4000);
+
+const contactpersoonModal = document.getElementById('contactpersoonModal');
+const openContactpersoonButton = document.getElementById('openContactpersoonModal');
+const closeContactpersoonButton = document.getElementById('closeContactpersoonModal');
+const cancelContactpersoonButton = document.getElementById('cancelContactpersoonModal');
+
+openContactpersoonButton.addEventListener('click', function () {
+    contactpersoonModal.classList.add('actief');
+});
+
+closeContactpersoonButton.addEventListener('click', function () {
+    contactpersoonModal.classList.remove('actief');
+});
+
+cancelContactpersoonButton.addEventListener('click', function () {
+    contactpersoonModal.classList.remove('actief');
+});
+
+contactpersoonModal.addEventListener('click', function (event) {
+    if (event.target === contactpersoonModal) {
+        contactpersoonModal.classList.remove('actief');
+    }
+});
 
 </script>
 </body>

@@ -91,6 +91,12 @@ Route::post('/verkopers/toevoegen', [VerkoperController::class, 'store'])
 Route::get('/contactpersonen', [ContactpersoonController::class, 'index'])
     ->name('contactpersonen.index');
 
+ // Sla een nieuwe contactpersoon op.
+Route::post('/contactpersonen/toevoegen', [ContactpersoonController::class, 'store'])
+    ->middleware(['auth', 'organisator'])
+    ->name('contactpersonen.store');
+
+
 /*
 |--------------------------------------------------------------------------
 | Organisator Dashboard
