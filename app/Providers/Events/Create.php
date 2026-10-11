@@ -48,7 +48,7 @@ class Create
             ]);
 
             return redirect()
-                ->route('events.index')
+                ->route('organisator.events')
                 ->with('success', 'Event succesvol toegevoegd!');
 
         } catch (ValidationException $fout) {

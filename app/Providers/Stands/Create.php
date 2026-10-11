@@ -46,7 +46,7 @@ class Create
             ]);
 
             return redirect()
-                ->route('stands.index')
+                ->route('organisator.stands')
                 ->with('success', 'Stand succesvol toegevoegd!');
 
         } catch (ValidationException $fout) {

@@ -61,6 +61,16 @@
                         </button>
                     </form>
                 @endauth
+
+                {{-- Dashboard alleen voor de organisator --}}
+                @auth
+                    @if (auth()->user()->email === 'organisator@sneakerness.nl')
+                        <a href="{{ route('organisator.dashboard') }}" class="btn-yellow-sm">
+                            DASHBOARD
+                        </a>
+                    @endif
+                @endauth
+
                 <a href="#tickets" class="btn-yellow-sm">TICKET KOPEN</a>
             </div>
         </div>
@@ -81,13 +91,13 @@
         </div>
 
         <script>
-            setTimeout(function() {
+            setTimeout(function () {
                 const melding = document.getElementById('registratie-succes');
 
                 if (melding) {
                     melding.classList.add('verdwijnen');
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         melding.remove();
                     }, 400);
                 }

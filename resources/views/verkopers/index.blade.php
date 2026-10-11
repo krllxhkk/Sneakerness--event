@@ -77,9 +77,16 @@
                     </form>
                 @endauth
 
-                <a href="{{ route('tickets.index') }}" class="btn-yellow-sm">
-                    TICKET KOPEN
-                </a>
+                {{-- Dashboard alleen voor de organisator --}}
+                @auth
+                    @if (auth()->user()->email === 'organisator@sneakerness.nl')
+                        <a href="{{ route('organisator.dashboard') }}" class="btn-yellow-sm">
+                            DASHBOARD
+                        </a>
+                    @endif
+                @endauth
+
+                <a href="#tickets" class="btn-yellow-sm">TICKET KOPEN</a>
 
             </div>
         </div>
