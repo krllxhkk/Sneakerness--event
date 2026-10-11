@@ -1,0 +1,72 @@
+{
+    "name": "pestphp/pest-plugin-laravel",
+    "description": "The Pest Laravel Plugin",
+    "keywords": [
+        "php",
+        "framework",
+        "pest",
+        "unit",
+        "test",
+        "testing",
+        "laravel"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^8.4",
+        "laravel/framework": "^13.23.0",
+        "pestphp/pest": "^5.0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pest\\Laravel\\": "src/"
+        },
+        "files": [
+            "src/Autoload.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "laravel/dusk": "^8.6.0",
+        "orchestra/testbench": "^11.1",
+        "pestphp/pest-dev-tools": "^5.0.0"
+    },
+    "conflict": {
+        "pestphp/pest": "<5.0.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist",
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Pest\\Laravel\\PestServiceProvider"
+            ]
+        },
+        "pest": {
+            "plugins": [
+                "Pest\\Laravel\\Plugin"
+            ]
+        }
+    },
+    "scripts": {
+        "lint": "pint",
+        "test:lint": "pint --test",
+        "test:unit": "pest --colors=always --exclude-group=options",
+        "test:unit:options": "pest --group=options --without-exception-handling --without-deprecation-handling",
+        "test": [
+            "@test:lint",
+            "@test:unit",
+            "@test:unit:options"
+        ]
+    }
+}

@@ -39,4 +39,35 @@ class Contactpersoon extends Model
             )
             ->get();
     }
+
+    // Voeg een nieuwe contactpersoon toe
+    public function store(array $gegevens)
+    {
+        return DB::transaction(function () use ($gegevens) {
+            $nu = now();
+
+            // Voeg de contactpersoon toe
+            $contactpersoonId = DB::table('Contactpersoon')->insertGetId([
+                'Naam' => $gegevens['Naam'],
+                'Telefoonnummer' => $gegevens['Telefoonnummer'],
+                'E-mailadres' => $gegevens['E-mailadres'],
+                'Isactief' => 1,
+                'Opmerking' => $gegevens['Opmerking'] ?? null,
+                'DatumAangemaakt' => $nu,
+                'Datumgewijzigd' => $nu,
+            ]);
+
+            // Koppel de contactpersoon aan de verkoper
+            DB::table('ContactPerVerkoper')->insert([
+                'VerkoperId' => $gegevens['VerkoperId'],
+                'ContactpersoonId' => $contactpersoonId,
+                'Isactief' => 1,
+                'Opmerking' => $gegevens['Opmerking'] ?? null,
+                'DatumAangemaakt' => $nu,
+                'Datumgewijzigd' => $nu,
+            ]);
+
+            return $contactpersoonId;
+        });
+    }
 }
