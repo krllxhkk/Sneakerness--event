@@ -23,4 +23,19 @@ class Verkoper extends Model
             ->where('Isactief', 1)
             ->get();
     }
+
+    // Voeg een nieuwe verkoper toe
+    public function store(array $gegevens)
+    {
+        return DB::table('Verkoper')->insert([
+            'Naam' => $gegevens['Naam'],
+            'SpecialeStatus' => $gegevens['SpecialeStatus'] ?? null,
+            'VerkooptSoort' => $gegevens['VerkooptSoort'],
+            'StandType' => $gegevens['StandType'],
+            'Dagen' => $gegevens['Dagen'],
+            'Isactief' => 1,
+            'Datumaangemaakt' => now(),
+            'Datumgewijzigd' => now(),
+        ]);
+    }
 }

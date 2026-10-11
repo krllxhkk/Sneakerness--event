@@ -33,9 +33,11 @@
                 Tickets
             </a>
 
-            <a href="{{ route('verkopers.index') }}">
-                Verkopers
-            </a>
+            
+<a href="{{ route('organisator.verkopers') }}">
+    Verkopers
+</a>
+
 
             <a href="{{ route('stands.index') }}">
                 Stands
@@ -82,9 +84,9 @@
                     Tickets
                 </a>
 
-                <a href="{{ route('verkopers.index') }}">
-                    Verkopers
-                </a>
+                <a href="{{ route('organisator.verkopers') }}">
+    Verkopers
+</a>
 
                 <a href="{{ route('stands.index') }}">
                     Stands

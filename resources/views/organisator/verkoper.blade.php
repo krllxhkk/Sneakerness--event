@@ -29,24 +29,16 @@
                 Evenementen
             </a>
 
-            <a href="#">
+            <a href="{{ route('organisator.tickets.index') }}">
                 Tickets
             </a>
 
-            <a href="#">
-                Bezoekers
-            </a>
-
-            <a href="{{ route('verkopers.index') }}" class="actief">
-                Verkopers
-            </a>
+            <a href="{{ route('organisator.verkopers') }}">
+    Verkopers
+</a>
 
             <a href="{{ route('stands.index') }}">
                 Stands
-            </a>
-
-            <a href="#">
-                Prijzen
             </a>
 
         </nav>
@@ -83,24 +75,18 @@
                     Evenementen
                 </a>
 
-                <a href="#">
-                    Tickets
-                </a>
+                <a href="{{ route('organisator.tickets.index') }}">
+                Tickets
+            </a>
 
-                <a href="#">
-                    Bezoekers
-                </a>
 
-                <a href="{{ route('verkopers.index') }}" class="actief">
-                    Verkopers
-                </a>
+
+<a href="{{ route('organisator.verkopers') }}">
+    Verkopers
+</a>
 
                 <a href="{{ route('stands.index') }}">
                     Stands
-                </a>
-
-                <a href="#">
-                    Prijzen
                 </a>
 
             </nav>
@@ -258,6 +244,20 @@
 
             <!-- Verkopers -->
             <section class="organisator-verkopers-overzicht">
+        
+<!-- Melding na het toevoegen van een verkoper -->
+@if (session('success'))
+    <div class="melding-succes">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="melding-fout">
+        {{ session('error') }}
+    </div>
+@endif
+
 
     <div class="verkopers-sectie-kop">
 
@@ -489,6 +489,22 @@
             modal.classList.remove('actief');
         }
     });
+// Verberg meldingen na 4 seconden
+setTimeout(function () {
+    const meldingen = document.querySelectorAll(
+        '.melding-succes, .melding-fout'
+    );
+
+    meldingen.forEach(function (melding) {
+        melding.style.transition = 'opacity 0.5s ease';
+        melding.style.opacity = '0';
+
+        setTimeout(function () {
+            melding.remove();
+        }, 500);
+    });
+}, 4000);
+
 </script>
 </body>
 

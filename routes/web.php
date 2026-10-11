@@ -72,6 +72,14 @@ Route::post('/events', [EventController::class, 'store'])
 // Toon het overzicht van verkopers.
 Route::get('/verkopers', [VerkoperController::class, 'index'])
     ->name('verkopers.index');
+    // Overzicht van verkopers en contactpersonen voor de organisator.
+Route::get('/organisator/verkopers', [VerkoperController::class, 'organisator'])
+    ->middleware(['auth', 'organisator'])
+    ->name('organisator.verkopers');
+    // Sla een nieuwe verkoper op.
+Route::post('/verkopers/toevoegen', [VerkoperController::class, 'store'])
+    ->middleware(['auth', 'organisator'])
+    ->name('verkopers.store');
 
 /*
 |--------------------------------------------------------------------------

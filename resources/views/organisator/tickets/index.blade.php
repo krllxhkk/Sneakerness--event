@@ -25,7 +25,9 @@
             <a href="{{ route('organisator.dashboard') }}">Dashboard</a>
             <a href="{{ route('events.index') }}">Evenementen</a>
             <a href="{{ route('organisator.tickets.index') }}" class="actief">Tickets</a>
-            <a href="{{ route('verkopers.index') }}">Verkopers</a>
+            <a href="{{ route('organisator.verkopers') }}">
+    Verkopers
+</a>
             <a href="{{ route('stands.index') }}">Stands</a>
         </nav>
 
@@ -57,7 +59,9 @@
                 <a href="{{ route('organisator.dashboard') }}">Dashboard</a>
                 <a href="{{ route('events.index') }}">Evenementen</a>
                 <a href="{{ route('organisator.tickets.index') }}" class="actief">Tickets</a>
-                <a href="{{ route('verkopers.index') }}">Verkopers</a>
+                <a href="{{ route('organisator.verkopers') }}">
+    Verkopers
+</a>
                 <a href="{{ route('stands.index') }}">Stands</a>
             </nav>
 

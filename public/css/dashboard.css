@@ -19,6 +19,10 @@ body {
     border-bottom: 1px solid #252525;
     background-color: #0d0d0d;
 }
+.dashboard-header {
+    position: relative;
+    z-index: 10;
+}
 
 .dashboard-logo {
     margin-right: 55px;
@@ -73,8 +77,11 @@ body {
 /* Dashboard indeling */
 .dashboard-layout {
     display: grid;
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 250px minmax(0, 1fr);
     min-height: calc(100vh - 75px);
+    margin-top: 0;
+    position: relative;
+    z-index: 1;
 }
 
 /* Beheer Panel links */
@@ -121,6 +128,8 @@ body {
 /* Dashboard inhoud */
 .dashboard-inhoud {
     padding: 45px;
+    min-width: 0;
+    overflow: visible;
 }
 
 .dashboard-kop {
@@ -363,8 +372,10 @@ body {
     }
 
     .dashboard-inhoud {
-        padding: 25px 20px;
-    }
+    flex: 1;
+    padding: 30px;
+    padding-top: 40px;
+}
 
     .statistieken {
         grid-template-columns: 1fr;
@@ -373,4 +384,187 @@ body {
     .dashboard-blokken {
         grid-template-columns: 1fr;
     }
+}
+/* Modal verkoper toevoegen */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.modal.actief {
+    display: flex;
+}
+
+.modal-inhoud {
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 30px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background: #111;
+}
+
+.modal-kop {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.modal-kop p {
+    margin-bottom: 8px;
+    color: #eaff00;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.modal-kop h2 {
+    font-size: 24px;
+}
+
+.modal-sluiten {
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.form-groep {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.form-groep label {
+    color: #ccc;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.form-groep input,
+.form-groep select {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    background: #0d0d0d;
+    color: #fff;
+    font-size: 14px;
+}
+
+.modal-knoppen {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.annuleer-knop,
+.opslaan-knop {
+    min-height: 45px;
+    padding: 0 18px;
+    border: 1px solid #eaff00;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.annuleer-knop {
+    background: transparent;
+    color: #eaff00;
+}
+
+.opslaan-knop {
+    background: #eaff00;
+    color: #000;
+}
+
+.opslaan-knop:hover {
+    background: transparent;
+    color: #eaff00;
+}
+
+/* Verkopers overzicht */
+.organisator-verkopers-overzicht {
+    margin-bottom: 35px;
+}
+
+.verkopers-sectie-kop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.verkopers-sectie-kop h2 {
+    font-size: 22px;
+}
+
+.toevoegen-knop {
+    padding: 12px 16px;
+    border: 1px solid #eaff00;
+    border-radius: 4px;
+    background: #eaff00;
+    color: #000;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.contactpersonen-section {
+    margin-top: 30px;
+}
+
+.status-actief {
+    color: #eaff00;
+    font-size: 12px;
+}
+/* Succesmelding */
+.melding-succes {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #10b981;
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* Foutmelding */
+.melding-fout {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+/* Herstel de ruimte boven de paginatitel */
+.dashboard-layout {
+    align-items: start;
+}
+
+.dashboard-inhoud .dashboard-kop {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.dashboard-inhoud .dashboard-kop h1 {
+    margin-top: 0;
+    line-height: 1.2;
 }
