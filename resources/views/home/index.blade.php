@@ -120,7 +120,7 @@
                 </p>
                 <div class="hero-buttons">
                     <a href="#tickets" class="btn-yellow-lg">TICKETS KOPEN</a>
-                    <a href="#stands" class="btn-outline-lg">STAND HUREN</a>
+                    <a href="{{ route('stands.index') }}" class="btn-outline-lg">STAND HUREN</a>
                 </div>
             </div>
         </div>

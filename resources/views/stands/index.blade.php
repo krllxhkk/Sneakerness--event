@@ -34,10 +34,6 @@
             </p>
         </section>
 
-        <!-- Knop om een stand toe te voegen -->
-        <button type="button" class="add-stand-btn" onclick="openStandModal()">
-            Stand toevoegen
-        </button>
 
         @if (session('success'))
             <p class="stand-success">{{ session('success') }}</p>

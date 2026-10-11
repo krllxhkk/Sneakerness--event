@@ -622,3 +622,8 @@ body {
     }
 }
 
+.dashboard-logo {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}

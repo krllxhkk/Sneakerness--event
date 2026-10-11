@@ -14,9 +14,9 @@
 
     <header class="dashboard-header">
 
-        <div class="dashboard-logo">
+        <a href="{{ route('home') }}" class="dashboard-logo">
             SNEAKERNESS<span>®</span>
-        </div>
+        </a>
 
         <nav class="dashboard-nav">
 
@@ -32,10 +32,10 @@
                 Tickets
             </a>
 
-            
-<a href="{{ route('organisator.verkopers') }}">
-    Verkopers
-</a>
+
+            <a href="{{ route('organisator.verkopers') }}">
+                Verkopers
+            </a>
 
 
             <a href="{{ route('organisator.stands') }}">
@@ -82,8 +82,8 @@
                 </a>
 
                 <a href="{{ route('organisator.verkopers') }}">
-    Verkopers
-</a>
+                    Verkopers
+                </a>
 
                 <a href="{{ route('organisator.stands') }}">
                     Stands
