@@ -46,4 +46,41 @@ class ContactpersoonController extends Controller
                 ->with('error', 'De contactpersoon kon niet worden toegevoegd.');
         }
     }
+
+    // Koppel een contactpersoon aan een verkoper
+    public function koppel(Request $request)
+    {
+        $gegevens = $request->validate([
+            'ContactpersoonId' => 'required|integer|exists:Contactpersoon,Id',
+            'VerkoperId' => 'required|integer|exists:Verkoper,Id',
+        ]);
+
+        try {
+            $contactpersoonModel = new Contactpersoon();
+
+            $resultaat = $contactpersoonModel->koppelAanVerkoper(
+                (int) $gegevens['ContactpersoonId'],
+                (int) $gegevens['VerkoperId']
+            );
+
+            if (!$resultaat) {
+                return redirect()
+                    ->route('organisator.verkopers')
+                    ->with('error', 'Deze contactpersoon is al gekoppeld aan deze verkoper.');
+            }
+
+            return redirect()
+                ->route('organisator.verkopers')
+                ->with('success', 'De contactpersoon is succesvol gekoppeld aan de verkoper.');
+        } catch (\Throwable $e) {
+            Log::error('Databasefout bij koppelen van contactpersoon aan verkoper.', [
+                'message' => $e->getMessage(),
+            ]);
+
+            return redirect()
+                ->route('organisator.verkopers')
+                ->with('error', 'De contactpersoon kon niet worden gekoppeld aan de verkoper.');
+        }
+    }
+
 }

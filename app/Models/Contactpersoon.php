@@ -70,4 +70,30 @@ class Contactpersoon extends Model
             return $contactpersoonId;
         });
     }
+
+    // Koppel een bestaande contactpersoon aan een verkoper
+    public function koppelAanVerkoper(int $contactpersoonId, int $verkoperId)
+    {
+        // Controleer of de koppeling al bestaat
+        $bestaat = DB::table('ContactPerVerkoper')
+            ->where('ContactpersoonId', $contactpersoonId)
+            ->where('VerkoperId', $verkoperId)
+            ->where('Isactief', 1)
+            ->exists();
+
+        if ($bestaat) {
+            return false;
+        }
+
+        // Maak de koppeling aan
+        return DB::table('ContactPerVerkoper')->insert([
+            'ContactpersoonId' => $contactpersoonId,
+            'VerkoperId' => $verkoperId,
+            'Isactief' => 1,
+            'Opmerking' => null,
+            'DatumAangemaakt' => now(),
+            'Datumgewijzigd' => now(),
+        ]);
+    }
+
 }

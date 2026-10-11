@@ -15,33 +15,43 @@
 
     <header class="dashboard-header">
 
-        <div class="dashboard-logo">
-            SNEAKERNESS<span>®</span>
-        </div>
+        
+<div class="dashboard-logo">
+    SNEAKERNESS<span>®</span>
+</div>
 
-        <nav class="dashboard-nav">
+<button class="burger-menu"
+        id="burgerMenu"
+        type="button"
+        aria-label="Menu openen"
+        aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
 
-            <a href="{{ route('organisator.dashboard') }}">
-                Dashboard
-            </a>
+<nav class="dashboard-nav">
+    <a href="{{ route('organisator.dashboard') }}">
+        Dashboard
+    </a>
 
-            <a href="{{ route('events.index') }}">
-                Evenementen
-            </a>
+    <a href="{{ route('events.index') }}">
+        Evenementen
+    </a>
 
-            <a href="{{ route('organisator.tickets.index') }}">
-                Tickets
-            </a>
+    <a href="{{ route('organisator.tickets.index') }}">
+        Tickets
+    </a>
 
-            <a href="{{ route('organisator.verkopers') }}">
-    Verkopers
-</a>
+    <a href="{{ route('organisator.verkopers') }}">
+        Verkopers
+    </a>
 
-            <a href="{{ route('stands.index') }}">
-                Stands
-            </a>
+    <a href="{{ route('stands.index') }}">
+        Stands
+    </a>
+</nav>
 
-        </nav>
 
         <form method="POST" action="{{ route('logout') }}" class="uitloggen-formulier">
             @csrf
@@ -452,18 +462,93 @@
             <section class="contactpersonen-section">
 
                 
+
 <div class="sectie-kop">
     <div>
         <p>STANDHOUDERS</p>
         <h2>CONTACTPERSONEN</h2>
     </div>
 
-    <button type="button"
-            class="toevoegen-knop"
-            id="openContactpersoonModal">
-        + TOEVOEGEN
-    </button>
+    <div class="contactpersoon-acties">
+        <button type="button"
+                class="toevoegen-knop"
+                id="openContactpersoonModal">
+            + TOEVOEGEN
+        </button>
+
+        <button type="button"
+                class="toevoegen-knop"
+                id="openKoppelenModal">
+            KOPPELEN AAN VERKOPER
+        </button>
+    </div>
+
+<!-- Modal contactpersoon koppelen -->
+<div id="koppelenModal" class="modal">
+    <div class="modal-inhoud">
+        <div class="modal-kop">
+            <div>
+                <p>Organisator Dashboard</p>
+                <h2>Contactpersoon koppelen</h2>
+            </div>
+
+            <button type="button"
+                    class="modal-sluiten"
+                    id="closeKoppelenModal">
+                &times;
+            </button>
+        </div>
+
+        <form method="POST" action="{{ route('contactpersonen.koppel') }}">
+            @csrf
+
+            <div class="form-groep">
+                <label for="KoppelContactpersoonId">Contactpersoon *</label>
+                <select id="KoppelContactpersoonId"
+                        name="ContactpersoonId"
+                        required>
+                    <option value="">Kies een contactpersoon</option>
+
+                    @foreach ($contactpersonen as $contactpersoon)
+                        <option value="{{ $contactpersoon->Id }}">
+                            {{ $contactpersoon->Naam }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-groep">
+                <label for="KoppelVerkoperId">Verkoper *</label>
+                <select id="KoppelVerkoperId"
+                        name="VerkoperId"
+                        required>
+                    <option value="">Kies een verkoper</option>
+
+                    @foreach ($verkopers as $verkoper)
+                        <option value="{{ $verkoper->Id }}">
+                            {{ $verkoper->Naam }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="modal-knoppen">
+                <button type="button"
+                        class="annuleer-knop"
+                        id="cancelKoppelenModal">
+                    ANNULEREN
+                </button>
+
+                <button type="submit" class="opslaan-knop">
+                    CONTACTPERSOON KOPPELEN
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
+
+</div>
+
 
 
 
@@ -627,6 +712,43 @@ contactpersoonModal.addEventListener('click', function (event) {
         contactpersoonModal.classList.remove('actief');
     }
 });
+
+const koppelenModal = document.getElementById('koppelenModal');
+const openKoppelenButton = document.getElementById('openKoppelenModal');
+const closeKoppelenButton = document.getElementById('closeKoppelenModal');
+const cancelKoppelenButton = document.getElementById('cancelKoppelenModal');
+
+openKoppelenButton.addEventListener('click', function () {
+    koppelenModal.classList.add('actief');
+});
+
+closeKoppelenButton.addEventListener('click', function () {
+    koppelenModal.classList.remove('actief');
+});
+
+cancelKoppelenButton.addEventListener('click', function () {
+    koppelenModal.classList.remove('actief');
+});
+
+koppelenModal.addEventListener('click', function (event) {
+    if (event.target === koppelenModal) {
+        koppelenModal.classList.remove('actief');
+    }
+});
+
+const burgerMenu = document.getElementById('burgerMenu');
+const dashboardNav = document.querySelector('.dashboard-header .dashboard-nav');
+
+burgerMenu.addEventListener('click', function () {
+    const isOpen = dashboardNav.classList.toggle('menu-open');
+
+    burgerMenu.setAttribute('aria-expanded', String(isOpen));
+    burgerMenu.setAttribute(
+        'aria-label',
+        isOpen ? 'Menu sluiten' : 'Menu openen'
+    );
+});
+
 
 </script>
 </body>

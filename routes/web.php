@@ -116,6 +116,10 @@ Route::post('/contactpersonen/toevoegen', [ContactpersoonController::class, 'sto
     ->middleware(['auth', 'organisator'])
     ->name('contactpersonen.store');
 
+Route::post('/contactpersonen/koppelen', [ContactpersoonController::class, 'koppel'])
+    ->middleware(['auth', 'organisator'])
+    ->name('contactpersonen.koppel');
+
 
 /*
 |--------------------------------------------------------------------------
