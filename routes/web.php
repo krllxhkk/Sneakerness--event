@@ -69,6 +69,10 @@ Route::get('/mailbox/bericht/{id}', [MailboxController::class, 'show'])
 Route::get('/stands', [StandController::class, 'index'])
     ->name('stands.index');
 
+
+// Stand toevoegen
+Route::post('/stands', [StandController::class, 'store'])
+    ->name('stands.store');
 /*
 |--------------------------------------------------------------------------
 | Evenementen

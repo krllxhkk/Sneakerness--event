@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Stand;
+use App\Http\Requests\StoreStandRequest;
+use App\Providers\Stands\Create;
+use App\Providers\Stands\Index;
 
 class StandController extends Controller
 {
-    public function index()
+    // Laat alle stands zien
+    public function index(Index $index)
     {
-        $stands = Stand::with('verkoper')
-    ->orderBy('VerhuurdStatus', 'asc')
-    ->get();
+        return $index->index();
+    }
 
-        return view('stands.index', compact('stands'));
+    // Stuurt de ingevulde gegevens door om een stand toe te voegen
+    public function store(StoreStandRequest $request, Create $create)
+    {
+        return $create->create($request->validated());
     }
 }

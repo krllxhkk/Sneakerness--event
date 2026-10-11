@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="nl">
 
@@ -17,10 +16,12 @@
 </head>
 
 <body>
+
     @include('partials.navbar')
 
     <main class="events-container">
 
+        <!-- Titel van de pagina -->
         <section class="events-header">
             <span class="events-label">SNEAKERNESS® EVENTS</span>
 
@@ -33,22 +34,17 @@
             </p>
         </section>
 
-        <button type="button" class="add-event-btn" onclick="openEventModal()">
-            Event toevoegen
-        </button>
+        <!-- Alleen de organisator mag een event toevoegen -->
+        @auth
+            @if (auth()->user()->email === 'organisator@sneakerness.nl')
+                <button type="button" class="add-event-btn"
+                    onclick="openEventModal()">
+                    Event toevoegen
+                </button>
+            @endif
+        @endauth
 
-        @if (session('success'))
-            <p class="event-success">{{ session('success') }}</p>
-        @endif
-
-        @if ($errors->any())
-            <div class="event-errors">
-                @foreach ($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                @endforeach
-            </div>
-        @endif
-
+        <!-- Overzicht van alle evenementen -->
         @if ($events->count() > 0)
 
             <section class="events-grid">
@@ -75,6 +71,13 @@
                             </div>
 
                             <div class="event-detail">
+                                <span class="detail-label">TIJD</span>
+                                <strong>
+                                    {{ $event->Tijd ? substr($event->Tijd, 0, 5) : 'Niet ingesteld' }}
+                                </strong>
+                            </div>
+
+                            <div class="event-detail">
                                 <span class="detail-label">TICKETS PER TIJDSLOT</span>
                                 <strong>{{ $event->AantalTicketsPerTijdslot }}</strong>
                             </div>
@@ -94,8 +97,8 @@
 
         @else
 
+            <!-- Melding als er geen evenementen zijn -->
             <section class="no-events">
-
                 <div class="no-events-icon">!</div>
 
                 <h2>GEEN EVENTS BESCHIKBAAR</h2>
@@ -104,70 +107,212 @@
                     Er zijn momenteel geen evenementen beschikbaar.
                     Bekijk deze pagina later opnieuw.
                 </p>
-
             </section>
 
         @endif
 
     </main>
 
-    <div id="eventModal" class="event-modal">
+    @auth
+        @if (auth()->user()->email === 'organisator@sneakerness.nl')
 
-        <div class="event-modal-content">
+            <!-- Pop-up om een event toe te voegen -->
+            <div id="eventModal" class="event-modal"
+                role="dialog" aria-modal="true"
+                aria-labelledby="eventModalTitle">
 
-            <button type="button" class="modal-close" onclick="closeEventModal()">
-                &times;
-            </button>
+                <div class="event-modal-content">
 
-            <h2>EVENT TOEVOEGEN</h2>
+                    <button type="button" class="modal-close"
+                        onclick="closeEventModal()" aria-label="Sluiten">
+                        &times;
+                    </button>
 
-            <form action="{{ route('events.store') }}" method="POST">
+                    <h2 id="eventModalTitle">EVENT TOEVOEGEN</h2>
 
-                @csrf
+                    @if ($errors->has('error'))
+                        <p class="event-field-error">
+                            {{ $errors->first('error') }}
+                        </p>
+                    @endif
 
-                <div class="form-group">
-                    <label for="naam">Naam</label>
-                    <input type="text" id="naam" name="Naam"
-                        value="{{ old('Naam') }}" required>
+                    <!-- Formulier voor een nieuw evenement -->
+                    <form id="eventForm" action="{{ route('events.store') }}"
+                        method="POST">
+
+                        @csrf
+
+                        <div class="form-group">
+                            <label for="naam">Naam *</label>
+
+                            <input type="text" id="naam" name="Naam"
+                                value="{{ old('Naam') }}" maxlength="100" required>
+
+                            @error('Naam')
+                                <span class="event-field-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="datum">Datum *</label>
+
+                            <input type="date" id="datum" name="Datum"
+                                value="{{ old('Datum') }}"
+                                min="{{ now()->format('Y-m-d') }}" required>
+
+                            @error('Datum')
+                                <span class="event-field-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tijd">Tijd *</label>
+
+                            <input type="time" id="tijd" name="Tijd"
+                                value="{{ old('Tijd') }}" required>
+
+                            @error('Tijd')
+                                <span class="event-field-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="locatie">Locatie *</label>
+
+                            <input type="text" id="locatie" name="Locatie"
+                                value="{{ old('Locatie') }}" maxlength="150" required>
+
+                            @error('Locatie')
+                                <span class="event-field-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tickets">Tickets per tijdslot *</label>
+
+                            <input type="number" id="tickets"
+                                name="AantalTicketsPerTijdslot"
+                                value="{{ old('AantalTicketsPerTijdslot', 0) }}"
+                                min="0" required>
+
+                            @error('AantalTicketsPerTijdslot')
+                                <span class="event-field-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stands">Beschikbare stands *</label>
+
+                            <input type="number" id="stands"
+                                name="BeschikbareStands"
+                                value="{{ old('BeschikbareStands', 0) }}"
+                                min="0" required>
+
+                            @error('BeschikbareStands')
+                                <span class="event-field-error">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <button type="submit" class="save-event-btn">
+                            OPSLAAN
+                        </button>
+
+                    </form>
+
                 </div>
+            </div>
 
-                <div class="form-group">
-                    <label for="datum">Datum</label>
-                    <input type="date" id="datum" name="Datum"
-                        value="{{ old('Datum') }}" required>
-                </div>
+        @endif
+    @endauth
 
+    <!-- Succesmelding na het toevoegen -->
+    @if (session('success'))
+        <div id="successPopup" class="success-popup-overlay" role="status">
+            <div class="success-popup">
+                <div class="success-icon">✓</div>
 
-                <div class="form-group">
-                    <label for="locatie">Locatie</label>
-                    <input type="text" id="locatie" name="Locatie"
-                        value="{{ old('Locatie') }}" required>
-                </div>
+                <h2>EVENT TOEGEVOEGD!</h2>
 
-                <button type="submit" class="save-event-btn">
-                    Opslaan
-                </button>
+                <p>{{ session('success') }}</p>
 
-            </form>
-
+                <span>Het evenement staat nu in het overzicht.</span>
+            </div>
         </div>
-
-    </div>
+    @endif
 
     @include('partials.footer')
 
     <script>
+        const eventModal = document.getElementById('eventModal');
+        const eventForm = document.getElementById('eventForm');
+
+        // Open de pop-up met lege velden
         function openEventModal() {
-            document.getElementById('eventModal').style.display = 'flex';
+            if (!eventModal || !eventForm) {
+                return;
+            }
+
+            eventForm.reset();
+
+            // Maak de velden leeg, behalve de verborgen CSRF-token
+            eventForm.querySelectorAll('input:not([type="hidden"])').forEach(input => {
+                input.value = '';
+            });
+
+            // Verberg oude foutmeldingen
+            eventModal.querySelectorAll('.event-field-error').forEach(fout => {
+                fout.style.display = 'none';
+            });
+
+            eventModal.style.display = 'flex';
+            document.getElementById('naam').focus();
         }
 
+        // Sluit de pop-up
         function closeEventModal() {
-            document.getElementById('eventModal').style.display = 'none';
+            if (eventModal) {
+                eventModal.style.display = 'none';
+            }
         }
 
+        // Open bij fouten zonder de ingevulde gegevens te wissen
         @if ($errors->any())
-            openEventModal();
+            if (eventModal) {
+                eventModal.style.display = 'flex';
+            }
         @endif
+
+        if (eventModal) {
+            // Sluit als je buiten het formulier klikt
+            eventModal.addEventListener('click', function(event) {
+                if (event.target === eventModal) {
+                    closeEventModal();
+                }
+            });
+
+            // Sluit de pop-up met Escape
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' &&
+                    eventModal.style.display === 'flex') {
+                    closeEventModal();
+                }
+            });
+        }
+
+        // Laat de succesmelding automatisch verdwijnen
+        const successPopup = document.getElementById('successPopup');
+
+        if (successPopup) {
+            setTimeout(function() {
+                successPopup.style.transition = 'opacity 0.3s ease';
+                successPopup.style.opacity = '0';
+
+                setTimeout(function() {
+                    successPopup.remove();
+                }, 300);
+
+            }, 2500);
+        }
     </script>
 
 </body>
