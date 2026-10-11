@@ -1,0 +1,185 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Pest\Plugins;
+
+use ParaTest\ParaTestCommand;
+use Pest\Contracts\Plugins\HandlesArguments;
+use Pest\Plugins\Actions\CallsAddsOutput;
+use Pest\Plugins\Concerns\HandleArguments;
+use Pest\Plugins\Parallel\Contracts\HandlersWorkerArguments;
+use Pest\Plugins\Parallel\Paratest\CleanConsoleOutput;
+use Pest\Support\Arr;
+use Pest\Support\Container;
+use Pest\TestSuite;
+use Stringable;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+
+use function Pest\version;
+
+final class Parallel implements HandlesArguments
+{
+    use HandleArguments;
+
+    private const string GLOBAL_PREFIX = 'PEST_PARALLEL_GLOBAL_';
+
+    private const array HANDLERS = [
+        Parallel\Handlers\Parallel::class,
+        Parallel\Handlers\Pest::class,
+        Parallel\Handlers\Laravel::class,
+    ];
+
+    /**
+     * @var string[]
+     */
+    private const array UNSUPPORTED_ARGUMENTS = ['--todo', '--todos', '--retry', '--notes', '--issue', '--pr', '--pull-request', '--flaky'];
+
+    public static function isEnabled(): bool
+    {
+        $argv = new ArgvInput;
+
+        if ($argv->hasParameterOption('--parallel')) {
+            return true;
+        }
+
+        return $argv->hasParameterOption('-p');
+    }
+
+    public static function isWorker(): bool
+    {
+        $argvValue = Arr::get($_SERVER, 'PARATEST');
+
+        assert(is_string($argvValue) || is_int($argvValue) || is_null($argvValue));
+
+        return ((int) $argvValue) === 1;
+    }
+
+    public static function setGlobal(string $key, string|int|bool|Stringable $value): void
+    {
+        $data = ['value' => $value instanceof Stringable ? $value->__toString() : $value];
+
+        $_ENV[self::GLOBAL_PREFIX.$key] = json_encode($data, JSON_THROW_ON_ERROR);
+    }
+
+    public static function getGlobal(string $key): string|int|bool|null
+    {
+        $placesToCheck = [$_SERVER, $_ENV];
+
+        foreach ($placesToCheck as $location) {
+            if (array_key_exists(self::GLOBAL_PREFIX.$key, $location)) {
+                // @phpstan-ignore-next-line
+                return json_decode((string) $location[self::GLOBAL_PREFIX.$key], true, 512, JSON_THROW_ON_ERROR)['value'] ?? null;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function handleArguments(array $arguments): array
+    {
+        if ($this->hasArgumentsThatWouldBeFasterWithoutParallel()) {
+            return $this->runTestSuiteInSeries($arguments);
+        }
+
+        if (self::isEnabled()) {
+            exit($this->runTestSuiteInParallel($arguments));
+        }
+
+        if (self::isWorker()) {
+            return $this->runWorkerHandlers($arguments);
+        }
+
+        return $arguments;
+    }
+
+    /**
+     * @param  array<int, string>  $arguments
+     */
+    private function runTestSuiteInParallel(array $arguments): int
+    {
+        $handlers = array_filter(
+            array_map(fn (string $handler): object|string => Container::getInstance()->get($handler), self::HANDLERS),
+            fn (object|string $handler): bool => $handler instanceof HandlesArguments,
+        );
+
+        $filteredArguments = array_reduce(
+            $handlers,
+            fn (array $arguments, HandlesArguments $handler): array => $handler->handleArguments($arguments),
+            $arguments
+        );
+
+        $filteredArguments = $this->processTeamcityArguments($filteredArguments);
+
+        $exitCode = $this->paratestCommand()->run(new ArgvInput(array_values($filteredArguments)), new CleanConsoleOutput);
+
+        return CallsAddsOutput::execute($exitCode);
+    }
+
+    /**
+     * @param  array<int, string>  $arguments
+     * @return array<int, string>
+     */
+    private function runWorkerHandlers(array $arguments): array
+    {
+        $handlers = array_filter(
+            array_map(fn (string $handler): object|string => Container::getInstance()->get($handler), self::HANDLERS),
+            fn (object|string $handler): bool => $handler instanceof HandlersWorkerArguments,
+        );
+
+        return array_reduce(
+            $handlers,
+            fn (array $arguments, HandlersWorkerArguments $handler): array => $handler->handleWorkerArguments($arguments),
+            $arguments
+        );
+    }
+
+    private function paratestCommand(): Application
+    {
+        /** @var non-empty-string $rootPath */
+        $rootPath = TestSuite::getInstance()->rootPath;
+
+        $command = ParaTestCommand::applicationFactory($rootPath);
+        $command->setAutoExit(false);
+        $command->setName('Pest');
+        $command->setVersion(version());
+
+        return $command;
+    }
+
+    private function hasArgumentsThatWouldBeFasterWithoutParallel(): bool
+    {
+        $arguments = new ArgvInput;
+
+        return array_any(self::UNSUPPORTED_ARGUMENTS, fn (string|array $unsupportedArgument): bool => $arguments->hasParameterOption($unsupportedArgument));
+    }
+
+    /**
+     * @param  array<int, string>  $arguments
+     * @return array<int, string>
+     */
+    private function runTestSuiteInSeries(array $arguments): array
+    {
+        $arguments = $this->popArgument('--parallel', $arguments);
+
+        return $this->popArgument('-p', $arguments);
+    }
+
+    /**
+     * @param  string[]  $arguments
+     * @return string[]
+     */
+    public function processTeamcityArguments(array $arguments): array
+    {
+        $argv = new ArgvInput;
+        if ($argv->hasParameterOption('--teamcity')) {
+            $arguments[] = '--teamcity';
+        }
+
+        return $arguments;
+    }
+}

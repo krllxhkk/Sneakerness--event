@@ -19,6 +19,7 @@
         </div>
 
         <nav class="dashboard-nav">
+
             <a href="{{ route('organisator.dashboard') }}" class="actief">
                 Dashboard
             </a>
@@ -27,37 +28,33 @@
                 Evenementen
             </a>
 
-            <a href="#">
+            <a href="{{ route('organisator.tickets.index') }}">
                 Tickets
             </a>
 
-            <a href="#">
-                Bezoekers
-            </a>
+            
+<a href="{{ route('organisator.verkopers') }}">
+    Verkopers
+</a>
 
-            <a href="{{ route('verkopers.index') }}">
-                Verkopers
-            </a>
 
             <a href="{{ route('stands.index') }}">
                 Stands
             </a>
 
-            <a href="#">
-                Prijzen
-            </a>
         </nav>
 
         <form method="POST" action="{{ route('logout') }}" class="uitloggen-formulier">
+
             @csrf
 
             <button type="submit" class="uitloggen-knop">
                 UITLOGGEN
             </button>
+
         </form>
 
     </header>
-
 
     <div class="dashboard-layout">
 
@@ -80,30 +77,21 @@
                     Evenementen
                 </a>
 
-                <a href="#">
+                <a href="{{ route('organisator.tickets.index') }}">
                     Tickets
                 </a>
 
-                <a href="#">
-                    Bezoekers
-                </a>
-
-                <a href="{{ route('verkopers.index') }}">
-                    Verkopers
-                </a>
+                <a href="{{ route('organisator.verkopers') }}">
+    Verkopers
+</a>
 
                 <a href="{{ route('stands.index') }}">
                     Stands
                 </a>
 
-                <a href="#">
-                    Prijzen
-                </a>
-
             </nav>
 
         </aside>
-
 
         <!-- Dashboard inhoud -->
         <main class="dashboard-inhoud">
@@ -119,7 +107,6 @@
                 </span>
 
             </div>
-
 
             <!-- Statistieken -->
             <section class="statistieken">
@@ -174,9 +161,11 @@
 
             </section>
 
+            <!-- Dashboard blokken -->
             <section class="dashboard-blokken">
 
                 <div class="dashboard-blok tickets-tijdsloten">
+
                     <h2>Tickets per tijdslot</h2>
 
                     @foreach ($tickets as $ticket)
@@ -188,9 +177,11 @@
                             </span>
 
                             <div class="tijdslot-balk-achtergrond">
+
                                 <div class="tijdslot-balk"
-                                    style="width: {{ ($ticket->aantal_tickets_per_tijdslot / 410) * 100 }}%;">
+                                    style="width: {{ min(100, ($ticket->aantal_tickets_per_tijdslot / 410) * 100) }}%;">
                                 </div>
+
                             </div>
 
                             <span class="tijdslot-aantal">
@@ -203,11 +194,13 @@
                 </div>
 
                 <div class="dashboard-blok">
+
                     <h2>Verhuurde stands per type</h2>
 
                     <p class="geen-gegevens">
                         Er zijn nog geen standgegevens beschikbaar.
                     </p>
+
                 </div>
 
             </section>
@@ -216,15 +209,19 @@
             <section class="recente-sectie">
 
                 <div class="sectie-kop">
+
                     <h2>Recente ticketbestellingen</h2>
 
-                    <a href="#">
+                    <a href="{{ route('organisator.tickets.index') }}">
                         Alle tickets →
                     </a>
+
                 </div>
 
                 <div class="dashboard-tabel">
+
                     <table>
+
                         <thead>
                             <tr>
                                 <th>Naam</th>
@@ -238,13 +235,41 @@
                         </thead>
 
                         <tbody>
-                            <tr>
-                                <td colspan="7" class="lege-tabel">
-                                    Er zijn nog geen ticketbestellingen.
-                                </td>
-                            </tr>
+                            @forelse ($recenteBestellingen as $bestelling)
+                                <tr>
+                                    <td>{{ $bestelling->naam }}</td>
+
+                                    <td>{{ $bestelling->email }}</td>
+
+                                    <td>
+                                        {{ \Carbon\Carbon::parse($bestelling->datum)->translatedFormat('l d-m-Y') }}
+                                    </td>
+
+                                    <td>
+                                        {{ \Carbon\Carbon::parse($bestelling->tijdslot)->format('H:i') }}
+                                    </td>
+
+                                    <td>{{ $bestelling->aantal }}</td>
+
+                                    <td>
+                                        €{{ number_format($bestelling->totaalprijs, 2, ',', '.') }}
+                                    </td>
+
+                                    <td>
+                                        {{ ucfirst($bestelling->status) }}
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="lege-tabel">
+                                        Er zijn nog geen ticketbestellingen.
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
+
                     </table>
+
                 </div>
 
             </section>

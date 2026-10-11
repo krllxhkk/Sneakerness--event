@@ -1,0 +1,321 @@
+/* ========================================
+   SNEAKERNESS MAILBOX
+======================================== */
+
+.ticket-mailbox {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Inter', Arial, sans-serif;
+}
+
+.ticket-mailbox-knop {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    color: #eaff00;
+    border: 1px solid #383838;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.ticket-mailbox-knop:hover {
+    background: #292929;
+}
+
+.ticket-mailbox-badge {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eaff00;
+    color: #111111;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.ticket-mailbox-paneel {
+    position: absolute;
+    top: calc(100% + 14px);
+    right: 0;
+    z-index: 2000;
+    width: min(370px, 90vw);
+    max-height: 450px;
+    overflow-y: auto;
+    background: #181818;
+    color: #ffffff;
+    border: 1px solid #383838;
+    border-radius: 10px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    text-align: left;
+}
+
+.ticket-mailbox-paneel[hidden] {
+    display: none;
+}
+
+.ticket-mailbox-kop {
+    padding: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333333;
+}
+
+.ticket-mailbox-kop strong {
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.ticket-mailbox-kop span {
+    color: #999999;
+    font-size: 11px;
+}
+
+.ticket-mailbox-bericht {
+    display: block;
+    padding: 18px;
+    border-bottom: 1px solid #333333;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.ticket-mailbox-bericht:hover {
+    background: #252525;
+}
+
+.ticket-mailbox-ongelezen {
+    border-left: 3px solid #eaff00;
+}
+
+.ticket-mailbox-bericht-kop {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.ticket-mailbox-bericht-kop strong {
+    font-size: 13px;
+}
+
+.ticket-mailbox-bericht-kop span {
+    color: #eaff00;
+    font-size: 11px;
+}
+
+.ticket-mailbox-bericht small {
+    display: block;
+    margin-top: 8px;
+    color: #999999;
+}
+
+.ticket-mailbox-bericht p {
+    margin: 12px 0;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.ticket-mailbox-samenvatting {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 13px;
+    background: #101010;
+    border-radius: 6px;
+    color: #cccccc;
+    font-size: 11px;
+}
+
+.ticket-mailbox-openen {
+    display: block;
+    margin-top: 14px;
+    color: #eaff00;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.ticket-mailbox-leeg {
+    padding: 28px 18px;
+    text-align: center;
+    color: #cccccc;
+    font-size: 12px;
+}
+
+.ticket-mailbox-leeg small {
+    color: #999999;
+}
+
+@media (max-width: 600px) {
+    .ticket-mailbox-paneel {
+        position: fixed;
+        top: 75px;
+        left: 5vw;
+        right: 5vw;
+        width: 90vw;
+    }
+}
+
+
+/* =========================================
+   SNEAKERNESS - MAILBOX BERICHT
+========================================= */
+
+.bericht-pagina {
+    min-height: 100vh;
+    background: #0b0b0b;
+    padding: 140px 20px 70px;
+}
+
+.bericht-container {
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+/* TERUGKNOP */
+.bericht-terug {
+    color: #ccff00;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.bericht-terug:hover {
+    text-decoration: underline;
+}
+
+/* TITEL */
+.bericht-titel {
+    font-family: 'Oswald', sans-serif;
+    color: #ffffff;
+    font-size: 35px;
+    margin: 25px 0;
+}
+
+/* BERICHTKAART */
+.bericht-kaart {
+    background: #151515;
+    border: 1px solid #292929;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* GELE HEADER */
+.bericht-header {
+    background: #ccff00;
+    color: #000000;
+    padding: 22px;
+}
+
+.bericht-header h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px;
+    margin: 0;
+}
+
+.bericht-header p {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* INHOUD */
+.bericht-inhoud {
+    padding: 25px;
+}
+
+.bericht-onderwerp {
+    color: #ffffff;
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.bericht-meta {
+    color: #888888;
+    font-size: 12px;
+    line-height: 2;
+    margin-bottom: 25px;
+}
+
+.bericht-tekst {
+    color: #dddddd;
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+/* BESTELGEGEVENS */
+.bericht-gegevens {
+    border-top: 1px solid #333333;
+    padding-top: 20px;
+}
+
+.bericht-rij {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid #252525;
+    font-size: 13px;
+}
+
+.bericht-rij span {
+    color: #888888;
+}
+
+.bericht-rij strong {
+    color: #ffffff;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.bericht-rij .geel {
+    color: #ccff00;
+}
+
+/* TICKETNUMMERS */
+.bericht-subtitel {
+    color: #ffffff;
+    font-family: 'Oswald', sans-serif;
+    margin: 25px 0 10px;
+}
+
+.bericht-ticketnummer {
+    color: #ccff00;
+    font-size: 13px;
+    padding: 8px 0;
+    overflow-wrap: anywhere;
+}
+
+/* AFSLUITING */
+.bericht-afsluiting {
+    margin-top: 25px;
+}
+
+/* MOBIEL */
+@media (max-width: 600px) {
+    .bericht-pagina {
+        padding: 120px 16px 45px;
+    }
+
+    .bericht-inhoud {
+        padding: 18px;
+    }
+
+    .bericht-titel {
+        font-size: 28px;
+    }
+
+    .bericht-rij {
+        font-size: 12px;
+    }
+}
