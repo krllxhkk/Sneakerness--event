@@ -57,12 +57,12 @@
 
             <nav class="beheer-menu">
                 <a href="{{ route('organisator.dashboard') }}">Dashboard</a>
-                <a href="{{ route('events.index') }}">Evenementen</a>
+                <a href="{{ route('organisator.events') }}">Evenementen</a>
                 <a href="{{ route('organisator.tickets.index') }}" class="actief">Tickets</a>
                 <a href="{{ route('organisator.verkopers') }}">
     Verkopers
 </a>
-                <a href="{{ route('stands.index') }}">Stands</a>
+                <a href="{{ route('organisator.stands') }}">Stands</a>
             </nav>
 
         </aside>

@@ -22,10 +22,10 @@
 
         <nav class="dashboard-nav">
             <a href="{{ route('organisator.dashboard') }}">Dashboard</a>
-            <a href="{{ route('events.index') }}">Evenementen</a>
+            <a href="{{ route('organisator.events') }}">Evenementen</a>
             <a href="{{ route('organisator.tickets.index') }}" class="actief">Tickets</a>
             <a href="{{ route('verkopers.index') }}">Verkopers</a>
-            <a href="{{ route('stands.index') }}">Stands</a>
+            <a href="{{ route('organisator.stands') }}">Stands</a>
         </nav>
 
         <form method="POST" action="{{ route('logout') }}" class="uitloggen-formulier">

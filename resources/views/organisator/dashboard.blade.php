@@ -73,7 +73,7 @@
                     Dashboard
                 </a>
 
-                <a href="{{ route('events.index') }}">
+                <a href="{{ route('organisator.events') }}">
                     Evenementen
                 </a>
 
@@ -85,7 +85,7 @@
     Verkopers
 </a>
 
-                <a href="{{ route('stands.index') }}">
+                <a href="{{ route('organisator.stands') }}">
                     Stands
                 </a>
 

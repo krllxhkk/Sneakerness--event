@@ -163,5 +163,22 @@ Route::post('/organisator/tickets', [OrganisatorTicketController::class, 'store'
 |--------------------------------------------------------------------------
 */
 
+/*
+|--------------------------------------------------------------------------
+| Evenementen en stands beheren
+|--------------------------------------------------------------------------
+*/
+
+// Evenementen beheren als organisator
+Route::get('/organisator/events', [EventController::class, 'organisator'])
+    ->middleware(['auth', 'organisator'])
+    ->name('organisator.events');
+
+// Stands beheren als organisator
+Route::get('/organisator/stands', [StandController::class, 'organisator'])
+    ->middleware(['auth', 'organisator'])
+    ->name('organisator.stands');
+
+
 // Laad de bestaande routes voor authenticatie.
 require __DIR__ . '/auth.php';
