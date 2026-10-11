@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="nl">
 
@@ -76,6 +75,14 @@
     </header>
 
     <main class="main-container">
+
+        <!-- Foutmelding helemaal bovenaan -->
+        @if (session('error'))
+            <div class="ticket-error-alert" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <div class="page-header">
             <span class="page-subtitle">
                 SNEAKERNESS® ROTTERDAM 2026
@@ -183,24 +190,28 @@
         </section>
 
         <div class="actions has-back besteloverzicht-acties">
-            <!-- Terug naar gegevens met hetzelfde geselecteerde ticket -->
+            <!-- Terug naar gegevens -->
             <a href="{{ route('tickets.index', [
                 'dag' => $besteloverzicht['dag'],
                 'stap' => 3,
                 'ticket' => $besteloverzicht['ticket_id'],
-            ]) }}" class="btn-terug">
+            ]) }}"
+                class="btn-terug">
                 &larr; TERUG
             </a>
 
-            <!-- Bestelling afronden hoort bij de volgende feature -->
-            <button type="button" class="btn-volgende" disabled
-                title="Bestelling afronden wordt in de volgende feature toegevoegd">
-                TICKET KOPEN
-            </button>
+            <!-- Verstuur de bestelling -->
+            <form method="POST" action="{{ route('tickets.bestellen') }}">
+                @csrf
+
+                <button type="submit" class="btn-volgende">
+                    TICKET KOPEN
+                </button>
+            </form>
         </div>
 
         <p class="besteloverzicht-melding">
-            Je bestelling is nog niet geplaatst. De bevestiging wordt later toegevoegd.
+            Controleer je bestelling en klik op TICKET KOPEN om je bestelling af te ronden.
         </p>
     </main>
 
@@ -212,4 +223,3 @@
 </body>
 
 </html>
-

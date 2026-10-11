@@ -1,0 +1,225 @@
+/* =========================================
+   SNEAKERNESS - BEVESTIGING FIGMA DESIGN
+   Alleen voor de bevestigingspagina
+========================================= */
+
+.bevestiging-pagina {
+    min-height: 100vh;
+    padding: 140px 20px 70px;
+    background: #0b0b0b;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.figma-bevestiging {
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* SUCCES ICOON */
+.figma-vinkje {
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    border: 1px solid #ccff00;
+    background: rgba(204, 255, 0, 0.12);
+    color: #ccff00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+/* TITEL */
+.figma-bevestiging h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 25px;
+    font-weight: 400;
+    color: #ffffff;
+    margin: 0 0 6px;
+}
+
+.figma-omschrijving {
+    font-size: 11px;
+    color: #777777;
+    margin-bottom: 24px;
+    overflow-wrap: anywhere;
+}
+
+/* TICKETKAART */
+.figma-ticket {
+    width: 100%;
+    background: #111111;
+    border: 1px solid #202020;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: left;
+}
+
+/* GELE BOVENKANT */
+.figma-ticket-header {
+    background: #ccff00;
+    color: #000000;
+    padding: 16px 12px;
+    text-align: center;
+}
+
+.figma-ticket-header h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 19px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.figma-ticket-header h2 sup {
+    font-size: 8px;
+}
+
+.figma-ticket-header p {
+    font-size: 10px;
+    margin: 2px 0 0;
+}
+
+/* TICKETGEGEVENS */
+.figma-ticket-inhoud {
+    padding: 18px 16px 14px;
+}
+
+.figma-rij {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 0;
+    font-size: 11px;
+}
+
+.figma-rij span {
+    color: #777777;
+}
+
+.figma-rij strong {
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.figma-totaal {
+    margin-top: 10px;
+    padding-top: 16px;
+    border-top: 1px solid #242424;
+}
+
+.figma-totaal strong {
+    color: #ccff00;
+    font-size: 14px;
+}
+
+/* MEERDERE TICKETS */
+.figma-extra-tickets {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #242424;
+}
+
+.figma-extra-tickets span {
+    color: #777777;
+    font-size: 11px;
+}
+
+.figma-extra-tickets p {
+    color: #ffffff;
+    font-size: 11px;
+    margin-top: 8px;
+}
+
+/* DECORATIEF BLOKJESSYMBOOL */
+.figma-qr-gedeelte {
+    border-top: 1px solid #242424;
+    padding: 18px;
+    display: flex;
+    justify-content: center;
+}
+
+.figma-qr-symbool {
+    display: grid;
+    grid-template-columns: repeat(3, 10px);
+    gap: 4px;
+    background: #1b1b1b;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.figma-qr-symbool span {
+    width: 10px;
+    height: 10px;
+    background: #ffffff;
+    border-radius: 2px;
+}
+
+.figma-qr-symbool span:nth-child(5),
+.figma-qr-symbool span:nth-child(8) {
+    background: transparent;
+}
+
+/* KNOPPEN */
+.figma-knoppen {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-top: 20px;
+}
+
+.figma-knop-geel,
+.figma-knop-outline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 36px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.figma-knop-geel {
+    background: #ccff00;
+    color: #000000;
+}
+
+.figma-knop-geel:hover {
+    background: #b9e600;
+}
+
+.figma-knop-outline {
+    border: 1px solid #ccff00;
+    color: #ccff00;
+    background: transparent;
+}
+
+.figma-knop-outline:hover {
+    background: rgba(204, 255, 0, 0.08);
+}
+
+/* MOBIEL */
+@media (max-width: 600px) {
+    .bevestiging-pagina {
+        padding: 120px 16px 45px;
+    }
+
+    .figma-bevestiging {
+        max-width: 100%;
+    }
+
+    .figma-bevestiging h1 {
+        font-size: 24px;
+    }
+}

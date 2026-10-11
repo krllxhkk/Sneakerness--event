@@ -1,14 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\StandController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\VerkoperController;
 use App\Http\Controllers\ContactpersoonController;
-use App\Http\Controllers\TicketController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MailboxController;
 use App\Http\Controllers\OrganisatorDashboardController;
 use App\Http\Controllers\OrganisatorTicketController;
+use App\Http\Controllers\StandController;
+use App\Http\Controllers\TicketController;
+use App\Http\Controllers\VerkoperController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,6 @@ Route::get('/', [HomeController::class, 'index'])
 Route::get('/tickets', [TicketController::class, 'index'])
     ->name('tickets.index');
 
-
 // Controleer de ingevulde gegevens van de bezoeker.
 Route::post('/tickets/gegevens', [TicketController::class, 'gegevensOpslaan'])
     ->name('tickets.gegevens');
@@ -38,6 +38,26 @@ Route::post('/tickets/gegevens', [TicketController::class, 'gegevensOpslaan'])
 // Toon het besteloverzicht van de bezoeker.
 Route::get('/tickets/overzicht', [TicketController::class, 'overzicht'])
     ->name('tickets.overzicht');
+
+// Verwerk de bestelling en maak de gekochte tickets aan.
+Route::post('/tickets/bestellen', [TicketController::class, 'bestellen'])
+    ->name('tickets.bestellen');
+
+// Toon de bevestigingspagina na een succesvolle bestelling.
+Route::get('/tickets/bevestiging', [TicketController::class, 'bevestiging'])
+    ->name('tickets.bevestiging');
+
+/*
+|--------------------------------------------------------------------------
+| Mailbox voor bezoekers
+|--------------------------------------------------------------------------
+*/
+
+// Open een persoonlijk bevestigingsbericht uit de mailbox.
+// Dit werkt met en zonder login in dezelfde browsersessie.
+Route::get('/mailbox/bericht/{id}', [MailboxController::class, 'show'])
+    ->whereNumber('id')
+    ->name('mailbox.show');
 
 /*
 |--------------------------------------------------------------------------
