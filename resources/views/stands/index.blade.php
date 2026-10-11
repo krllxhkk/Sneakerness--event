@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="nl">
 
@@ -34,13 +33,31 @@
             </p>
         </section>
 
-
+        <!-- Succesmelding -->
         @if (session('success'))
-            <p class="stand-success">{{ session('success') }}</p>
+            <p class="stand-success" role="status">
+                {{ session('success') }}
+            </p>
         @endif
 
-        @if ($errors->has('stand'))
-            <p class="stand-error">{{ $errors->first('stand') }}</p>
+        <!-- Foutmelding bij een mislukte reservering -->
+        @if ($errors->any())
+            <div class="reservation-alert" id="reservationAlert" role="alert">
+                <div class="reservation-alert-icon">!</div>
+
+                <div class="reservation-alert-content">
+                    <strong>RESERVERING MISLUKT</strong>
+
+                    @foreach ($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
+                </div>
+
+                <button type="button" class="reservation-alert-close"
+                    onclick="document.getElementById('reservationAlert').remove()" aria-label="Melding sluiten">
+                    &times;
+                </button>
+            </div>
         @endif
 
         <!-- Overzicht van alle stands -->
@@ -58,9 +75,13 @@
                             </span>
 
                             @if ($stand->VerhuurdStatus)
-                                <span class="status rented">VERHUURD</span>
+                                <span class="status rented">
+                                    GERESERVEERD
+                                </span>
                             @else
-                                <span class="status available">BESCHIKBAAR</span>
+                                <span class="status available">
+                                    BESCHIKBAAR
+                                </span>
                             @endif
                         </div>
 
@@ -79,18 +100,22 @@
 
                             <div class="stand-detail">
                                 <span>STANDNUMMER</span>
-                                <strong>{{ $stand->Standnummer ?? '-' }}</strong>
+                                <strong>
+                                    {{ $stand->Standnummer ?? '-' }}
+                                </strong>
                             </div>
 
                             <div class="stand-detail">
                                 <span>LOCATIE</span>
-                                <strong>{{ $stand->Locatie ?? '-' }}</strong>
+                                <strong>
+                                    {{ $stand->Locatie ?? '-' }}
+                                </strong>
                             </div>
 
                             <div class="stand-detail">
                                 <span>STATUS</span>
                                 <strong>
-                                    {{ $stand->VerhuurdStatus ? 'Verhuurd' : 'Beschikbaar' }}
+                                    {{ $stand->VerhuurdStatus ? 'Gereserveerd' : 'Beschikbaar' }}
                                 </strong>
                             </div>
 
@@ -129,6 +154,46 @@
                             </div>
 
                         </div>
+
+                        <!-- Reserveringsknoppen voor verkopers -->
+                        @auth
+                            @if (auth()->user()->rol === 'verkoper')
+
+                                @if (!$stand->VerhuurdStatus)
+
+                                    <!-- Happy Scenario -->
+                                    <button type="button" class="save-stand-btn" style="display: block; width: 100%; margin-top: 20px;"
+                                        onclick="openReserveerModal({{ $stand->Id }})">
+                                        Reserveren
+                                    </button>
+
+                                @elseif (
+                                        $stand->verkoper &&
+                                        (int) $stand->verkoper->UserId === (int) auth()->id()
+                                    )
+
+                                    <!-- Unhappy Scenario: eigen reservering opnieuw proberen -->
+                                    <form action="{{ route('stands.reserveren', ['stand' => $stand->Id]) }}" method="POST">
+                                        @csrf
+
+                                        <button type="submit" class="save-stand-btn" style="display: block; width: 100%; margin-top: 20px;">
+                                            Reserveren
+                                        </button>
+                                    </form>
+
+                                @else
+
+                                    <!-- Een andere verkoper heeft deze stand -->
+                                    <button type="button" class="save-stand-btn" disabled
+                                        style="display: block; width: 100%; margin-top: 20px; opacity: 0.5; cursor: not-allowed;">
+                                        Al gereserveerd
+                                    </button>
+
+                                @endif
+
+                            @endif
+                        @endauth
+
                     </article>
 
                 @endforeach
@@ -137,7 +202,7 @@
 
         @else
 
-            <!-- Melding als er geen stands zijn -->
+            <!-- Geen stands gevonden -->
             <section class="no-stands">
                 <div class="no-stands-icon">!</div>
 
@@ -153,135 +218,119 @@
 
     </main>
 
-    <!-- Pop-up voor het toevoegen van een stand -->
-    <div id="standModal" class="stand-modal"
-        role="dialog" aria-modal="true"
-        aria-labelledby="standModalTitle">
+    <!-- Pop-up voor een nieuwe reservering -->
+    @auth
+        @if (auth()->user()->rol === 'verkoper')
 
-        <div class="stand-modal-content">
+            <div id="reserveerModal" class="stand-modal" role="dialog" aria-modal="true" aria-labelledby="reserveerModalTitle"
+                style="display: none;">
 
-            <button type="button" class="stand-modal-close"
-                onclick="closeStandModal()" aria-label="Sluiten">
-                &times;
-            </button>
+                <div class="stand-modal-content">
 
-            <h2 id="standModalTitle">STAND TOEVOEGEN</h2>
+                    <button type="button" class="stand-modal-close" onclick="closeReserveerModal()" aria-label="Sluiten">
+                        &times;
+                    </button>
 
-            <form id="standForm" action="{{ route('stands.store') }}" method="POST">
-                @csrf
+                    <h2 id="reserveerModalTitle">
+                        STAND RESERVEREN
+                    </h2>
 
-                <div class="stand-form-group">
-                    <label for="standnummer">Standnummer *</label>
+                    <p>
+                        Vul je contactgegevens in om deze stand te reserveren.
+                    </p>
 
-                    <input type="text" id="standnummer" name="Standnummer"
-                        value="{{ old('Standnummer') }}" maxlength="20" required>
+                    <form id="reserveerForm" method="POST">
+                        @csrf
 
-                    @error('Standnummer')
-                        <span class="stand-field-error">{{ $message }}</span>
-                    @enderror
+                        <div class="stand-form-group">
+                            <label for="reserveerNaam">Naam *</label>
+
+                            <input type="text" id="reserveerNaam" name="Naam" value="{{ old('Naam', auth()->user()->name) }}"
+                                maxlength="100" required>
+                        </div>
+
+                        <div class="stand-form-group">
+                            <label for="reserveerEmail">E-mailadres *</label>
+
+                            <input type="email" id="reserveerEmail" name="Email"
+                                value="{{ old('Email', auth()->user()->email) }}" maxlength="150" required>
+                        </div>
+
+                        <div class="stand-form-group">
+                            <label for="reserveerTelefoon">
+                                Telefoonnummer *
+                            </label>
+
+                            <input type="tel" id="reserveerTelefoon" name="Telefoonnummer" value="{{ old('Telefoonnummer') }}"
+                                maxlength="20" required>
+                        </div>
+
+                        <button type="submit" class="save-stand-btn">
+                            Reservering bevestigen
+                        </button>
+
+                    </form>
+
                 </div>
+            </div>
 
-                <div class="stand-form-group">
-                    <label for="standnaam">Standnaam *</label>
-
-                    <input type="text" id="standnaam" name="Standnaam"
-                        value="{{ old('Standnaam') }}" maxlength="100" required>
-
-                    @error('Standnaam')
-                        <span class="stand-field-error">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="stand-form-group">
-                    <label for="locatie">Locatie *</label>
-
-                    <input type="text" id="locatie" name="Locatie"
-                        value="{{ old('Locatie') }}" maxlength="100" required>
-
-                    @error('Locatie')
-                        <span class="stand-field-error">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="stand-form-group">
-                    <label for="prijs">Prijs (€) *</label>
-
-                    <input type="number" id="prijs" name="Prijs"
-                        value="{{ old('Prijs') }}"
-                        min="0" max="999999.99" step="0.01" required>
-
-                    @error('Prijs')
-                        <span class="stand-field-error">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="stand-form-group">
-                    <label for="kwaliteitsklasse">Kwaliteitsklasse</label>
-
-                    <input type="text" id="kwaliteitsklasse"
-                        name="Kwaliteitsklasse"
-                        value="{{ old('Kwaliteitsklasse') }}" maxlength="30">
-
-                    @error('Kwaliteitsklasse')
-                        <span class="stand-field-error">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <button type="submit" class="save-stand-btn">
-                    Opslaan
-                </button>
-
-            </form>
-
-        </div>
-    </div>
+        @endif
+    @endauth
 
     @include('partials.footer')
 
     <script>
-        const standModal = document.getElementById('standModal');
-        const standForm = document.getElementById('standForm');
+        const reserveerModal = document.getElementById('reserveerModal');
+        const reserveerForm = document.getElementById('reserveerForm');
 
-        // Open de pop-up met lege velden
-        function openStandModal() {
-            standForm.reset();
+        // Open het formulier voor de gekozen stand
+        function openReserveerModal(standId) {
+            if (!reserveerModal || !reserveerForm) {
+                return;
+            }
 
-            standForm.querySelectorAll('input:not([type="hidden"])').forEach(input => {
-                input.value = '';
-            });
+            reserveerForm.action =
+                "{{ route('stands.reserveren', ['stand' => '__STAND_ID__']) }}"
+                    .replace('__STAND_ID__', standId);
 
-            // Verberg oude foutmeldingen
-            standModal.querySelectorAll('.stand-field-error').forEach(fout => {
-                fout.style.display = 'none';
-            });
-
-            standModal.style.display = 'flex';
-            document.getElementById('standnummer').focus();
+            reserveerModal.style.display = 'flex';
+            document.getElementById('reserveerNaam').focus();
         }
 
         // Sluit de pop-up
-        function closeStandModal() {
-            standModal.style.display = 'none';
+        function closeReserveerModal() {
+            if (reserveerModal) {
+                reserveerModal.style.display = 'none';
+            }
         }
 
-        // Sluit de pop-up als je buiten het formulier klikt
-        standModal.addEventListener('click', function(event) {
-            if (event.target === standModal) {
-                closeStandModal();
+        // Sluiten bij klikken buiten de pop-up
+        if (reserveerModal) {
+            reserveerModal.addEventListener('click', function (event) {
+                if (event.target === reserveerModal) {
+                    closeReserveerModal();
+                }
+            });
+        }
+
+        // Sluiten met Escape
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                closeReserveerModal();
             }
         });
 
-        // Sluit de pop-up met Escape
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape' && standModal.style.display === 'flex') {
-                closeStandModal();
-            }
-        });
+        // Voorkom dubbel klikken tijdens het verzenden
+        if (reserveerForm) {
+            reserveerForm.addEventListener('submit', function () {
+                const knop = reserveerForm.querySelector(
+                    'button[type="submit"]'
+                );
 
-        // Houd de pop-up open als er fouten zijn
-        @if ($errors->any())
-            standModal.style.display = 'flex';
-        @endif
+                knop.disabled = true;
+                knop.textContent = 'Reservering verwerken...';
+            });
+        }
     </script>
 
 </body>

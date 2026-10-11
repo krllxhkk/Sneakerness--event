@@ -525,3 +525,167 @@ body {
         width: 100%;
     }
 }
+
+
+/* Standkaarten en knoppen op kleinere schermen */
+.stand-card {
+    min-width: 0;
+}
+
+.stand-card .save-stand-btn {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 20px;
+}
+
+.stand-card form {
+    width: 100%;
+}
+
+.stand-modal {
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.stand-modal-content {
+    box-sizing: border-box;
+    max-width: 100%;
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
+}
+
+.stand-form-group input {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+}
+
+@media (max-width: 768px) {
+    .stands-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .stand-card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .stand-modal-content {
+        width: 100%;
+        padding: 24px;
+    }
+
+    .stand-detail {
+        gap: 12px;
+    }
+
+    .stand-detail strong {
+        overflow-wrap: anywhere;
+        text-align: right;
+    }
+}
+
+@media (max-width: 480px) {
+    .stands-container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .stand-modal-content {
+        padding: 20px;
+    }
+
+    .stand-card {
+        padding: 20px;
+    }
+}
+
+/* Foutmelding bij stand reserveren */
+.reservation-alert {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 28px 0;
+    padding: 22px 24px;
+    background: #171111;
+    border: 1px solid #733333;
+    border-left: 4px solid #ff5555;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.reservation-alert-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255, 85, 85, 0.12);
+    color: #ff6666;
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.reservation-alert-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.reservation-alert-content strong {
+    display: block;
+    margin-bottom: 6px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.6px;
+    color: #ff6666;
+}
+
+.reservation-alert-content p {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #e5dada;
+}
+
+.reservation-alert-close {
+    align-self: flex-start;
+    flex-shrink: 0;
+    padding: 0 4px;
+    background: transparent;
+    border: none;
+    color: #aaa;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.reservation-alert-close:hover {
+    color: #fff;
+}
+
+@media (max-width: 600px) {
+    .reservation-alert {
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .reservation-alert-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 21px;
+    }
+
+    .reservation-alert-content strong {
+        font-size: 17px;
+    }
+
+    .reservation-alert-content p {
+        font-size: 13px;
+    }
+}

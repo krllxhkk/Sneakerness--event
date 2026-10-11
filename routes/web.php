@@ -73,6 +73,12 @@ Route::get('/stands', [StandController::class, 'index'])
 // Stand toevoegen
 Route::post('/stands', [StandController::class, 'store'])
     ->name('stands.store');
+
+// Stand reserveren als ingelogde verkoper
+Route::post('/stands/{stand}/reserveren', [StandController::class, 'reserveren'])
+    ->middleware('auth')
+    ->whereNumber('stand')
+    ->name('stands.reserveren');
 /*
 |--------------------------------------------------------------------------
 | Evenementen
@@ -96,11 +102,11 @@ Route::post('/events', [EventController::class, 'store'])
 // Toon het overzicht van verkopers.
 Route::get('/verkopers', [VerkoperController::class, 'index'])
     ->name('verkopers.index');
-    // Overzicht van verkopers en contactpersonen voor de organisator.
+// Overzicht van verkopers en contactpersonen voor de organisator.
 Route::get('/organisator/verkopers', [VerkoperController::class, 'organisator'])
     ->middleware(['auth', 'organisator'])
     ->name('organisator.verkopers');
-    // Sla een nieuwe verkoper op.
+// Sla een nieuwe verkoper op.
 Route::post('/verkopers/toevoegen', [VerkoperController::class, 'store'])
     ->middleware(['auth', 'organisator'])
     ->name('verkopers.store');
@@ -115,7 +121,7 @@ Route::post('/verkopers/toevoegen', [VerkoperController::class, 'store'])
 Route::get('/contactpersonen', [ContactpersoonController::class, 'index'])
     ->name('contactpersonen.index');
 
- // Sla een nieuwe contactpersoon op.
+// Sla een nieuwe contactpersoon op.
 Route::post('/contactpersonen/toevoegen', [ContactpersoonController::class, 'store'])
     ->middleware(['auth', 'organisator'])
     ->name('contactpersonen.store');
@@ -162,6 +168,13 @@ Route::post('/organisator/tickets', [OrganisatorTicketController::class, 'store'
 | Inloggen en registreren
 |--------------------------------------------------------------------------
 */
+
+// Stand reserveren als ingelogde verkoper
+Route::post('/stands/{stand}/reserveren', [StandController::class, 'reserveren'])
+    ->middleware('auth')
+    ->whereNumber('stand')
+    ->name('stands.reserveren');
+
 
 /*
 |--------------------------------------------------------------------------

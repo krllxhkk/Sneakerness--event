@@ -6,6 +6,9 @@ use App\Http\Requests\StoreStandRequest;
 use App\Models\Stand;
 use App\Providers\Stands\Create;
 use App\Providers\Stands\Index;
+use App\Providers\Stands\Reservering;
+use Illuminate\Http\Request;
+
 
 class StandController extends Controller
 {
@@ -31,5 +34,11 @@ class StandController extends Controller
     public function store(StoreStandRequest $request, Create $create)
     {
         return $create->create($request->validated());
+    }
+
+    // Verwerk de reservering van een stand
+    public function reserveren(Request $request, int $stand, Reservering $reservering)
+    {
+        return $reservering->reserveren($request, $stand);
     }
 }
