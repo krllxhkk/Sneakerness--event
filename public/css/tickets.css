@@ -868,3 +868,313 @@ header .logo {
         display: flex;
     }
 }
+
+
+/* =========================================
+   TICKET KOPEN - TIJDSLOT SELECTEREN
+   ========================================= */
+
+.timeslot-selecteerbaar {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.timeslot-selecteerbaar:hover,
+.timeslot-selecteerbaar:focus-visible {
+    border-color: #ccff00;
+    background-color: #1a1e14;
+    outline: 2px solid #ccff00;
+    outline-offset: 2px;
+}
+
+/* =========================================
+   TICKET KOPEN - GEGEVENSFORMULIER
+   ========================================= */
+
+.ticket-formulier {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.formulier-groep {
+    margin-bottom: 25px;
+}
+
+.formulier-groep>label,
+.formulier-label {
+    display: block;
+    margin-bottom: 12px;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.formulier-groep>input {
+    width: 100%;
+    padding: 15px;
+    background-color: #141414;
+    border: 1px solid #333333;
+    border-radius: 6px;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+}
+
+.formulier-groep>input:focus {
+    outline: 2px solid #ccff00;
+    border-color: #ccff00;
+}
+
+.formulier-groep input::placeholder {
+    color: #777777;
+}
+
+.formulier-hint {
+    margin-top: 10px;
+    color: #888888;
+    font-size: 0.8rem;
+}
+
+/* Aantal tickets */
+
+.aantal-bediening {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    background-color: #141414;
+    border: 1px solid #333333;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.aantal-knop {
+    width: 52px;
+    height: 52px;
+    background-color: #1e1e1e;
+    border: none;
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.aantal-knop:hover {
+    background-color: #ccff00;
+    color: #000000;
+}
+
+.aantal-bediening input {
+    width: 75px;
+    height: 52px;
+    text-align: center;
+    background-color: #141414;
+    border: none;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.aantal-bediening input:focus {
+    outline: 2px solid #ccff00;
+}
+
+/* Betaalmethoden */
+
+.betaalmethoden {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.betaalmethode-kaart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22px;
+    background-color: #141414;
+    border: 1px solid #333333;
+    border-radius: 6px;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.betaalmethode-kaart:has(input:checked) {
+    border-color: #ccff00;
+    background-color: #1a1e14;
+    color: #ccff00;
+}
+
+.betaalmethode-kaart input {
+    margin-right: 10px;
+    accent-color: #ccff00;
+}
+
+/* Prijsberekening */
+
+.prijs-samenvatting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    padding: 25px;
+    background-color: #141414;
+    border: 1px solid #333333;
+    border-radius: 6px;
+}
+
+.prijs-samenvatting span {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.prijs-samenvatting strong {
+    color: #ccff00;
+    font-family: 'Oswald', sans-serif;
+    font-size: 2rem;
+}
+
+.foutenlijst {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.foutenlijst li+li {
+    margin-top: 8px;
+}
+
+.logout-formulier {
+    display: inline;
+}
+
+/* Mobiel */
+
+@media (max-width: 768px) {
+    .ticket-formulier {
+        width: 100%;
+    }
+
+    .betaalmethoden {
+        grid-template-columns: 1fr;
+    }
+
+    .prijs-samenvatting {
+        gap: 15px;
+    }
+
+    .stepper {
+        gap: 12px;
+    }
+
+    .step-label {
+        font-size: 0.65rem;
+    }
+
+    .main-container {
+        padding: 0 15px;
+    }
+}
+
+
+/* =========================================
+   STAP 4 - BESTELOVERZICHT
+   ========================================= */
+
+.besteloverzicht-kaart {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #141414;
+    border: 1px solid #333333;
+    border-radius: 8px;
+}
+
+.besteloverzicht-titel {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    color: #ccff00;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.5rem;
+    border-bottom: 1px solid #333333;
+}
+
+.besteloverzicht-regel {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 13px 0;
+    border-bottom: 1px solid #252525;
+}
+
+.besteloverzicht-regel span {
+    color: #999999;
+    font-size: 0.9rem;
+}
+
+.besteloverzicht-regel strong {
+    color: #ffffff;
+    font-size: 0.9rem;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.besteloverzicht-totaal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 2px solid #ccff00;
+}
+
+.besteloverzicht-totaal span {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.besteloverzicht-totaal strong {
+    color: #ccff00;
+    font-family: 'Oswald', sans-serif;
+    font-size: 2rem;
+}
+
+.besteloverzicht-acties {
+    max-width: 700px;
+}
+
+.besteloverzicht-acties .btn-volgende:disabled {
+    background-color: #8b9b48;
+    color: #222222;
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.besteloverzicht-melding {
+    max-width: 700px;
+    margin: 18px auto;
+    color: #999999;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .besteloverzicht-kaart {
+        padding: 20px;
+    }
+
+    .besteloverzicht-regel {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .besteloverzicht-regel strong {
+        text-align: left;
+    }
+}
