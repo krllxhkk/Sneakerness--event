@@ -21,27 +21,54 @@
             SNEAKERNESS<span>®</span>
         </div>
 
-        <nav class="dashboard-nav">
-            <a href="{{ route('organisator.dashboard') }}">Dashboard</a>
-            <a href="{{ route('organisator.events') }}">Evenementen</a>
-            <a href="{{ route('organisator.tickets.index') }}" class="actief">Tickets</a>
+        <!-- Hamburgermenu voor kleine schermen -->
+        <button
+            type="button"
+            class="burger-menu"
+            id="burgerMenu"
+            aria-label="Open navigatiemenu"
+            aria-controls="mobielMenu"
+            aria-expanded="false"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- Navigatie -->
+        <nav class="dashboard-nav" id="mobielMenu">
+            <a href="{{ route('organisator.dashboard') }}">
+                Dashboard
+            </a>
+
+            <a href="{{ route('organisator.events') }}">
+                Evenementen
+            </a>
+
+            <a href="{{ route('organisator.tickets.index') }}" class="actief">
+                Tickets
+            </a>
+
             <a href="{{ route('organisator.verkopers') }}">
-    Verkopers
-</a>
-            <a href="{{ route('organisator.stands') }}">Stands</a>
+                Verkopers
+            </a>
+
+            <a href="{{ route('organisator.stands') }}">
+                Stands
+            </a>
         </nav>
 
         <!-- Uitloggen -->
-        <form method="POST"
-              action="{{ route('logout') }}"
-              class="uitloggen-formulier">
-
+        <form
+            method="POST"
+            action="{{ route('logout') }}"
+            class="uitloggen-formulier"
+        >
             @csrf
 
             <button type="submit" class="uitloggen-knop">
                 UITLOGGEN
             </button>
-
         </form>
 
     </header>
@@ -56,13 +83,27 @@
             <h2>Beheer Panel</h2>
 
             <nav class="beheer-menu">
-                <a href="{{ route('organisator.dashboard') }}">Dashboard</a>
-                <a href="{{ route('organisator.events') }}">Evenementen</a>
-                <a href="{{ route('organisator.tickets.index') }}" class="actief">Tickets</a>
+
+                <a href="{{ route('organisator.dashboard') }}">
+                    Dashboard
+                </a>
+
+                <a href="{{ route('organisator.events') }}">
+                    Evenementen
+                </a>
+
+                <a href="{{ route('organisator.tickets.index') }}" class="actief">
+                    Tickets
+                </a>
+
                 <a href="{{ route('organisator.verkopers') }}">
-    Verkopers
-</a>
-                <a href="{{ route('organisator.stands') }}">Stands</a>
+                    Verkopers
+                </a>
+
+                <a href="{{ route('organisator.stands') }}">
+                    Stands
+                </a>
+
             </nav>
 
         </aside>
@@ -79,8 +120,10 @@
                 </div>
 
                 <!-- Nieuw ticket toevoegen -->
-                <a href="{{ route('organisator.tickets.create') }}"
-                   class="toevoegen-knop">
+                <a
+                    href="{{ route('organisator.tickets.create') }}"
+                    class="toevoegen-knop"
+                >
                     TICKET TOEVOEGEN
                 </a>
 
@@ -191,13 +234,14 @@
 
     </div>
 
-    <!-- JavaScript voor het zoeken van tickets -->
     <script>
-        // Zoekveld en tabelrijen ophalen.
+        // =====================================
+        // TICKETS ZOEKEN
+        // =====================================
+
         const zoekveld = document.getElementById('ticketsZoeken');
         const rijen = document.querySelectorAll('#ticketsRijen tr');
 
-        // Filter de tickets tijdens het typen.
         zoekveld.addEventListener('input', function () {
             const zoektekst = this.value.toLowerCase();
 
@@ -209,6 +253,31 @@
                     : 'none';
             });
         });
+
+
+        // =====================================
+        // HAMBURGERMENU
+        // =====================================
+
+        const burgerMenu = document.getElementById('burgerMenu');
+        const mobielMenu = document.getElementById('mobielMenu');
+
+        burgerMenu.addEventListener('click', function () {
+            const isOpen = mobielMenu.classList.toggle('menu-open');
+
+            burgerMenu.setAttribute(
+                'aria-expanded',
+                String(isOpen)
+            );
+
+            burgerMenu.setAttribute(
+                'aria-label',
+                isOpen
+                    ? 'Sluit navigatiemenu'
+                    : 'Open navigatiemenu'
+            );
+        });
+
     </script>
 
 </body>
