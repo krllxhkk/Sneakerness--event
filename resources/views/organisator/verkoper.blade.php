@@ -12,7 +12,7 @@
 </head>
 
 <body>
-
+<!-- Navigatiebalk met het hamburgermenu -->
     <header class="dashboard-header">
 
         
