@@ -43,7 +43,7 @@ class ContactpersoonController extends Controller
             return redirect()
                 ->route('organisator.verkopers')
                 ->withInput()
-                ->with('error', 'De contactpersoon kon niet worden toegevoegd.');
+                ->with('error', 'De verkoper kon niet worden opgeslagen door geen verbinding met de database.');
         }
     }
 
@@ -79,7 +79,7 @@ class ContactpersoonController extends Controller
 
             return redirect()
                 ->route('organisator.verkopers')
-                ->with('error', 'De contactpersoon kon niet worden gekoppeld aan de verkoper.');
+            ->with('error', 'De verkoper kon niet worden opgeslagen door geen verbinding met de database.');
         }
     }
 

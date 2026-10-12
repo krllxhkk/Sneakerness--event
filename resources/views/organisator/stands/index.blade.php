@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="nl">
 
@@ -81,7 +82,9 @@
 
             @if ($errors->any())
                 <div class="melding-fout" role="alert">
-                    Controleer de ingevulde gegevens.
+                    @foreach ($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
                 </div>
             @endif
 
@@ -104,8 +107,8 @@
                     <tbody>
                         @forelse ($stands as $stand)
                             <tr>
-                                <td>ST-{{ str_pad($stand->Id, 3, '0', STR_PAD_LEFT) }}</td>
-                                <td>{{ $stand->Standnummer ?? '-' }}</td>
+                                <td>{{ $stand->Id }}</td>
+                                <td>ST-{{ str_pad($stand->Standnummer ?? $stand->Id, 3, '0', STR_PAD_LEFT) }}</td>
                                 <td class="beheer-naam">{{ $stand->Standnaam ?? '-' }}</td>
                                 <td>{{ $stand->Locatie ?? '-' }}</td>
                                 <td>{{ $stand->StandType ?? '-' }}</td>
@@ -156,15 +159,7 @@
             <form action="{{ route('stands.store') }}" method="POST">
                 @csrf
 
-                <div class="form-groep">
-                    <label for="standnummer">Standnummer</label>
-                    <input type="text" id="standnummer" name="Standnummer"
-                           value="{{ old('Standnummer') }}"
-                           maxlength="20" required>
-                    @error('Standnummer')
-                        <span class="formulier-fout">{{ $message }}</span>
-                    @enderror
-                </div>
+                <!-- Standnummer wordt automatisch aangemaakt -->
 
                 <div class="form-groep">
                     <label for="standnaam">Standnaam</label>

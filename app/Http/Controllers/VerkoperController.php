@@ -50,7 +50,8 @@ class VerkoperController extends Controller
             'contactpersonenFout'
         ));
     }
-    // Toon verkopers en contactpersonen voor de organisator
+
+    // Toon het overzicht voor de organisator
     public function organisator()
     {
         $verkoperModel = new Verkoper();
@@ -89,35 +90,35 @@ class VerkoperController extends Controller
             'contactpersonenFout'
         ));
     }
-// Sla een nieuwe verkoper op
-public function store(Request $request)
-{
-    $gegevens = $request->validate([
-        'Naam' => 'required|string|max:100',
-        'SpecialeStatus' => 'nullable|string|max:50',
-        'VerkooptSoort' => 'required|string|max:100',
-        'StandType' => 'required|string|max:10',
-        'Dagen' => 'required|string|max:50',
-    ]);
 
-    try {
-        $verkoperModel = new Verkoper();
-        $verkoperModel->store($gegevens);
-
-        return redirect()
-            ->route('organisator.verkopers')
-            ->with('success', 'De verkoper is succesvol toegevoegd.');
-    } catch (\Throwable $e) {
-        Log::error('Databasefout bij toevoegen van verkoper.', [
-            'message' => $e->getMessage(),
+    // Sla een nieuwe verkoper op
+    public function store(Request $request)
+    {
+        $gegevens = $request->validate([
+            'Naam' => 'required|string|max:100',
+            'SpecialeStatus' => 'nullable|string|max:50',
+            'VerkooptSoort' => 'required|string|max:100',
+            'StandType' => 'required|string|max:10',
+            'Dagen' => 'required|string|max:50',
         ]);
 
-        return redirect()
-            ->route('organisator.verkopers')
-            ->withInput()
-            ->with('error', 'De verkoper kon niet worden toegevoegd door een probleem met de databaseverbinding.');
+        try {
+            $verkoperModel = new Verkoper();
+            $verkoperModel->store($gegevens);
+
+            return redirect()
+                ->route('organisator.verkopers')
+                ->with('success', 'De verkoper is succesvol toegevoegd.');
+        } catch (\Throwable $e) {
+            // Log de fout en toon een melding aan de gebruiker
+            Log::error('Databasefout bij toevoegen van verkoper.', [
+                'message' => $e->getMessage(),
+            ]);
+
+            return redirect()
+                ->route('organisator.verkopers')
+                ->withInput()
+                ->with('error', 'De verkoper kon niet worden opgeslagen door geen verbinding met de database.');
+        }
     }
-}
-
-
 }
