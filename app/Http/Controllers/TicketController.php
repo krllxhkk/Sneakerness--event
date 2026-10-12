@@ -335,7 +335,7 @@ class TicketController extends Controller
              * om een databasefout te simuleren.
              */
 
-            // throw new Exception('Test: database niet bereikbaar');
+            //throw new Exception('Test: database niet bereikbaar');
 
             // Gebruik een transactie zodat er geen halve bestelling ontstaat.
             $bestelling = DB::transaction(function () use ($besteloverzicht) {

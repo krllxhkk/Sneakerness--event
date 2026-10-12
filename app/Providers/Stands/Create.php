@@ -5,6 +5,7 @@ namespace App\Providers\Stands;
 use App\Models\Stand;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Throwable;
@@ -24,33 +25,41 @@ class Create
                 ]);
             }
 
-            // Sla de nieuwe stand op in de database
-            $stand = Stand::create([
-                'Standnummer' => $gegevens['Standnummer'],
-                'Standnaam' => $gegevens['Standnaam'],
-                'Locatie' => $gegevens['Locatie'],
-                'Prijs' => $gegevens['Prijs'],
-                'Kwaliteitsklasse' => $gegevens['Kwaliteitsklasse'] ?? null,
-                'StandType' => 'STD',
-                'VerkoperId' => null,
-                'VerhuurdStatus' => 0,
-                'Isactief' => 1,
-                'Opmerking' => null,
-                'Datumaangemaakt' => now(),
-                'Datumgewijzigd' => now(),
-            ]);
+            // Maak de stand aan binnen een transaction
+            DB::transaction(function () use ($gegevens) {
 
-            // Sla op dat de stand is toegevoegd
-            Log::info('Stand toegevoegd', [
-                'stand_id' => $stand->Id,
-            ]);
+                // Eerst opslaan met tijdelijk standnummer
+                $stand = Stand::create([
+                    'Standnummer' => 'TEMP-' . uniqid(),
+                    'Standnaam' => $gegevens['Standnaam'],
+                    'Locatie' => $gegevens['Locatie'],
+                    'Prijs' => $gegevens['Prijs'],
+                    'Kwaliteitsklasse' => $gegevens['Kwaliteitsklasse'] ?? null,
+                    'StandType' => 'STD',
+                    'VerkoperId' => null,
+                    'VerhuurdStatus' => 0,
+                    'Isactief' => 1,
+                    'Opmerking' => null,
+                    'Datumaangemaakt' => now(),
+                    'Datumgewijzigd' => now(),
+                ]);
+
+                // Gebruik het automatisch gegenereerde ID
+                $stand->Standnummer = $stand->Id;
+                $stand->save();
+
+                // Sla op dat de stand is toegevoegd
+                Log::info('Stand toegevoegd', [
+                    'stand_id' => $stand->Id,
+                    'standnummer' => $stand->Standnummer,
+                ]);
+            });
 
             return redirect()
                 ->route('organisator.stands')
                 ->with('success', 'Stand succesvol toegevoegd!');
 
         } catch (ValidationException $fout) {
-            // Laat Laravel de foutmelding tonen
             throw $fout;
 
         } catch (QueryException $fout) {
@@ -64,7 +73,6 @@ class Create
                 ]);
             }
 
-            // Sla andere databasefouten op in de log
             Log::error('Databasefout bij stand toevoegen', [
                 'melding' => $fout->getMessage(),
             ]);
@@ -74,7 +82,6 @@ class Create
             ])->withInput();
 
         } catch (Throwable $fout) {
-            // Sla onverwachte fouten op in de log
             Log::error('Stand toevoegen mislukt', [
                 'melding' => $fout->getMessage(),
             ]);
