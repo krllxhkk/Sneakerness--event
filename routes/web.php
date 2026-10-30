@@ -54,7 +54,6 @@ Route::get('/tickets/bevestiging', [TicketController::class, 'bevestiging'])
 */
 
 // Open een persoonlijk bevestigingsbericht uit de mailbox.
-// Dit werkt met en zonder login in dezelfde browsersessie.
 Route::get('/mailbox/bericht/{id}', [MailboxController::class, 'show'])
     ->whereNumber('id')
     ->name('mailbox.show');
@@ -69,16 +68,16 @@ Route::get('/mailbox/bericht/{id}', [MailboxController::class, 'show'])
 Route::get('/stands', [StandController::class, 'index'])
     ->name('stands.index');
 
-
-// Stand toevoegen
+// Stand toevoegen.
 Route::post('/stands', [StandController::class, 'store'])
     ->name('stands.store');
 
-// Stand reserveren als ingelogde verkoper
+// Stand reserveren als ingelogde verkoper.
 Route::post('/stands/{stand}/reserveren', [StandController::class, 'reserveren'])
     ->middleware('auth')
     ->whereNumber('stand')
     ->name('stands.reserveren');
+
 /*
 |--------------------------------------------------------------------------
 | Evenementen
@@ -102,10 +101,12 @@ Route::post('/events', [EventController::class, 'store'])
 // Toon het overzicht van verkopers.
 Route::get('/verkopers', [VerkoperController::class, 'index'])
     ->name('verkopers.index');
+
 // Overzicht van verkopers en contactpersonen voor de organisator.
 Route::get('/organisator/verkopers', [VerkoperController::class, 'organisator'])
     ->middleware(['auth', 'organisator'])
     ->name('organisator.verkopers');
+
 // Sla een nieuwe verkoper op.
 Route::post('/verkopers/toevoegen', [VerkoperController::class, 'store'])
     ->middleware(['auth', 'organisator'])
@@ -126,10 +127,10 @@ Route::post('/contactpersonen/toevoegen', [ContactpersoonController::class, 'sto
     ->middleware(['auth', 'organisator'])
     ->name('contactpersonen.store');
 
+// Koppel een contactpersoon.
 Route::post('/contactpersonen/koppelen', [ContactpersoonController::class, 'koppel'])
     ->middleware(['auth', 'organisator'])
     ->name('contactpersonen.koppel');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -163,18 +164,21 @@ Route::post('/organisator/tickets', [OrganisatorTicketController::class, 'store'
     ->middleware(['auth', 'organisator'])
     ->name('organisator.tickets.store');
 
+// =====================================
+// SPRINT 3 - TICKET WIJZIGEN (UPDATE)
+// =====================================
+
+// Wijzig de gegevens van een bestaand ticket.
+Route::put('/organisator/tickets/{id}', [OrganisatorTicketController::class, 'update'])
+    ->middleware(['auth', 'organisator'])
+    ->whereNumber('id')
+    ->name('organisator.tickets.update');
+
 /*
 |--------------------------------------------------------------------------
 | Inloggen en registreren
 |--------------------------------------------------------------------------
 */
-
-// Stand reserveren als ingelogde verkoper
-Route::post('/stands/{stand}/reserveren', [StandController::class, 'reserveren'])
-    ->middleware('auth')
-    ->whereNumber('stand')
-    ->name('stands.reserveren');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -182,16 +186,15 @@ Route::post('/stands/{stand}/reserveren', [StandController::class, 'reserveren']
 |--------------------------------------------------------------------------
 */
 
-// Evenementen beheren als organisator
+// Evenementen beheren als organisator.
 Route::get('/organisator/events', [EventController::class, 'organisator'])
     ->middleware(['auth', 'organisator'])
     ->name('organisator.events');
 
-// Stands beheren als organisator
+// Stands beheren als organisator.
 Route::get('/organisator/stands', [StandController::class, 'organisator'])
     ->middleware(['auth', 'organisator'])
     ->name('organisator.stands');
-
 
 // Laad de bestaande routes voor authenticatie.
 require __DIR__ . '/auth.php';
