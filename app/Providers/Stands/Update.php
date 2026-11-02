@@ -34,7 +34,7 @@ class Update
                 // Een verhuurde stand mag geen andere prijs krijgen.
                 if ($isVerhuurd && $oudePrijs !== $nieuwePrijs) {
                     throw ValidationException::withMessages([
-                        'Prijs' => 'Stand is Al Verhuurd Wijzigen van prijs niet meer mogelijk',
+                        'Prijs' => 'Stand is al verhuurd wijzigen van prijs niet meer mogelijk.',
                     ])->errorBag('standWijzigen');
                 }
 
