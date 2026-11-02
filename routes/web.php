@@ -79,6 +79,12 @@ Route::post('/stands/{stand}/reserveren', [StandController::class, 'reserveren']
     ->middleware('auth')
     ->whereNumber('stand')
     ->name('stands.reserveren');
+
+// Bestaande stand wijzigen als organisator
+Route::put('/organisator/stands/{stand}', [StandController::class, 'update'])
+    ->middleware(['auth', 'organisator'])
+    ->whereNumber('stand')
+    ->name('stands.update');
 /*
 |--------------------------------------------------------------------------
 | Evenementen

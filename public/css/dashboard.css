@@ -791,3 +791,77 @@ body {
     }
 }
 
+/* Houd lange formulieren bereikbaar op kleinere schermen. */
+#wijzigStandModal {
+    overflow-y: auto;
+}
+
+#wijzigStandModal .modal-inhoud {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+#wijzigStandModal select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    color: #111;
+    font: inherit;
+}
+
+
+/* Laat brede tabellen binnen hun eigen vlak scrollen. */
+.dashboard-inhoud {
+    min-width: 0;
+}
+
+.beheer-tabel {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+/* Houd het wijzigformulier bereikbaar op kleine schermen. */
+#wijzigStandModal {
+    padding: 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#wijzigStandModal .modal-inhoud {
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    margin: auto;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#wijzigStandModal input,
+#wijzigStandModal select {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+    #wijzigStandModal .modal-inhoud {
+        padding: 16px;
+    }
+
+    #wijzigStandModal .modal-knoppen {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #wijzigStandModal .modal-knoppen button {
+        width: 100%;
+    }
+
+    .beheer-tabel th,
+    .beheer-tabel td {
+        white-space: nowrap;
+    }
+}
