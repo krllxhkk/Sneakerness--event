@@ -105,6 +105,12 @@ Route::get('/events', [EventController::class, 'index'])
 Route::post('/events', [EventController::class, 'store'])
     ->name('events.store');
 
+
+// Een organisator mag bestaande evenementen wijzigen.
+Route::put('/organisator/events/{event}', [EventController::class, 'update'])
+    ->middleware(['auth', 'organisator'])
+    ->whereNumber('event')
+    ->name('events.update');
 /*
 |--------------------------------------------------------------------------
 | Verkopers
