@@ -74,6 +74,13 @@
                 </div>
             @endif
 
+            <!-- Fouten bij verwijderen verschijnen op het overzicht. -->
+            <div id="standVerwijderenFout" class="melding-fout" role="alert" tabindex="-1" @if (!$errors->standVerwijderen->any()) hidden @endif>
+                @foreach ($errors->standVerwijderen->all() as $melding)
+                    <p>{{ $melding }}</p>
+                @endforeach
+            </div>
+
             @if ($errors->any())
                 <div class="melding-fout" role="alert">
                     @foreach ($errors->all() as $error)
@@ -440,6 +447,7 @@
                     'Deze stand is al gereserveerd en kan niet worden verwijderd';
 
                 foutvak.hidden = false;
+                verbergMeldingNaDrieSeconden(foutvak);
                 foutvak.focus();
                 return;
             }
@@ -483,6 +491,21 @@
                 closeVerwijderStandModal();
             }
         });
+
+        // Verberg succes- en foutmeldingen na 3 seconden.
+        function verbergMeldingNaDrieSeconden(melding) {
+            setTimeout(() => {
+                melding.hidden = true;
+            }, 3000);
+        }
+
+        // Meldingen die bij het laden van de pagina zichtbaar zijn.
+        document.querySelectorAll('.melding-succes, .melding-fout')
+            .forEach((melding) => {
+                if (!melding.hidden) {
+                    verbergMeldingNaDrieSeconden(melding);
+                }
+            }); 
     </script>
 
 </body>

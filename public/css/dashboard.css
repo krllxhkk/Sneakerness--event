@@ -811,7 +811,6 @@ body {
     font: inherit;
 }
 
-
 /* Laat brede tabellen binnen hun eigen vlak scrollen. */
 .dashboard-inhoud {
     min-width: 0;
@@ -865,3 +864,70 @@ body {
         white-space: nowrap;
     }
 }
+
+/* Maak verwijderen duidelijk herkenbaar. */
+.verwijderen-knop {
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 4px;
+    background: #b42318;
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.verwijderen-knop:hover {
+    background: #8f1c13;
+}
+
+.verwijderen-knop:focus-visible {
+    outline: 3px solid #111;
+    outline-offset: 3px;
+}
+
+#standVerwijderenFout[hidden] {
+    display: none;
+}
+
+/* Houd de bevestiging bruikbaar op mobiele schermen. */
+#verwijderStandModal {
+    padding: 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#verwijderStandModal .modal-inhoud {
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    margin: auto;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#verwijderStandVraag {
+    margin-bottom: 24px;
+}
+
+@media (max-width: 600px) {
+    #verwijderStandModal .modal-inhoud {
+        padding: 16px;
+    }
+
+    #verwijderStandModal .modal-knoppen {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #verwijderStandModal .modal-knoppen button {
+        width: 100%;
+    }
+}
+
+.melding-succes[hidden],
+.melding-fout[hidden] {
+    display: none !important;
+}
+    
