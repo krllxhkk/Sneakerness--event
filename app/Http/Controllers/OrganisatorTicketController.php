@@ -237,7 +237,6 @@ class OrganisatorTicketController extends Controller
             //
             // Ook wanneer er nog geen tickets verkocht zijn,
             // moet het ticket gevonden kunnen worden.
-
             $verkochteTickets = DB::table('tickets')
                 ->leftJoin(
                     'bestelde_tickets',
@@ -260,7 +259,6 @@ class OrganisatorTicketController extends Controller
 
             // Het nieuwe totale aantal tickets mag niet
             // lager zijn dan het aantal verkochte tickets.
-
             if ($gegevens['aantal_tickets_per_tijdslot'] < $verkochteTickets) {
                 Log::warning('Ticket wijzigen: aantal lager dan verkocht.', [
                     'ticket_id' => $id,
@@ -283,7 +281,6 @@ class OrganisatorTicketController extends Controller
 
             // Alle controles zijn geslaagd.
             // Sla de gewijzigde ticketgegevens op.
-
             DB::table('tickets')
                 ->where('id', $id)
                 ->update([
@@ -334,6 +331,161 @@ class OrganisatorTicketController extends Controller
                 ->with(
                     'error',
                     'Het ticket kan momenteel niet worden gewijzigd. Probeer het later opnieuw.'
+                );
+        }
+    }
+
+    /**
+     * Verwijder een bestaand ticket definitief uit de database.
+     *
+     * Sprint 3 - Ticket verwijderen (DELETE).
+     */
+    public function destroy(int $id): RedirectResponse
+    {
+        try {
+            // =====================================
+            // 0. TEST: DATABASEFOUT SIMULEREN
+            // =====================================
+
+            // true  = unhappy scenario testen.
+            // false = normaal verwijderen.
+            //
+            // Alleen voor lokaal testen.
+            // Zet deze waarde na het testen terug op false.
+            $testDatabaseFout = false;
+
+            if ($testDatabaseFout && app()->environment('local')) {
+                throw new \RuntimeException(
+                    'TEST: databaseverbinding is niet beschikbaar.'
+                );
+            }
+
+            // =====================================
+            // 1. VALIDATIE: CONTROLEER HET TICKET
+            // =====================================
+
+            // Haal het geselecteerde ticket op.
+            $ticket = DB::table('tickets')
+                ->where('id', $id)
+                ->first();
+
+            // Unhappy scenario: ticket bestaat niet.
+            if ($ticket === null) {
+                Log::warning('Ticket verwijderen: ticket niet gevonden.', [
+                    'ticket_id' => $id,
+                ]);
+
+                return redirect()
+                    ->route('organisator.tickets.index')
+                    ->with(
+                        'error',
+                        'Het geselecteerde ticket bestaat niet.'
+                    );
+            }
+
+            // =====================================
+            // 2. JOIN: CONTROLEER VERKOCHTE TICKETS
+            // =====================================
+
+            // Verbind tickets met bestelde_tickets.
+            // Tel hoeveel tickets al zijn verkocht.
+            $aantalVerkocht = DB::table('tickets')
+                ->leftJoin(
+                    'bestelde_tickets',
+                    'tickets.id',
+                    '=',
+                    'bestelde_tickets.ticket_id'
+                )
+                ->where('tickets.id', $id)
+                ->count('bestelde_tickets.id');
+
+            Log::info('Ticket verwijderen: verkochte tickets gecontroleerd.', [
+                'ticket_id' => $id,
+                'aantal_verkocht' => $aantalVerkocht,
+            ]);
+
+            // =====================================
+            // 3. CONTROLEER BESTAANDE BESTELLINGEN
+            // =====================================
+
+            // Bestellingen kunnen ook rechtstreeks
+            // aan het ticket gekoppeld zijn.
+            $heeftBestellingen = DB::table('bestellingen')
+                ->where('ticket_id', $id)
+                ->exists();
+
+            // Verwijder geen tickets die al zijn besteld.
+            // Zo blijven bestaande bestellingen bewaard.
+            if ($aantalVerkocht > 0 || $heeftBestellingen) {
+                Log::warning('Ticket verwijderen: ticket is al besteld.', [
+                    'ticket_id' => $id,
+                    'aantal_verkocht' => $aantalVerkocht,
+                ]);
+
+                return redirect()
+                    ->route('organisator.tickets.index')
+                    ->with(
+                        'error',
+                        'Dit ticket kan niet worden verwijderd, omdat er al bestellingen aan gekoppeld zijn.'
+                    );
+            }
+
+            // =====================================
+            // 4. HAPPY SCENARIO: ECHT VERWIJDEREN
+            // =====================================
+
+            // Verwijder het ticket definitief uit de database.
+            $aantalVerwijderd = DB::table('tickets')
+                ->where('id', $id)
+                ->delete();
+
+            // Controleer of precies één ticket is verwijderd.
+            if ($aantalVerwijderd !== 1) {
+                Log::warning('Ticket verwijderen: geen ticket verwijderd.', [
+                    'ticket_id' => $id,
+                ]);
+
+                return redirect()
+                    ->route('organisator.tickets.index')
+                    ->with(
+                        'error',
+                        'Het ticket kon niet worden verwijderd.'
+                    );
+            }
+
+            // =====================================
+            // 5. TECHNISCHE LOGGING
+            // =====================================
+
+            Log::info('Ticket succesvol verwijderd.', [
+                'ticket_id' => $id,
+                'datum' => $ticket->datum,
+                'tijdslot' => $ticket->tijdslot,
+            ]);
+
+            // =====================================
+            // 6. SUCCESMELDING
+            // =====================================
+
+            return redirect()
+                ->route('organisator.tickets.index')
+                ->with('success', '✓ Ticket succesvol verwijderd.');
+        } catch (Throwable $fout) {
+            // =====================================
+            // 7. UNHAPPY SCENARIO: TECHNISCHE FOUT
+            // =====================================
+
+            // Bewaar de technische fout in Laravel.
+            Log::error('Ticket verwijderen mislukt.', [
+                'ticket_id' => $id,
+                'fout' => $fout->getMessage(),
+            ]);
+
+            return redirect()
+                ->route('organisator.tickets.index')
+                ->with(
+                    'error',
+                    'Geen verbinding met de database. Probeer het later opnieuw.'
                 );
         }
     }
