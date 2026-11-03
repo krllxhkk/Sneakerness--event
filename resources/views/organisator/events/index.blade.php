@@ -217,6 +217,72 @@
         </div>
     </div>
 
+    <!-- Pop-up voor het wijzigen van een bestaand evenement. -->
+    <div class="modal {{ $errors->eventWijzigen->any() ? 'actief' : '' }}" id="wijzigEventModal" role="dialog"
+        aria-modal="true" aria-labelledby="wijzigEventTitel">
+        <div class="modal-inhoud">
+            <div class="modal-kop">
+                <div>
+                    <p>Evenementen beheren</p>
+                    <h2 id="wijzigEventTitel">Event wijzigen</h2>
+                </div>
+
+                <button type="button" class="modal-sluiten" onclick="closeWijzigEventModal()" aria-label="Sluiten">
+                    &times;
+                </button>
+            </div>
+
+            @if ($errors->eventWijzigen->any())
+                <div class="melding-fout" role="alert">
+                    @foreach ($errors->eventWijzigen->all() as $melding)
+                        <p>{{ $melding }}</p>
+                    @endforeach
+                </div>
+            @endif
+
+            <form id="wijzigEventForm" method="POST" @if ($errors->eventWijzigen->any() && old('_edit_event'))
+            action="{{ route('events.update', ['event' => old('_edit_event')]) }}" @endif>
+                @csrf
+                @method('PUT')
+
+                <input type="hidden" id="wijzigEventId" name="_edit_event" value="{{ old('_edit_event') }}">
+
+                <div class="form-groep">
+                    <label for="wijzigEventNaam">Naam</label>
+                    <input type="text" id="wijzigEventNaam" name="Naam" value="{{ old('Naam') }}" maxlength="100"
+                        required>
+                </div>
+
+                <div class="form-groep">
+                    <label for="wijzigEventDatum">Datum</label>
+                    <input type="date" id="wijzigEventDatum" name="Datum" value="{{ old('Datum') }}" required>
+                </div>
+
+                <div class="form-groep">
+                    <label for="wijzigEventTijd">Tijd</label>
+                    <input type="time" id="wijzigEventTijd" name="Tijd" value="{{ old('Tijd') }}" required>
+                </div>
+
+                <div class="form-groep">
+                    <label for="wijzigEventLocatie">Locatie</label>
+                    <input type="text" id="wijzigEventLocatie" name="Locatie" value="{{ old('Locatie') }}"
+                        maxlength="150" required>
+                </div>
+
+                <div class="modal-knoppen">
+                    <button type="button" id="annuleerEventWijzigen" class="annuleer-knop"
+                        onclick="closeWijzigEventModal()">
+                        ANNULEREN
+                    </button>
+
+                    <button type="submit" class="opslaan-knop">
+                        OPSLAAN
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         function toggleMenu(knop) {
             const menu = document.getElementById('dashboardNav');
