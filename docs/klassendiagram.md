@@ -110,3 +110,8 @@ classDiagram
 
     tickets "1" --> "0..*" bestelde_tickets : gekoppeld aan
 ```
+classDiagram
+    class OrganisatorTicketController {
+        +update(verzoek, id)
+        +destroy(id)
+    }
