@@ -314,6 +314,45 @@
         </div>
     </div>
 
+    <!-- Bevestigingspop-up voor het verwijderen van een stand. -->
+    <div class="modal" id="verwijderStandModal" role="dialog" aria-modal="true" aria-labelledby="verwijderStandTitel"
+        aria-describedby="verwijderStandVraag">
+        <div class="modal-inhoud">
+            <div class="modal-kop">
+                <div>
+                    <p>Stands beheren</p>
+                    <h2 id="verwijderStandTitel">Stand verwijderen</h2>
+                </div>
+
+                <button type="button" class="modal-sluiten" onclick="closeVerwijderStandModal()" aria-label="Sluiten">
+                    &times;
+                </button>
+            </div>
+
+            <p id="verwijderStandVraag">
+                Weet je zeker dat je deze stand wilt verwijderen?
+            </p>
+
+            <form id="verwijderStandForm" method="POST">
+                @csrf
+                @method('DELETE')
+
+                <input type="hidden" name="bevestiging" value="1">
+
+                <div class="modal-knoppen">
+                    <button type="button" id="annuleerVerwijderen" class="annuleer-knop"
+                        onclick="closeVerwijderStandModal()">
+                        ANNULEREN
+                    </button>
+
+                    <button type="submit" class="verwijderen-knop">
+                        BEVESTIGEN
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         function toggleMenu(knop) {
             const menu = document.getElementById('dashboardNav');
