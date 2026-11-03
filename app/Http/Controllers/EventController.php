@@ -34,4 +34,26 @@ class EventController extends Controller
     {
         return $create->create($request->validated());
     }
+
+    // Controleer het formulier en laat de provider het evenement wijzigen.
+    public function update(Request $request, int $event, Update $update)
+    {
+        $gegevens = $request->validateWithBag('eventWijzigen', [
+            'Naam' => ['required', 'string', 'max:100'],
+            'Datum' => ['required', 'date_format:Y-m-d'],
+            'Tijd' => ['required', 'date_format:H:i'],
+            'Locatie' => ['required', 'string', 'max:150'],
+        ], [
+            'Naam.required' => 'Vul een naam in.',
+            'Naam.max' => 'De naam mag maximaal 100 tekens bevatten.',
+            'Datum.required' => 'Vul een datum in.',
+            'Datum.date_format' => 'Vul een geldige datum in.',
+            'Tijd.required' => 'Vul een tijd in.',
+            'Tijd.date_format' => 'Vul een geldige tijd in.',
+            'Locatie.required' => 'Vul een locatie in.',
+            'Locatie.max' => 'De locatie mag maximaal 150 tekens bevatten.',
+        ]);
+
+        return $update->update($event, $gegevens);
+    }
 }
