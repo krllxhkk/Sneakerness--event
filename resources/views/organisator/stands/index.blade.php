@@ -425,6 +425,64 @@
                 closeWijzigStandModal();
             }
         });
+
+        let laatsteVerwijderKnop = null;
+
+        // Controleer de getoonde status en open zo nodig de bevestigingspop-up.
+        function openVerwijderStandModal(knop) {
+            const foutvak = document.getElementById('standVerwijderenFout');
+
+            laatsteVerwijderKnop = knop;
+
+            // Toon direct de voorgeschreven melding bij een gereserveerde stand.
+            if (knop.dataset.gereserveerd === '1') {
+                foutvak.textContent =
+                    'Deze stand is al gereserveerd en kan niet worden verwijderd';
+
+                foutvak.hidden = false;
+                foutvak.focus();
+                return;
+            }
+
+            foutvak.hidden = true;
+
+            document.getElementById('verwijderStandForm').action =
+                knop.dataset.verwijderUrl;
+
+            document.getElementById('verwijderStandModal')
+                .classList.add('actief');
+
+            document.getElementById('annuleerVerwijderen').focus();
+        }
+
+        // Annuleren sluit alleen de pop-up: er wordt geen verzoek verstuurd.
+        function closeVerwijderStandModal() {
+            document.getElementById('verwijderStandModal')
+                .classList.remove('actief');
+
+            if (laatsteVerwijderKnop) {
+                laatsteVerwijderKnop.focus();
+            }
+        }
+
+        // Klikken naast de pop-up annuleert het verwijderen.
+        document.getElementById('verwijderStandModal')
+            .addEventListener('click', function (event) {
+                if (event.target === this) {
+                    closeVerwijderStandModal();
+                }
+            });
+
+        // Escape annuleert het verwijderen.
+        document.addEventListener('keydown', function (event) {
+            if (
+                event.key === 'Escape'
+                && document.getElementById('verwijderStandModal')
+                    .classList.contains('actief')
+            ) {
+                closeVerwijderStandModal();
+            }
+        });
     </script>
 
 </body>
