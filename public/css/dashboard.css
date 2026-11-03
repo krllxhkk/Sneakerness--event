@@ -930,4 +930,41 @@ body {
 .melding-fout[hidden] {
     display: none !important;
 }
-    
+
+/* Maak de wijzigpop-up bruikbaar op desktop en mobiel. */
+#wijzigEventModal {
+    padding: 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#wijzigEventModal .modal-inhoud {
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    margin: auto;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#wijzigEventModal input {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+    #wijzigEventModal .modal-inhoud {
+        padding: 16px;
+    }
+
+    #wijzigEventModal .modal-knoppen {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #wijzigEventModal .modal-knoppen button {
+        width: 100%;
+    }
+}

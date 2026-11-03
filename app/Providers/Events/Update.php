@@ -85,7 +85,7 @@ class Update
             return back()
                 ->withInput()
                 ->withErrors([
-                    'event' => 'Het event kon niet worden gewijzigd. Probeer het opnieuw.',
+                    'event' => 'Er bestaat al een ander event op deze datum en tijd.',
                 ], 'eventWijzigen');
         } catch (Throwable $fout) {
             Log::error('Onverwachte fout bij event wijzigen', [

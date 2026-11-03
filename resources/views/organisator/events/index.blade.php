@@ -309,6 +309,67 @@
                 closeEventModal();
             }
         });
+        let laatsteEventWijzigKnop = null;
+
+        // Vul het formulier met de gegevens van het aangeklikte evenement.
+        function openWijzigEventModal(knop) {
+            const event = JSON.parse(knop.dataset.event);
+
+            laatsteEventWijzigKnop = knop;
+
+            document.getElementById('wijzigEventForm').action =
+                knop.dataset.updateUrl;
+
+            document.getElementById('wijzigEventId').value = event.Id;
+            document.getElementById('wijzigEventNaam').value = event.Naam;
+            document.getElementById('wijzigEventDatum').value = event.Datum;
+            document.getElementById('wijzigEventTijd').value = event.Tijd;
+            document.getElementById('wijzigEventLocatie').value = event.Locatie;
+
+            // Oude meldingen horen niet bij een nieuwe wijzigpoging.
+            document.querySelectorAll('#wijzigEventModal .melding-fout')
+                .forEach((melding) => melding.remove());
+
+            document.getElementById('wijzigEventModal').classList.add('actief');
+            document.getElementById('wijzigEventNaam').focus();
+        }
+
+        // Sluit de pop-up zonder gegevens op te slaan.
+        function closeWijzigEventModal() {
+            document.getElementById('wijzigEventModal')
+                .classList.remove('actief');
+
+            if (laatsteEventWijzigKnop) {
+                laatsteEventWijzigKnop.focus();
+            }
+        }
+
+        // Klikken op de achtergrond annuleert het wijzigen.
+        document.getElementById('wijzigEventModal')
+            .addEventListener('click', function (event) {
+                if (event.target === this) {
+                    closeWijzigEventModal();
+                }
+            });
+
+        // Escape sluit de wijzigpop-up.
+        document.addEventListener('keydown', function (event) {
+            if (
+                event.key === 'Escape'
+                && document.getElementById('wijzigEventModal')
+                    .classList.contains('actief')
+            ) {
+                closeWijzigEventModal();
+            }
+        });
+
+        // Verberg meldingen op deze pagina na drie seconden.
+        document.querySelectorAll('.melding-succes, .melding-fout')
+            .forEach((melding) => {
+                setTimeout(() => {
+                    melding.hidden = true;
+                }, 3000);
+            });
     </script>
 
 </body>
