@@ -10,6 +10,7 @@ use App\Providers\Stands\Reservering;
 use Illuminate\Http\Request;
 use App\Models\Verkoper;
 use App\Providers\Stands\Update;
+use App\Providers\Stands\Delete;
 
 
 class StandController extends Controller
@@ -75,5 +76,18 @@ class StandController extends Controller
         ]);
 
         return $update->update($stand, $gegevens);
+    }
+
+    // Controleer de bevestiging en laat de provider de stand verwijderen.
+    public function destroy(Request $request, int $stand, Delete $delete)
+    {
+        $request->validateWithBag('standVerwijderen', [
+            'bevestiging' => ['required', 'accepted'],
+        ], [
+            'bevestiging.required' => 'Bevestig eerst het verwijderen.',
+            'bevestiging.accepted' => 'Bevestig eerst het verwijderen.',
+        ]);
+
+        return $delete->delete($stand);
     }
 }

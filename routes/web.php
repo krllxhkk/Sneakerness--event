@@ -85,6 +85,12 @@ Route::put('/organisator/stands/{stand}', [StandController::class, 'update'])
     ->middleware(['auth', 'organisator'])
     ->whereNumber('stand')
     ->name('stands.update');
+
+// Alleen een organisator mag een stand verwijderen.
+Route::delete('/organisator/stands/{stand}', [StandController::class, 'destroy'])
+    ->middleware(['auth', 'organisator'])
+    ->whereNumber('stand')
+    ->name('stands.destroy');
 /*
 |--------------------------------------------------------------------------
 | Evenementen

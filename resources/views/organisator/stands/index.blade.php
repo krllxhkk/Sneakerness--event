@@ -130,6 +130,12 @@
                                                             onclick="openWijzigStandModal(this)">
                                                             WIJZIGEN
                                                         </button>
+                                                        <button type="button" class="verwijderen-knop"
+                                                            data-verwijder-url="{{ route('stands.destroy', ['stand' => $stand->Id]) }}"
+                                                            data-gereserveerd="{{ ($stand->VerhuurdStatus || $stand->VerkoperId !== null) ? '1' : '0' }}"
+                                                            onclick="openVerwijderStandModal(this)">
+                                                            VERWIJDEREN
+                                                        </button>
                                                     </td>
                                                 </tr>
                         @empty
