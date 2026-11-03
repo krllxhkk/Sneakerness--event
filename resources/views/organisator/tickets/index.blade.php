@@ -130,12 +130,11 @@
 
             <!-- =====================================
                  SUCCESMELDING
-                 VERDWIJNT NA 3 SECONDEN
             ====================================== -->
 
             @if (session('success'))
                 <div class="ticket-melding" id="ticketSuccesMelding" role="status">
-                    ✓ {{ session('success') }}
+                    {{ session('success') }}
                 </div>
             @endif
 
@@ -150,8 +149,7 @@
             @endif
 
             <!-- =====================================
-                 FOUTMELDING BIJ WIJZIGEN
-                 VERDWIJNT NA 3 SECONDEN
+                 FOUTMELDING
             ====================================== -->
 
             @if (session('error'))
@@ -245,20 +243,19 @@
 
                                 <!-- Status -->
                                 <td>
-
                                     <span
                                         class="ticket-status {{ $ticket->is_actief ? 'status-actief' : 'status-inactief' }}">
                                         {{ $ticket->is_actief ? 'Actief' : 'Inactief' }}
                                     </span>
-
                                 </td>
 
                                 <!-- =====================================
-                                     KNOP TICKET BEWERKEN
+                                     KNOPPEN BEWERKEN EN ANNULEREN
                                 ====================================== -->
 
                                 <td>
 
+                                    <!-- Bestaande UPDATE-knop -->
                                     <button type="button" class="ticket-bewerken-knop" data-id="{{ $ticket->id }}"
                                         data-datum="{{ \Carbon\Carbon::parse($ticket->datum)->format('Y-m-d') }}"
                                         data-tijdslot="{{ substr($ticket->tijdslot, 0, 5) }}"
@@ -267,6 +264,15 @@
                                         data-status="{{ $ticket->is_actief ? 1 : 0 }}">
                                         BEWERKEN
                                     </button>
+
+                                    <!-- Nieuwe DELETE-knop -->
+
+                                    <button type="button" class="ticket-verwijderen-knop"
+                                        data-id="{{ $ticket->id }}"
+                                        data-ticketnummer="TK-{{ str_pad($ticket->id, 3, '0', STR_PAD_LEFT) }}">
+                                        VERWIJDEREN
+                                    </button>
+
 
                                 </td>
 
@@ -300,10 +306,6 @@
 
         <div class="ticket-modal-inhoud">
 
-            <!-- =====================================
-                 TITEL EN SLUITKNOP
-            ====================================== -->
-
             <div class="ticket-modal-kop">
 
                 <h2 id="ticketBewerkTitel">
@@ -317,24 +319,15 @@
 
             </div>
 
-            <!-- =====================================
-                 FORMULIER VOOR UPDATE
-            ====================================== -->
-
+            <!-- Formulier voor UPDATE -->
             <form id="ticketBewerkFormulier" class="ticket-bewerk-formulier" method="POST">
 
-                <!-- Laravel-beveiliging -->
                 @csrf
-
-                <!-- POST wordt verwerkt als PUT -->
                 @method('PUT')
 
                 <div class="ticket-bewerk-grid">
 
-                    <!-- =====================================
-                         DATUM
-                    ====================================== -->
-
+                    <!-- Datum -->
                     <div class="ticket-bewerk-groep">
 
                         <label for="bewerkDatum">
@@ -345,10 +338,7 @@
 
                     </div>
 
-                    <!-- =====================================
-                         TIJDSLOT
-                    ====================================== -->
-
+                    <!-- Tijdslot -->
                     <div class="ticket-bewerk-groep">
 
                         <label for="bewerkTijdslot">
@@ -364,10 +354,7 @@
 
                     </div>
 
-                    <!-- =====================================
-                         AANTAL TICKETS
-                    ====================================== -->
-
+                    <!-- Aantal tickets -->
                     <div class="ticket-bewerk-groep">
 
                         <label for="bewerkAantal">
@@ -379,10 +366,7 @@
 
                     </div>
 
-                    <!-- =====================================
-                         PRIJS
-                    ====================================== -->
-
+                    <!-- Prijs -->
                     <div class="ticket-bewerk-groep">
 
                         <label for="bewerkPrijs">
@@ -394,10 +378,7 @@
 
                     </div>
 
-                    <!-- =====================================
-                         STATUS
-                    ====================================== -->
-
+                    <!-- Status -->
                     <div class="ticket-bewerk-groep">
 
                         <label for="bewerkStatus">
@@ -418,18 +399,72 @@
 
                 </div>
 
-                <!-- =====================================
-                     KNOPPEN
-                ====================================== -->
-
                 <div class="ticket-bewerk-knoppen">
 
+                    <!-- Sluit alleen het UPDATE-venster -->
                     <button type="button" class="ticket-bewerk-annuleren" id="ticketBewerkAnnuleren">
-                        ANNULEREN
+                        VERWIJDEREN
                     </button>
 
                     <button type="submit" class="ticket-bewerk-opslaan">
                         OPSLAAN
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- =====================================
+         TICKET ANNULEREN - BEVESTIGINGSVENSTER
+    ====================================== -->
+
+    <div id="ticketVerwijderModal" class="ticket-modal" role="dialog" aria-modal="true"
+        aria-labelledby="ticketVerwijderTitel" aria-hidden="true">
+
+        <div class="ticket-modal-inhoud">
+
+            <div class="ticket-modal-kop">
+
+                <h2 id="ticketVerwijderTitel">
+                    TICKET ANNULEREN
+                </h2>
+
+                <button type="button" class="ticket-modal-sluiten" id="ticketVerwijderSluiten"
+                    aria-label="Sluit annuleervenster">
+                    &times;
+                </button>
+
+            </div>
+
+            <p>
+                Weet je zeker dat je ticket
+                <strong id="ticketVerwijderNummer"></strong>
+                wilt annuleren?
+            </p>
+
+            <p>
+                Dit ticket wordt definitief uit de database verwijderd.
+                Deze actie kan niet ongedaan worden gemaakt.
+            </p>
+
+            <!-- Formulier voor DELETE -->
+            <form id="ticketVerwijderFormulier" method="POST">
+
+                @csrf
+                @method('DELETE')
+
+                <div class="ticket-bewerk-knoppen">
+
+                    <button type="button" class="ticket-bewerk-annuleren" id="ticketVerwijderTerug">
+                        TERUG
+                    </button>
+
+                    <button type="submit" class="ticket-verwijderen-bevestigen">
+                        BEVESTIGEN
                     </button>
 
                 </div>
@@ -450,274 +485,255 @@
         // =====================================
 
         const zoekveld = document.getElementById('ticketsZoeken');
-
         const rijen = document.querySelectorAll('#ticketsRijen tr');
 
         zoekveld.addEventListener('input', function() {
-
             const zoektekst = this.value.toLowerCase();
 
             rijen.forEach(function(rij) {
-
                 const ticketgegevens = rij.textContent.toLowerCase();
 
                 rij.style.display = ticketgegevens.includes(zoektekst) ?
                     '' :
                     'none';
-
             });
-
         });
-
 
         // =====================================
         // HAMBURGERMENU
         // =====================================
 
         const burgerMenu = document.getElementById('burgerMenu');
-
         const mobielMenu = document.getElementById('mobielMenu');
 
         burgerMenu.addEventListener('click', function() {
-
             const isOpen = mobielMenu.classList.toggle('menu-open');
 
-            burgerMenu.setAttribute(
-                'aria-expanded',
-                String(isOpen)
-            );
+            burgerMenu.setAttribute('aria-expanded', String(isOpen));
 
             burgerMenu.setAttribute(
                 'aria-label',
-                isOpen ?
-                'Sluit navigatiemenu' :
-                'Open navigatiemenu'
+                isOpen ? 'Sluit navigatiemenu' : 'Open navigatiemenu'
             );
-
         });
-
 
         // =====================================
         // TICKET WIJZIGEN - ELEMENTEN
         // =====================================
 
         const ticketBewerkModal = document.getElementById('ticketBewerkModal');
-
         const ticketBewerkFormulier = document.getElementById('ticketBewerkFormulier');
-
         const ticketModalSluiten = document.getElementById('ticketModalSluiten');
-
         const ticketBewerkAnnuleren = document.getElementById('ticketBewerkAnnuleren');
-
         const bewerkKnoppen = document.querySelectorAll('.ticket-bewerken-knop');
 
         let vorigeFocus = null;
-
 
         // =====================================
         // UPDATE-ROUTE VAN LARAVEL
         // =====================================
 
-        // Laravel maakt de route met een tijdelijke ticket-ID.
         const ticketUpdateRoute = @json(route('organisator.tickets.update', ['id' => '__TICKET_ID__']));
-
 
         // =====================================
         // BEWERKVENSTER OPENEN
         // =====================================
 
         function openTicketBewerkModal(knop) {
-
-            // Bewaar het element dat eerst geselecteerd was.
             vorigeFocus = document.activeElement;
 
-            // =====================================
-            // BESTAANDE TICKETGEGEVENS INVULLEN
-            // =====================================
-
-            document.getElementById('bewerkDatum').value =
-                knop.dataset.datum;
-
-            document.getElementById('bewerkTijdslot').value =
-                knop.dataset.tijdslot;
-
-            document.getElementById('bewerkAantal').value =
-                knop.dataset.aantal;
-
-            document.getElementById('bewerkPrijs').value =
-                knop.dataset.prijs;
-
-            document.getElementById('bewerkStatus').value =
-                knop.dataset.status;
-
-
-            // =====================================
-            // JUISTE UPDATE-ROUTE INSTELLEN
-            // =====================================
-
-            // Bijvoorbeeld:
-            // /organisator/tickets/1
-            // /organisator/tickets/2
+            document.getElementById('bewerkDatum').value = knop.dataset.datum;
+            document.getElementById('bewerkTijdslot').value = knop.dataset.tijdslot;
+            document.getElementById('bewerkAantal').value = knop.dataset.aantal;
+            document.getElementById('bewerkPrijs').value = knop.dataset.prijs;
+            document.getElementById('bewerkStatus').value = knop.dataset.status;
 
             ticketBewerkFormulier.action = ticketUpdateRoute.replace(
                 '__TICKET_ID__',
                 encodeURIComponent(knop.dataset.id)
             );
 
-
-            // =====================================
-            // BEWERKVENSTER TONEN
-            // =====================================
-
             ticketBewerkModal.classList.add('is-open');
-
             ticketBewerkModal.setAttribute('aria-hidden', 'false');
 
-            // Voorkom scrollen op de achtergrond.
             document.body.style.overflow = 'hidden';
-
-            // Zet de focus op de sluitknop.
             ticketModalSluiten.focus();
-
         }
-
 
         // =====================================
         // BEWERKVENSTER SLUITEN
         // =====================================
 
         function sluitTicketBewerkModal() {
-
-            // Sluit het venster.
             ticketBewerkModal.classList.remove('is-open');
-
             ticketBewerkModal.setAttribute('aria-hidden', 'true');
 
-            // Sta scrollen weer toe.
             document.body.style.overflow = '';
 
-            // Zet de focus terug op de knop Bewerken.
             if (vorigeFocus) {
                 vorigeFocus.focus();
             }
-
         }
-
 
         // =====================================
         // KNOP BEWERKEN
         // =====================================
 
         bewerkKnoppen.forEach(function(knop) {
-
             knop.addEventListener('click', function() {
-
                 openTicketBewerkModal(knop);
-
             });
-
         });
-
-
-        // =====================================
-        // KNOP SLUITEN
-        // =====================================
 
         ticketModalSluiten.addEventListener(
             'click',
             sluitTicketBewerkModal
         );
 
-
-        // =====================================
-        // KNOP ANNULEREN
-        // =====================================
-
         ticketBewerkAnnuleren.addEventListener(
             'click',
             sluitTicketBewerkModal
         );
 
+        ticketBewerkModal.addEventListener('click', function(event) {
+            if (event.target === ticketBewerkModal) {
+                sluitTicketBewerkModal();
+            }
+        });
+
+        // =====================================
+        // TICKET ANNULEREN - ELEMENTEN
+        // =====================================
+
+        const ticketVerwijderModal = document.getElementById('ticketVerwijderModal');
+        const ticketVerwijderFormulier = document.getElementById('ticketVerwijderFormulier');
+        const ticketVerwijderSluiten = document.getElementById('ticketVerwijderSluiten');
+        const ticketVerwijderTerug = document.getElementById('ticketVerwijderTerug');
+        const ticketVerwijderNummer = document.getElementById('ticketVerwijderNummer');
+
+        const verwijderKnoppen = document.querySelectorAll('.ticket-verwijderen-knop');
+
+        const ticketDeleteRoute = @json(route('organisator.tickets.destroy', ['id' => '__TICKET_ID__']));
+
+        let vorigeVerwijderFocus = null;
+
+        // =====================================
+        // BEVESTIGINGSVENSTER OPENEN
+        // =====================================
+
+        function openTicketVerwijderModal(knop) {
+            vorigeVerwijderFocus = document.activeElement;
+
+            // Toon het juiste ticketnummer.
+            ticketVerwijderNummer.textContent = knop.dataset.ticketnummer;
+
+            // Stel de DELETE-route in voor het gekozen ticket.
+            ticketVerwijderFormulier.action = ticketDeleteRoute.replace(
+                '__TICKET_ID__',
+                encodeURIComponent(knop.dataset.id)
+            );
+
+            ticketVerwijderModal.classList.add('is-open');
+            ticketVerwijderModal.setAttribute('aria-hidden', 'false');
+
+            document.body.style.overflow = 'hidden';
+            ticketVerwijderSluiten.focus();
+        }
+
+        // =====================================
+        // BEVESTIGINGSVENSTER SLUITEN
+        // =====================================
+
+        function sluitTicketVerwijderModal() {
+            ticketVerwijderModal.classList.remove('is-open');
+            ticketVerwijderModal.setAttribute('aria-hidden', 'true');
+
+            document.body.style.overflow = '';
+
+            if (vorigeVerwijderFocus) {
+                vorigeVerwijderFocus.focus();
+            }
+        }
+
+        // =====================================
+        // KNOP ANNULEREN IN TICKETOVERZICHT
+        // =====================================
+
+        verwijderKnoppen.forEach(function(knop) {
+            knop.addEventListener('click', function() {
+                openTicketVerwijderModal(knop);
+            });
+        });
+
+        // =====================================
+        // KNOPPEN SLUITEN EN TERUG
+        // =====================================
+
+        ticketVerwijderSluiten.addEventListener(
+            'click',
+            sluitTicketVerwijderModal
+        );
+
+        ticketVerwijderTerug.addEventListener(
+            'click',
+            sluitTicketVerwijderModal
+        );
 
         // =====================================
         // BUITEN HET VENSTER KLIKKEN
         // =====================================
 
-        ticketBewerkModal.addEventListener('click', function(event) {
-
-            if (event.target === ticketBewerkModal) {
-
-                sluitTicketBewerkModal();
-
+        ticketVerwijderModal.addEventListener('click', function(event) {
+            if (event.target === ticketVerwijderModal) {
+                sluitTicketVerwijderModal();
             }
-
         });
-
 
         // =====================================
         // SLUITEN MET ESCAPE
         // =====================================
 
         document.addEventListener('keydown', function(event) {
-
-            if (
-                event.key === 'Escape' &&
-                ticketBewerkModal.classList.contains('is-open')
-            ) {
-
-                sluitTicketBewerkModal();
-
+            if (event.key !== 'Escape') {
+                return;
             }
 
-        });
+            if (ticketBewerkModal.classList.contains('is-open')) {
+                sluitTicketBewerkModal();
+            }
 
+            if (ticketVerwijderModal.classList.contains('is-open')) {
+                sluitTicketVerwijderModal();
+            }
+        });
 
         // =====================================
         // MELDINGEN NA 3 SECONDEN VERBERGEN
         // =====================================
 
-        // Zoek de groene succesmelding.
         const ticketSuccesMelding = document.getElementById('ticketSuccesMelding');
-
-        // Zoek de rode foutmelding.
         const ticketFoutMelding = document.getElementById('ticketFoutMelding');
 
-        // Zet beide meldingen in een lijst.
         const meldingen = [
             ticketSuccesMelding,
             ticketFoutMelding
         ];
 
-        // Controleer welke meldingen aanwezig zijn.
         meldingen.forEach(function(melding) {
-
             if (melding) {
-
-                // Wacht 3 seconden.
                 setTimeout(function() {
-
-                    // Verberg de melding.
                     melding.style.display = 'none';
-
                 }, 3000);
-
             }
-
         });
 
-
         // =====================================
-        // OPSLAAN
+        // FORMULIEREN VERZENDEN
         // =====================================
 
-        // Er staat GEEN event.preventDefault().
-        // Daardoor wordt het formulier echt verzonden.
-        //
-        // Laravel verwerkt het verzoek via:
-        // OrganisatorTicketController@update.
-        //
-        // De controller controleert de gegevens
-        // en slaat de wijzigingen op in de database.
+        // UPDATE gebruikt @method('PUT').
+        // DELETE gebruikt @method('DELETE').
+        // Laravel verwerkt beide formulieren via de juiste route.
     </script>
 
 </body>
