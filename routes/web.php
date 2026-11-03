@@ -1,3 +1,4 @@
+
 <?php
 
 use App\Http\Controllers\ContactpersoonController;
@@ -173,6 +174,17 @@ Route::put('/organisator/tickets/{id}', [OrganisatorTicketController::class, 'up
     ->middleware(['auth', 'organisator'])
     ->whereNumber('id')
     ->name('organisator.tickets.update');
+
+// =====================================
+// SPRINT 3 - TICKET ANNULEREN (DELETE)
+// =====================================
+
+// Annuleer een bestaand ticket.
+// Alleen ingelogde organisatoren mogen tickets annuleren.
+Route::delete('/organisator/tickets/{id}', [OrganisatorTicketController::class, 'destroy'])
+    ->middleware(['auth', 'organisator'])
+    ->whereNumber('id')
+    ->name('organisator.tickets.destroy');
 
 /*
 |--------------------------------------------------------------------------
