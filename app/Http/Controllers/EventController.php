@@ -6,6 +6,8 @@ use App\Http\Requests\StoreEventRequest;
 use App\Models\Event;
 use App\Providers\Events\Create;
 use App\Providers\Events\Index;
+use App\Providers\Events\Update;
+use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
