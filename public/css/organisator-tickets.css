@@ -275,7 +275,7 @@
 }
 
 /* Mobiele schermen */
-@media (max-width: 700px) {
+@media (max-width: 600px) {
     .ticket-formulier-pagina {
         padding: 8px 0;
     }
@@ -721,5 +721,119 @@
     #ticketVerwijderTerug,
     #ticketVerwijderModal .ticket-verwijderen-bevestigen {
         width: 100%;
+    }
+}
+
+
+/* =========================================
+   RESPONSIVE TICKETS - MOBIELE KAARTEN
+========================================= */
+
+@media (max-width: 600px) {
+
+    .dashboard-inhoud {
+        padding: 16px 12px;
+        min-width: 0;
+    }
+
+    .tickets-kop {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .tickets-kop h1 {
+        font-size: 22px;
+    }
+
+    .toevoegen-knop {
+        text-align: center;
+    }
+
+    .zoekveld {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Geen brede tabel meer */
+    .tickets-tabel-wrapper {
+        overflow: visible;
+        background: transparent;
+        border: none;
+    }
+
+    .tickets-tabel {
+        display: block;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .tickets-tabel thead {
+        display: none;
+    }
+
+    .tickets-tabel tbody {
+        display: grid;
+        gap: 12px;
+    }
+
+    /* Iedere ticketrij wordt een kaart */
+    .tickets-tabel tbody tr {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        padding: 16px;
+        background: #111111;
+        border: 1px solid #292929;
+        border-radius: 8px;
+    }
+
+    .tickets-tabel td {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        min-width: 0;
+        padding: 0;
+        border: none;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    /* Labels boven de gegevens */
+    .tickets-tabel td::before {
+        content: attr(data-label);
+        color: #888888;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    /* Ticketnummer */
+    .tickets-tabel td:first-child {
+        grid-column: 1 / -1;
+        color: #e5ff00;
+        font-weight: bold;
+    }
+
+    /* Actieknoppen onderaan */
+    .tickets-tabel td:last-child {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .tickets-tabel td:last-child::before {
+        width: 100%;
+    }
+
+    .ticket-bewerken-knop,
+    .ticket-verwijderen-knop {
+        flex: 1;
+        min-width: 0;
+        margin: 0;
+        padding: 12px 8px;
+        font-size: 11px;
     }
 }
