@@ -33,7 +33,7 @@ class Update
 
                 if ($bestaatAl) {
                     throw ValidationException::withMessages([
-                        'Locatie' => 'Er bestaat al een ander event op deze datum en locatie.',,
+                        'Locatie' => 'Er bestaat al een ander event op deze datum en locatie.',
                     ])->errorBag('eventWijzigen');
                 }
 
@@ -79,7 +79,7 @@ class Update
                 return back()
                     ->withInput()
                     ->withErrors([
-                        'Locatie' => 'Er bestaat al een ander event op deze datum en locatie.',,
+                        'Locatie' => 'Er bestaat al een ander event op deze datum en locatie.',
                     ], 'eventWijzigen');
             }
 
