@@ -27,13 +27,13 @@ class Update
 
                 // Sluit het huidige evenement uit van de dubbele datum/tijd-controle.
                 $bestaatAl = Event::where('Datum', $gegevens['Datum'])
-                    ->where('Tijd', $gegevens['Tijd'] . ':00')
+                    ->where('Locatie', $gegevens['Locatie'])
                     ->where('Id', '!=', $event->Id)
                     ->exists();
 
                 if ($bestaatAl) {
                     throw ValidationException::withMessages([
-                        'Tijd' => 'Er bestaat al een ander event op deze datum en tijd.',
+                        'Locatie' => 'Er bestaat al een ander event op deze datum en locatie.',,
                     ])->errorBag('eventWijzigen');
                 }
 
@@ -75,11 +75,11 @@ class Update
             ]);
 
             // Zet de bedrijfsfout uit de procedure om naar de voorgeschreven melding.
-            if (str_contains($fout->getMessage(), 'EVENT_DATUM_TIJD_BEZET')) {
+            if (str_contains($fout->getMessage(), 'EVENT_DATUM_LOCATIE_BEZET')) {
                 return back()
                     ->withInput()
                     ->withErrors([
-                        'Tijd' => 'Er bestaat al een ander event op deze datum en tijd.',
+                        'Locatie' => 'Er bestaat al een ander event op deze datum en locatie.',,
                     ], 'eventWijzigen');
             }
 
