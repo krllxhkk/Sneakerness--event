@@ -20,9 +20,8 @@ class EventController extends Controller
     // Evenementen in het organisator dashboard laten zien
     public function organisator()
     {
-        $events = Event::orderBy('Datum')
-            ->orderBy('Tijd')
-            ->get();
+        // Toon de laatst toegevoegde evenementen bovenaan.
+        $events = Event::orderByDesc('Id')->get();
 
         return view('organisator.events.index', [
             'events' => $events,

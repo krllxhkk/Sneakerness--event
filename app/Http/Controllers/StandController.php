@@ -30,7 +30,7 @@ class StandController extends Controller
         $stands = Stand::query()
             ->leftJoin('Verkoper', 'Stand.VerkoperId', '=', 'Verkoper.Id')
             ->select('Stand.*', 'Verkoper.Naam as VerkoperNaam')
-            ->orderBy('Stand.VerhuurdStatus', 'asc')
+            ->orderByDesc('Stand.Id')
             ->get();
 
         $verkopers = Verkoper::orderBy('Naam')->get();

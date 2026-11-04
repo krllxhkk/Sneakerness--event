@@ -5,6 +5,7 @@ namespace App\Providers\Stands;
 use App\Models\Stand;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -59,6 +60,12 @@ class Update
                     ])->errorBag('standWijzigen');
                 }
 
+
+                // Een beschikbare stand heeft geen gekoppelde verkoper.
+                if ((int) $gegevens['VerhuurdStatus'] === 0) {
+                    $gegevens['VerkoperId'] = null;
+                }
+
                 // Parameters worden veilig afzonderlijk aan de procedure meegegeven.
                 DB::statement(
                     'CALL UpdateStand(?, ?, ?, ?, ?, ?, ?)',
@@ -77,7 +84,7 @@ class Update
             // Log succes nadat de transactie daadwerkelijk is afgerond.
             Log::info('Stand succesvol gewijzigd', [
                 'stand_id' => $id,
-                'gebruiker_id' => auth()->id(),
+                'gebruiker_id' => Auth::id(),
                 'gewijzigde_velden' => array_keys($gegevens),
             ]);
 
@@ -88,7 +95,7 @@ class Update
             // Laravel bewaart de invoer en toont de melding in de wijzigpop-up.
             Log::warning('Stand wijzigen geweigerd door bedrijfsregel', [
                 'stand_id' => $id,
-                'gebruiker_id' => auth()->id(),
+                'gebruiker_id' => Auth::id(),
                 'fouten' => $fout->errors(),
             ]);
 
@@ -97,7 +104,7 @@ class Update
             // Bewaar technische databasegegevens uitsluitend in de log.
             Log::error('Databasefout bij stand wijzigen', [
                 'stand_id' => $id,
-                'gebruiker_id' => auth()->id(),
+                'gebruiker_id' => Auth::id(),
                 'sqlstate' => $fout->errorInfo[0] ?? null,
                 'databasecode' => $fout->errorInfo[1] ?? null,
             ]);
@@ -111,7 +118,7 @@ class Update
             // Vang overige technische fouten op.
             Log::error('Onverwachte fout bij stand wijzigen', [
                 'stand_id' => $id,
-                'gebruiker_id' => auth()->id(),
+                'gebruiker_id' => Auth::id(),
                 'fouttype' => get_class($fout),
                 'melding' => $fout->getMessage(),
             ]);
