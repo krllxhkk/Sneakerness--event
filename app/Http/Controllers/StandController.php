@@ -11,7 +11,8 @@ use Illuminate\Http\Request;
 use App\Models\Verkoper;
 use App\Providers\Stands\Update;
 use App\Providers\Stands\Delete;
-
+use App\Http\Requests\DeleteStandRequest;
+use App\Http\Requests\UpdateStandRequest;
 
 class StandController extends Controller
 {
@@ -55,39 +56,16 @@ class StandController extends Controller
 
 
     // Controleer het wijzigformulier en laat de provider de stand opslaan.
-    public function update(Request $request, int $stand, Update $update)
-    {
-        $gegevens = $request->validateWithBag('standWijzigen', [
-            'Standnaam' => ['required', 'string', 'max:100'],
-            'Locatie' => ['required', 'string', 'max:100'],
-            'Prijs' => ['required', 'numeric', 'min:0', 'max:999999.99'],
-            'Kwaliteitsklasse' => ['nullable', 'string', 'max:30'],
-            'VerhuurdStatus' => ['required', 'boolean'],
-            'VerkoperId' => ['nullable', 'integer', 'exists:Verkoper,Id'],
-        ], [
-            'Standnaam.required' => 'Vul een standnaam in.',
-            'Locatie.required' => 'Vul een locatie in.',
-            'Prijs.required' => 'Vul een prijs in.',
-            'Prijs.numeric' => 'Vul een geldige prijs in.',
-            'Prijs.min' => 'De prijs mag niet negatief zijn.',
-            'Prijs.max' => 'De prijs is te hoog.',
-            'VerhuurdStatus.required' => 'Selecteer een status.',
-            'VerkoperId.exists' => 'Selecteer een bestaande verkoper.',
-        ]);
-
-        return $update->update($stand, $gegevens);
-    }
+// Geef de gecontroleerde standgegevens door aan de provider.
+public function update(UpdateStandRequest $request, int $stand, Update $update)
+{
+    return $update->update($stand, $request->validated());
+}
 
     // Controleer de bevestiging en laat de provider de stand verwijderen.
-    public function destroy(Request $request, int $stand, Delete $delete)
-    {
-        $request->validateWithBag('standVerwijderen', [
-            'bevestiging' => ['required', 'accepted'],
-        ], [
-            'bevestiging.required' => 'Bevestig eerst het verwijderen.',
-            'bevestiging.accepted' => 'Bevestig eerst het verwijderen.',
-        ]);
-
-        return $delete->delete($stand);
-    }
+// De Request controleert de bevestiging voordat de provider wordt aangeroepen.
+public function destroy(DeleteStandRequest $request, int $stand, Delete $delete)
+{
+    return $delete->delete($stand);
+}
 }

@@ -7,8 +7,9 @@ use App\Models\Event;
 use App\Providers\Events\Create;
 use App\Providers\Events\Index;
 use App\Providers\Events\Update;
-use Illuminate\Http\Request;
 use App\Providers\Events\Delete;
+use App\Http\Requests\DeleteEventRequest;
+use App\Http\Requests\UpdateEventRequest;
 
 class EventController extends Controller
 {
@@ -36,37 +37,16 @@ class EventController extends Controller
     }
 
     // Controleer het formulier en laat de provider het evenement wijzigen.
-    public function update(Request $request, int $event, Update $update)
+    public function update(UpdateEventRequest $request, int $event, Update $update)
     {
-        $gegevens = $request->validateWithBag('eventWijzigen', [
-            'Naam' => ['required', 'string', 'max:100'],
-            'Datum' => ['required', 'date_format:Y-m-d'],
-            'Tijd' => ['required', 'date_format:H:i'],
-            'Locatie' => ['required', 'string', 'max:150'],
-        ], [
-            'Naam.required' => 'Vul een naam in.',
-            'Naam.max' => 'De naam mag maximaal 100 tekens bevatten.',
-            'Datum.required' => 'Vul een datum in.',
-            'Datum.date_format' => 'Vul een geldige datum in.',
-            'Tijd.required' => 'Vul een tijd in.',
-            'Tijd.date_format' => 'Vul een geldige tijd in.',
-            'Locatie.required' => 'Vul een locatie in.',
-            'Locatie.max' => 'De locatie mag maximaal 150 tekens bevatten.',
-        ]);
-
-        return $update->update($event, $gegevens);
+        return $update->update($event, $request->validated());
     }
 
     // Controleer de bevestiging en laat de provider het event verwijderen.
-    public function destroy(Request $request, int $event, Delete $delete)
-    {
-        $request->validateWithBag('eventVerwijderen', [
-            'bevestiging' => ['required', 'accepted'],
-        ], [
-            'bevestiging.required' => 'Bevestig eerst het verwijderen.',
-            'bevestiging.accepted' => 'Bevestig eerst het verwijderen.',
-        ]);
+    // De Request controleert de bevestiging voordat de provider wordt aangeroepen.
 
+    public function destroy(DeleteEventRequest $request, int $event, Delete $delete)
+    {
         return $delete->delete($event);
     }
 }
