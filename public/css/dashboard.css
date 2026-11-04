@@ -1019,12 +1019,12 @@ body {
     }
 }
 
-    .responsive-overzicht table,
-    .responsive-overzicht tbody {
-            .beheer-kop .toevoegen-knop {
-                width: 100%;
-            }
-        }
+.responsive-overzicht table,
+.responsive-overzicht tbody {
+    .beheer-kop .toevoegen-knop {
+        width: 100%;
+    }
+}
 /* Actieknoppen in de verkoperstabel */
 .verkopers-tabel td:last-child {
     white-space: nowrap;
@@ -1259,7 +1259,9 @@ body {
     border: 1px solid #393939;
     border-radius: 9px;
     color: #fff;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
 }
 
 .form-groep input:focus,
@@ -1358,7 +1360,6 @@ body {
 
 /* Mobiele versie: verkopers en contactpersonen */
 @media (max-width: 600px) {
-
     .dashboard-inhoud {
         padding: 15px;
     }
@@ -1523,7 +1524,10 @@ body {
     }
 
     .verkopers-tabel tbody td:not(:last-child)::before,
-    .contactpersonen-section .dashboard-tabel tbody td:not(:last-child)::before {
+    .contactpersonen-section
+        .dashboard-tabel
+        tbody
+        td:not(:last-child)::before {
         color: #777;
         font-size: 10px;
         text-align: left;
@@ -1575,5 +1579,57 @@ body {
     .btn-loskoppelen,
     .btn-verwijderen {
         min-height: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-layout,
+    .dashboard-inhoud {
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .responsive-overzicht,
+    .responsive-overzicht table,
+    .responsive-overzicht tbody,
+    .responsive-overzicht tbody tr {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .responsive-overzicht table {
+        table-layout: auto;
+    }
+
+    .responsive-overzicht tbody td {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .responsive-overzicht tbody td[data-label="Acties"] {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .responsive-overzicht td[data-label="Acties"] button {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        white-space: normal;
+        box-sizing: border-box;
+    }
+
+    .responsive-overzicht tbody td[colspan] {
+        display: block;
     }
 }
