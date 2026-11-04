@@ -19,8 +19,8 @@ class OrganisatorTicketController extends Controller
         try {
             // Haal alle tickets op uit de database.
             $tickets = DB::table('tickets')
-                ->orderBy('datum')
-                ->orderBy('tijdslot')
+                ->orderBy('datum', 'desc')
+                ->orderBy('tijdslot', 'asc')
                 ->get();
 
             $errorMessage = null;
