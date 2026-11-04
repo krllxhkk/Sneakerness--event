@@ -16,7 +16,6 @@ class StoreStandRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'Standnummer' => ['required', 'string', 'max:20'],
             'Standnaam' => ['required', 'string', 'max:100'],
             'Locatie' => ['required', 'string', 'max:100'],
             'Prijs' => ['required', 'numeric', 'min:0', 'max:999999.99'],

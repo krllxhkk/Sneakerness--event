@@ -6,84 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evenementen beheren | Sneakerness®</title>
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
-
-    <style>
-        .beheer-kop {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .beheer-kop h1 {
-            font-size: 36px;
-            margin-bottom: 8px;
-        }
-
-        .beheer-kop p {
-            color: #888;
-            font-size: 14px;
-        }
-
-        .beheer-tabel {
-            overflow-x: auto;
-            border: 1px solid #252525;
-            border-radius: 6px;
-        }
-
-        .beheer-tabel table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #0d0d0d;
-            min-width: 780px;
-        }
-
-        .beheer-tabel th {
-            padding: 16px;
-            color: #888;
-            border-bottom: 1px solid #333;
-            font-size: 11px;
-            text-align: left;
-            text-transform: uppercase;
-        }
-
-        .beheer-tabel td {
-            padding: 16px;
-            color: #ddd;
-            border-bottom: 1px solid #252525;
-            font-size: 13px;
-        }
-
-        .beheer-tabel tbody tr:hover {
-            background: #151515;
-        }
-
-        .beheer-naam {
-            color: #eaff00;
-            font-weight: bold;
-        }
-
-        .formulier-fout {
-            color: #ff7777;
-            font-size: 12px;
-        }
-
-        .form-groep input:focus {
-            outline: 1px solid #eaff00;
-        }
-
-        @media (max-width: 768px) {
-            .beheer-kop h1 {
-                font-size: 28px;
-            }
-
-            .beheer-kop .toevoegen-knop {
-                width: 100%;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -94,11 +16,8 @@
             SNEAKERNESS<span>®</span>
         </div>
 
-        <button type="button" class="burger-menu"
-                aria-label="Menu openen"
-                aria-expanded="false"
-                aria-controls="dashboardNav"
-                onclick="toggleMenu(this)">
+        <button type="button" class="burger-menu" aria-label="Menu openen" aria-expanded="false"
+            aria-controls="dashboardNav" onclick="toggleMenu(this)">
             <span></span>
             <span></span>
             <span></span>
@@ -112,8 +31,7 @@
             <a href="{{ route('organisator.stands') }}">Stands</a>
         </nav>
 
-        <form method="POST" action="{{ route('logout') }}"
-              class="uitloggen-formulier">
+        <form method="POST" action="{{ route('logout') }}" class="uitloggen-formulier">
             @csrf
             <button type="submit" class="uitloggen-knop">UITLOGGEN</button>
         </form>
@@ -144,8 +62,7 @@
                     <p>{{ $events->count() }} evenementen totaal</p>
                 </div>
 
-                <button type="button" class="toevoegen-knop"
-                        onclick="openEventModal()">
+                <button type="button" class="toevoegen-knop" onclick="openEventModal()">
                     EVENT TOEVOEGEN
                 </button>
             </div>
@@ -156,6 +73,13 @@
                     {{ session('success') }}
                 </div>
             @endif
+
+            <!-- Foutmeldingen voor het verwijderen van events. -->
+            <div id="eventVerwijderenFout" class="melding-fout" role="alert" tabindex="-1" @if (!$errors->eventVerwijderen->any()) hidden @endif>
+                @foreach ($errors->eventVerwijderen->all() as $melding)
+                    <p>{{ $melding }}</p>
+                @endforeach
+            </div>
 
             @if ($errors->any())
                 <div class="melding-fout" role="alert">
@@ -175,23 +99,42 @@
                             <th>Locatie</th>
                             <th>Tickets per tijdslot</th>
                             <th>Beschikbare stands</th>
+                            <th>Acties</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         @forelse ($events as $event)
-                            <tr>
-                                <td>EV-{{ str_pad($event->Id, 3, '0', STR_PAD_LEFT) }}</td>
-                                <td class="beheer-naam">{{ $event->Naam }}</td>
-                                <td>{{ \Carbon\Carbon::parse($event->Datum)->format('d-m-Y') }}</td>
-                                <td>{{ substr($event->Tijd ?? '', 0, 5) }}</td>
-                                <td>{{ $event->Locatie }}</td>
-                                <td>{{ $event->AantalTicketsPerTijdslot }}</td>
-                                <td>{{ $event->BeschikbareStands }}</td>
-                            </tr>
+                                                <tr>
+                                                    <td>EV-{{ str_pad($event->Id, 3, '0', STR_PAD_LEFT) }}</td>
+                                                    <td class="beheer-naam">{{ $event->Naam }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($event->Datum)->format('d-m-Y') }}</td>
+                                                    <td>{{ substr($event->Tijd ?? '', 0, 5) }}</td>
+                                                    <td>{{ $event->Locatie }}</td>
+                                                    <td>{{ $event->AantalTicketsPerTijdslot }}</td>
+                                                    <td>{{ $event->BeschikbareStands }}</td>
+                                                    <td>
+                                                        <button type="button" class="opslaan-knop" data-event="{{ json_encode([
+                                'Id' => $event->Id,
+                                'Naam' => $event->Naam,
+                                'Datum' => \Carbon\Carbon::parse($event->Datum)->format('Y-m-d'),
+                                'Tijd' => substr($event->Tijd ?? '', 0, 5),
+                                'Locatie' => $event->Locatie,
+                            ]) }}" data-update-url="{{ route('events.update', ['event' => $event->Id]) }}"
+                                                            onclick="openWijzigEventModal(this)">
+                                                            WIJZIGEN
+                                                        </button>
+                                                        <button type="button" class="verwijderen-knop"
+                                                            data-verwijder-url="{{ route('events.destroy', ['event' => $event->Id]) }}"
+                                                            data-vandaag="{{ \Carbon\Carbon::parse($event->Datum)->toDateString() === \Carbon\Carbon::now('Europe/Amsterdam')->toDateString() ? '1' : '0' }}"
+                                                            onclick="openVerwijderEventModal(this)">
+                                                            VERWIJDEREN
+                                                        </button>
+                                                    </td>
+                                                </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="lege-tabel">
+                                <td colspan="8" class="lege-tabel">
                                     Er zijn nog geen evenementen beschikbaar.
                                 </td>
                             </tr>
@@ -204,11 +147,8 @@
     </div>
 
     <!-- Popup voor een evenement toevoegen -->
-    <div class="modal {{ $errors->any() ? 'actief' : '' }}"
-         id="eventModal"
-         role="dialog"
-         aria-modal="true"
-         aria-labelledby="eventModalTitel">
+    <div class="modal {{ $errors->any() ? 'actief' : '' }}" id="eventModal" role="dialog" aria-modal="true"
+        aria-labelledby="eventModalTitel">
 
         <div class="modal-inhoud">
             <div class="modal-kop">
@@ -217,8 +157,7 @@
                     <h2 id="eventModalTitel">Event toevoegen</h2>
                 </div>
 
-                <button type="button" class="modal-sluiten"
-                        onclick="closeEventModal()" aria-label="Sluiten">
+                <button type="button" class="modal-sluiten" onclick="closeEventModal()" aria-label="Sluiten">
                     &times;
                 </button>
             </div>
@@ -228,8 +167,7 @@
 
                 <div class="form-groep">
                     <label for="eventNaam">Naam</label>
-                    <input type="text" id="eventNaam" name="Naam"
-                           value="{{ old('Naam') }}" maxlength="100" required>
+                    <input type="text" id="eventNaam" name="Naam" value="{{ old('Naam') }}" maxlength="100" required>
                     @error('Naam')
                         <span class="formulier-fout">{{ $message }}</span>
                     @enderror
@@ -237,9 +175,8 @@
 
                 <div class="form-groep">
                     <label for="eventDatum">Datum</label>
-                    <input type="date" id="eventDatum" name="Datum"
-                           min="{{ date('Y-m-d') }}"
-                           value="{{ old('Datum') }}" required>
+                    <input type="date" id="eventDatum" name="Datum" min="{{ date('Y-m-d') }}" value="{{ old('Datum') }}"
+                        required>
                     @error('Datum')
                         <span class="formulier-fout">{{ $message }}</span>
                     @enderror
@@ -247,8 +184,7 @@
 
                 <div class="form-groep">
                     <label for="eventTijd">Tijd</label>
-                    <input type="time" id="eventTijd" name="Tijd"
-                           value="{{ old('Tijd') }}" required>
+                    <input type="time" id="eventTijd" name="Tijd" value="{{ old('Tijd') }}" required>
                     @error('Tijd')
                         <span class="formulier-fout">{{ $message }}</span>
                     @enderror
@@ -256,8 +192,8 @@
 
                 <div class="form-groep">
                     <label for="eventLocatie">Locatie</label>
-                    <input type="text" id="eventLocatie" name="Locatie"
-                           value="{{ old('Locatie') }}" maxlength="150" required>
+                    <input type="text" id="eventLocatie" name="Locatie" value="{{ old('Locatie') }}" maxlength="150"
+                        required>
                     @error('Locatie')
                         <span class="formulier-fout">{{ $message }}</span>
                     @enderror
@@ -265,11 +201,8 @@
 
                 <div class="form-groep">
                     <label for="eventTickets">Tickets per tijdslot</label>
-                    <input type="number" id="eventTickets"
-                           name="AantalTicketsPerTijdslot"
-                           min="0"
-                           value="{{ old('AantalTicketsPerTijdslot', 0) }}"
-                           required>
+                    <input type="number" id="eventTickets" name="AantalTicketsPerTijdslot" min="0"
+                        value="{{ old('AantalTicketsPerTijdslot', 0) }}" required>
                     @error('AantalTicketsPerTijdslot')
                         <span class="formulier-fout">{{ $message }}</span>
                     @enderror
@@ -277,24 +210,125 @@
 
                 <div class="form-groep">
                     <label for="eventStands">Beschikbare stands</label>
-                    <input type="number" id="eventStands"
-                           name="BeschikbareStands"
-                           min="0"
-                           value="{{ old('BeschikbareStands', 0) }}"
-                           required>
+                    <input type="number" id="eventStands" name="BeschikbareStands" min="0"
+                        value="{{ old('BeschikbareStands', 0) }}" required>
                     @error('BeschikbareStands')
                         <span class="formulier-fout">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <div class="modal-knoppen">
-                    <button type="button" class="annuleer-knop"
-                            onclick="closeEventModal()">
+                    <button type="button" class="annuleer-knop" onclick="closeEventModal()">
                         ANNULEREN
                     </button>
 
                     <button type="submit" class="opslaan-knop">
                         OPSLAAN
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pop-up voor het wijzigen van een bestaand evenement. -->
+    <div class="modal {{ $errors->eventWijzigen->any() ? 'actief' : '' }}" id="wijzigEventModal" role="dialog"
+        aria-modal="true" aria-labelledby="wijzigEventTitel">
+        <div class="modal-inhoud">
+            <div class="modal-kop">
+                <div>
+                    <p>Evenementen beheren</p>
+                    <h2 id="wijzigEventTitel">Event wijzigen</h2>
+                </div>
+
+                <button type="button" class="modal-sluiten" onclick="closeWijzigEventModal()" aria-label="Sluiten">
+                    &times;
+                </button>
+            </div>
+
+            @if ($errors->eventWijzigen->any())
+                <div class="melding-fout" role="alert">
+                    @foreach ($errors->eventWijzigen->all() as $melding)
+                        <p>{{ $melding }}</p>
+                    @endforeach
+                </div>
+            @endif
+
+            <form id="wijzigEventForm" method="POST" @if ($errors->eventWijzigen->any() && old('_edit_event'))
+            action="{{ route('events.update', ['event' => old('_edit_event')]) }}" @endif>
+                @csrf
+                @method('PUT')
+
+                <input type="hidden" id="wijzigEventId" name="_edit_event" value="{{ old('_edit_event') }}">
+
+                <div class="form-groep">
+                    <label for="wijzigEventNaam">Naam</label>
+                    <input type="text" id="wijzigEventNaam" name="Naam" value="{{ old('Naam') }}" maxlength="100"
+                        required>
+                </div>
+
+                <div class="form-groep">
+                    <label for="wijzigEventDatum">Datum</label>
+                    <input type="date" id="wijzigEventDatum" name="Datum" value="{{ old('Datum') }}" required>
+                </div>
+
+                <div class="form-groep">
+                    <label for="wijzigEventTijd">Tijd</label>
+                    <input type="time" id="wijzigEventTijd" name="Tijd" value="{{ old('Tijd') }}" required>
+                </div>
+
+                <div class="form-groep">
+                    <label for="wijzigEventLocatie">Locatie</label>
+                    <input type="text" id="wijzigEventLocatie" name="Locatie" value="{{ old('Locatie') }}"
+                        maxlength="150" required>
+                </div>
+
+                <div class="modal-knoppen">
+                    <button type="button" id="annuleerEventWijzigen" class="annuleer-knop"
+                        onclick="closeWijzigEventModal()">
+                        ANNULEREN
+                    </button>
+
+                    <button type="submit" class="opslaan-knop">
+                        OPSLAAN
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bevestiging voor het verwijderen van een event. -->
+    <div class="modal" id="verwijderEventModal" role="dialog" aria-modal="true" aria-labelledby="verwijderEventTitel"
+        aria-describedby="verwijderEventVraag">
+        <div class="modal-inhoud">
+            <div class="modal-kop">
+                <div>
+                    <p>Evenementen beheren</p>
+                    <h2 id="verwijderEventTitel">Event verwijderen</h2>
+                </div>
+
+                <button type="button" class="modal-sluiten" onclick="closeVerwijderEventModal()" aria-label="Sluiten">
+                    &times;
+                </button>
+            </div>
+
+            <p id="verwijderEventVraag">
+                Weet je zeker dat je dit event wilt verwijderen?
+            </p>
+
+            <form id="verwijderEventForm" method="POST">
+                @csrf
+                @method('DELETE')
+
+                <input type="hidden" name="bevestiging" value="1">
+
+                <div class="modal-knoppen">
+                    <button type="button" id="annuleerEventVerwijderen" class="annuleer-knop"
+                        onclick="closeVerwijderEventModal()">
+                        ANNULEREN
+                    </button>
+
+                    <button type="submit" class="verwijderen-knop">
+                        BEVESTIGEN
                     </button>
                 </div>
             </form>
@@ -327,7 +361,137 @@
                 closeEventModal();
             }
         });
+        let laatsteEventWijzigKnop = null;
+
+        // Vul het formulier met de gegevens van het aangeklikte evenement.
+        function openWijzigEventModal(knop) {
+            const event = JSON.parse(knop.dataset.event);
+
+            laatsteEventWijzigKnop = knop;
+
+            document.getElementById('wijzigEventForm').action =
+                knop.dataset.updateUrl;
+
+            document.getElementById('wijzigEventId').value = event.Id;
+            document.getElementById('wijzigEventNaam').value = event.Naam;
+            document.getElementById('wijzigEventDatum').value = event.Datum;
+            document.getElementById('wijzigEventTijd').value = event.Tijd;
+            document.getElementById('wijzigEventLocatie').value = event.Locatie;
+
+            // Oude meldingen horen niet bij een nieuwe wijzigpoging.
+            document.querySelectorAll('#wijzigEventModal .melding-fout')
+                .forEach((melding) => melding.remove());
+
+            document.getElementById('wijzigEventModal').classList.add('actief');
+            document.getElementById('wijzigEventNaam').focus();
+        }
+
+        // Sluit de pop-up zonder gegevens op te slaan.
+        function closeWijzigEventModal() {
+            document.getElementById('wijzigEventModal')
+                .classList.remove('actief');
+
+            if (laatsteEventWijzigKnop) {
+                laatsteEventWijzigKnop.focus();
+            }
+        }
+
+        // Klikken op de achtergrond annuleert het wijzigen.
+        document.getElementById('wijzigEventModal')
+            .addEventListener('click', function (event) {
+                if (event.target === this) {
+                    closeWijzigEventModal();
+                }
+            });
+
+        // Escape sluit de wijzigpop-up.
+        document.addEventListener('keydown', function (event) {
+            if (
+                event.key === 'Escape'
+                && document.getElementById('wijzigEventModal')
+                    .classList.contains('actief')
+            ) {
+                closeWijzigEventModal();
+            }
+        });
+
+        // Verberg meldingen op deze pagina na drie seconden.
+        document.querySelectorAll('.melding-succes, .melding-fout')
+            .forEach((melding) => {
+                setTimeout(() => {
+                    melding.hidden = true;
+                }, 3000);
+            });
+        let laatsteEventVerwijderKnop = null;
+        let eventVerwijderTimer;
+
+        // Toon een verwijderfout gedurende drie seconden.
+        function toonEventVerwijderFout(tekst) {
+            const foutvak = document.getElementById('eventVerwijderenFout');
+
+            clearTimeout(eventVerwijderTimer);
+
+            foutvak.textContent = tekst;
+            foutvak.hidden = false;
+            foutvak.focus();
+
+            eventVerwijderTimer = setTimeout(() => {
+                foutvak.hidden = true;
+            }, 3000);
+        }
+
+        // Controleer de getoonde datum en open de bevestiging.
+        function openVerwijderEventModal(knop) {
+            laatsteEventVerwijderKnop = knop;
+
+            if (knop.dataset.vandaag === '1') {
+                toonEventVerwijderFout(
+                    'Dit event vindt vandaag plaats en kan niet worden verwijderd.'
+                );
+                return;
+            }
+
+            document.getElementById('eventVerwijderenFout').hidden = true;
+
+            document.getElementById('verwijderEventForm').action =
+                knop.dataset.verwijderUrl;
+
+            document.getElementById('verwijderEventModal')
+                .classList.add('actief');
+
+            document.getElementById('annuleerEventVerwijderen').focus();
+        }
+
+        // Annuleren verstuurt geen verwijderverzoek.
+        function closeVerwijderEventModal() {
+            document.getElementById('verwijderEventModal')
+                .classList.remove('actief');
+
+            if (laatsteEventVerwijderKnop) {
+                laatsteEventVerwijderKnop.focus();
+            }
+        }
+
+        // Klikken op de achtergrond sluit de bevestiging.
+        document.getElementById('verwijderEventModal')
+            .addEventListener('click', function (event) {
+                if (event.target === this) {
+                    closeVerwijderEventModal();
+                }
+            });
+
+        // Escape sluit de bevestiging.
+        document.addEventListener('keydown', function (event) {
+            if (
+                event.key === 'Escape'
+                && document.getElementById('verwijderEventModal')
+                    .classList.contains('actief')
+            ) {
+                closeVerwijderEventModal();
+            }
+        });
     </script>
 
 </body>
+
 </html>

@@ -79,6 +79,17 @@ Route::post('/stands/{stand}/reserveren', [StandController::class, 'reserveren']
     ->whereNumber('stand')
     ->name('stands.reserveren');
 
+// Bestaande stand wijzigen als organisator
+Route::put('/organisator/stands/{stand}', [StandController::class, 'update'])
+    ->middleware(['auth', 'organisator'])
+    ->whereNumber('stand')
+    ->name('stands.update');
+
+// Alleen een organisator mag een stand verwijderen.
+Route::delete('/organisator/stands/{stand}', [StandController::class, 'destroy'])
+    ->middleware(['auth', 'organisator'])
+    ->whereNumber('stand')
+    ->name('stands.destroy');
 /*
 |--------------------------------------------------------------------------
 | Evenementen
@@ -93,6 +104,18 @@ Route::get('/events', [EventController::class, 'index'])
 Route::post('/events', [EventController::class, 'store'])
     ->name('events.store');
 
+
+// Een organisator mag bestaande evenementen wijzigen.
+Route::put('/organisator/events/{event}', [EventController::class, 'update'])
+    ->middleware(['auth', 'organisator'])
+    ->whereNumber('event')
+    ->name('events.update');
+
+// Alleen organisatoren mogen evenementen verwijderen.
+Route::delete('/organisator/events/{event}', [EventController::class, 'destroy'])
+    ->middleware(['auth', 'organisator'])
+    ->whereNumber('event')
+    ->name('events.destroy');
 /*
 |--------------------------------------------------------------------------
 | Verkopers

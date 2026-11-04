@@ -20,12 +20,17 @@ class Reservering
             abort(403, 'Alleen verkopers mogen reserveren.');
         }
 
-        // JOIN: zoek het bedrijf van de ingelogde verkoper
-        $verkoper = DB::table('verkoper as v')
-            ->join('users as u', 'v.UserId', '=', 'u.id')
-            ->where('u.id', $gebruiker->id)
-            ->select('v.Id', 'v.Naam')
-            ->first();
+        // Zoek de verkoper die bij het ingelogde account hoort
+        $verkopers = DB::select(
+            'SELECT v.Id, v.Naam
+     FROM verkoper AS v
+     INNER JOIN users AS u
+         ON v.UserId = u.id
+     WHERE u.id = ?',
+            [$gebruiker->id]
+        );
+
+        $verkoper = $verkopers[0] ?? null;
 
         if (!$verkoper) {
             return redirect()->route('stands.index')
