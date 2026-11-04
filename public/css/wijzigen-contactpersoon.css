@@ -1,0 +1,187 @@
+/* Achtergrond van het wijzigvenster */
+.wijzigen-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    padding: 20px;
+}
+
+.wijzigen-modal.actief {
+    display: flex;
+}
+
+/* Inhoud van het venster */
+.wijzigen-modal-inhoud {
+    width: 100%;
+    max-width: 480px;
+    padding: 30px;
+    background: #171717;
+    border: 1px solid #3a3a3a;
+    border-radius: 18px;
+    color: #fff;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: wijzigenOpenen 0.25s ease;
+}
+
+@keyframes wijzigenOpenen {
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Kop van het venster */
+.wijzigen-modal-kop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.wijzigen-modal-kop h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #e5ff35;
+}
+
+.wijzigen-sluiten {
+    border: none;
+    background: transparent;
+    color: #aaa;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.wijzigen-sluiten:hover {
+    color: #e5ff35;
+}
+
+/* Formuliervelden */
+.wijzigen-form-groep {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.wijzigen-form-groep label {
+    color: #ccc;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.wijzigen-form-groep input,
+.wijzigen-form-groep select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    background: #242424;
+    border: 1px solid #414141;
+    border-radius: 9px;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+}
+
+.wijzigen-form-groep input:focus,
+.wijzigen-form-groep select:focus {
+    border-color: #e5ff35;
+    box-shadow: 0 0 0 2px rgba(229, 255, 53, 0.12);
+}
+
+/* Knoppen */
+.wijzigen-modal-knoppen {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.wijzigen-modal-knoppen button {
+    padding: 11px 20px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.wijzigen-annuleren {
+    background: transparent;
+    border: 1px solid #555;
+    color: #fff;
+}
+
+.wijzigen-annuleren:hover {
+    background: #333;
+}
+
+.wijzigen-opslaan {
+    background: #e5ff35;
+    border: 1px solid #e5ff35;
+    color: #111;
+}
+
+.wijzigen-opslaan:hover {
+    background: #d3ed20;
+    transform: translateY(-2px);
+}
+
+/* Mobiele weergave */
+@media (max-width: 600px) {
+    .wijzigen-modal-inhoud {
+        padding: 22px;
+    }
+
+    .wijzigen-modal-knoppen {
+        flex-direction: column-reverse;
+    }
+
+    .wijzigen-modal-knoppen button {
+        width: 100%;
+    }
+}
+/* Modal verkoper wijzigen */
+#wijzigenVerkoperModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.85);
+}
+
+#wijzigenVerkoperModal.actief {
+    display: flex;
+}
+/* Modal contactpersoon wijzigen */
+#wijzigenContactpersoonModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10001;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.85);
+}
+
+#wijzigenContactpersoonModal.actief {
+    display: flex;
+}

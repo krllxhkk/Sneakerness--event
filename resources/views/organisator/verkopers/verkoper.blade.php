@@ -9,6 +9,8 @@
 
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/wijzigen.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/wijzigen-contactpersoon.css') }}">
 </head>
 
 <body>
@@ -406,6 +408,7 @@
                                     <th>STAND TYPE</th>
                                     <th>DAGEN</th>
                                     <th>STATUS</th>
+                                    <th>ACTIES</th>
                                 </tr>
                             </thead>
 
@@ -434,13 +437,33 @@
                                         <td>
                                             {{ $verkoper->SpecialeStatus ?? 'Geen' }}
                                         </td>
+                                        <td>
+    <button
+    type="button"
+    class="toevoegen-knop"
+    onclick='openWijzigenModal(@json($verkoper))'>
+    WIJZIGEN
+</button>
+    <form
+    method="POST"
+    action="{{ route('verkopers.destroy', $verkoper->Id) }}"
+    class="verwijder-formulier"
+    style="display: inline;">
+        @csrf
+        @method('DELETE')
+
+        <button type="submit" class="annuleer-knop">
+            VERWIJDEREN
+        </button>
+    </form>
+</td>
 
                                     </tr>
 
                                 @empty
 
                                     <tr>
-                                        <td colspan="5" class="lege-tabel">
+                                        <td colspan="6" class="lege-tabel">
                                             Er zijn momenteel geen actieve verkopers.
                                         </td>
                                     </tr>
@@ -509,7 +532,7 @@
                         required>
                     <option value="">Kies een contactpersoon</option>
 
-                    @foreach ($contactpersonen as $contactpersoon)
+                    @foreach ($alleContactpersonen as $contactpersoon)
                         <option value="{{ $contactpersoon->Id }}">
                             {{ $contactpersoon->Naam }}
                         </option>
@@ -585,72 +608,149 @@
                     <div class="dashboard-tabel">
 
                         <table>
+    <thead>
+        <tr>
+            <th>NAAM</th>
+            <th>VERKOPER</th>
+            <th>E-MAILADRES</th>
+            <th>TELEFOON</th>
+            <th>STATUS</th>
+            <th>ACTIES</th>
+        </tr>
+    </thead>
 
-                            <thead>
-                                <tr>
-                                    <th>NAAM</th>
-                                    <th>VERKOPER</th>
-                                    <th>E-MAILADRES</th>
-                                    <th>TELEFOON</th>
-                                    <th>STATUS</th>
-                                </tr>
-                            </thead>
+    <tbody>
+        @forelse($contactpersonen as $contactpersoon)
+            <tr>
+                <td><strong>{{ $contactpersoon->Naam }}</strong></td>
 
-                            <tbody>
+                <td>{{ $contactpersoon->VerkoperNaam ?? '-' }}</td>
 
-                                @forelse($contactpersonen as $contactpersoon)
+                <td>{{ $contactpersoon->{'E-mailadres'} }}</td>
 
-                                    <tr>
+                <td>{{ $contactpersoon->Telefoonnummer }}</td>
 
-                                        <td>
-                                            <strong>
-                                                {{ $contactpersoon->Naam }}
-                                            </strong>
-                                        </td>
+                <td>
+                    <span class="status-actief">● Actief</span>
+                </td>
 
-                                        <td>
-                                            {{ $contactpersoon->VerkoperNaam ?? '-' }}
-                                        </td>
+                <td>
+                    <div class="actie-knoppen">
 
-                                        <td>
-                                            {{ $contactpersoon->{'E-mailadres'} }}
-                                        </td>
+                        <button type="button"
+                            class="btn-wijzigen"
+                            onclick="openWijzigenContactpersoonModal(this)"
+                            data-id="{{ $contactpersoon->Id }}"
+                            data-naam="{{ $contactpersoon->Naam }}"
+                            data-email="{{ $contactpersoon->{'E-mailadres'} }}"
+                            data-telefoon="{{ $contactpersoon->Telefoonnummer }}"
+                            data-verkoper="{{ $contactpersoon->VerkoperId }}">
+                            WIJZIGEN
+                        </button>
 
-                                        <td>
-                                            {{ $contactpersoon->Telefoonnummer }}
-                                        </td>
+                        <form action="{{ route('contactpersonen.loskoppelen', $contactpersoon->Id) }}"
+      method="POST"
+      class="contactpersoon-bevestiging-formulier"
+      data-modal="loskoppelenModal">
+    @csrf
+    @method('DELETE')
 
-                                        <td>
-                                            <span class="status-actief">
-                                                ● Actief
-                                            </span>
-                                        </td>
+    <button type="submit" class="btn-loskoppelen">
+        CONTACTPERSOON LOSKOPPELEN
+    </button>
+</form>
 
-                                    </tr>
+                        <form action="{{ route('contactpersonen.destroy', $contactpersoon->Id) }}"
+      method="POST"
+      class="contactpersoon-bevestiging-formulier"
+      data-modal="verwijderenContactpersoonModal">
+    @csrf
+    @method('DELETE')
 
-                                @empty
+    <button type="submit" class="btn-verwijderen">
+        VERWIJDEREN
+    </button>
+</form>
 
-                                    <tr>
-                                        <td colspan="5" class="lege-tabel">
-                                            Er zijn momenteel geen contactpersonen.
-                                        </td>
-                                    </tr>
-
-                                @endforelse
-
-                            </tbody>
-
-                        </table>
+                    </div>
+                </td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="6" class="lege-tabel">
+                    Er zijn momenteel geen contactpersonen.
+                </td>
+            </tr>
+        @endforelse
+    </tbody>
+</table>
 
                     </div>
 
                 @endif
 
             </section>
+            
+<!-- Modal verkoper verwijderen -->
+<div id="verwijderModal" class="verwijder-modal">
+    <div class="verwijder-modal-inhoud">
+        <div class="verwijder-icoon">!</div>
 
-        </main>
+        <p class="verwijder-label">VERKOPER VERWIJDEREN</p>
 
+        <h2>Weet je het zeker?</h2>
+
+        <p class="verwijder-tekst">
+            Weet je zeker dat je deze verkoper wilt verwijderen?
+            Deze actie kan niet zomaar ongedaan worden gemaakt.
+        </p>
+
+        <div class="verwijder-acties">
+            <button type="button" id="annuleerVerwijderen">
+                ANNULEREN
+            </button>
+
+            <button type="button" id="bevestigVerwijderen">
+                VERWIJDEREN
+            </button>
+        </div>
     </div>
+</div>
+<!-- Modal contactpersoon loskoppelen -->
+<div id="loskoppelenModal" class="verwijder-modal contactpersoon-bevestiging-modal">
+    <div class="verwijder-modal-inhoud">
+        <div class="verwijder-icoon">!</div>
+        <p class="verwijder-label">CONTACTPERSOON LOSKOPPELEN</p>
+        <h2>Weet je het zeker?</h2>
+        <p class="verwijder-tekst">
+            Weet je zeker dat je deze contactpersoon wilt loskoppelen?
+        </p>
+        <div class="verwijder-acties">
+            <button type="button" class="annuleer-contactpersoon">ANNULEREN</button>
+            <button type="button" class="bevestig-contactpersoon">LOSKOPPELEN</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal contactpersoon verwijderen -->
+<div id="verwijderenContactpersoonModal" class="verwijder-modal contactpersoon-bevestiging-modal">
+    <div class="verwijder-modal-inhoud">
+        <div class="verwijder-icoon">!</div>
+        <p class="verwijder-label">CONTACTPERSOON VERWIJDEREN</p>
+        <h2>Weet je het zeker?</h2>
+        <p class="verwijder-tekst">
+            Weet je zeker dat je deze contactpersoon wilt verwijderen?
+        </p>
+        <div class="verwijder-acties">
+            <button type="button" class="annuleer-contactpersoon">ANNULEREN</button>
+            <button type="button" class="bevestig-contactpersoon">VERWIJDEREN</button>
+        </div>
+    </div>
+</div>
+        </main>
+    </div>
+    @include('organisator.verkopers.wijzigen')
+    @include('organisator.contactpersonen.wijzigen')
 <script>
     const modal = document.getElementById('verkoperModal');
     const openButton = document.getElementById('openVerkoperModal');
@@ -749,7 +849,87 @@ burgerMenu.addEventListener('click', function () {
     );
 });
 
+// Bevestiging voor verwijderen van verkopers
+const verwijderModal = document.getElementById('verwijderModal');
+const annuleerVerwijderen = document.getElementById('annuleerVerwijderen');
+const bevestigVerwijderen = document.getElementById('bevestigVerwijderen');
 
+let formulierOmTeVerwijderen = null;
+
+document.querySelectorAll('.verwijder-formulier').forEach(function (formulier) {
+    formulier.addEventListener('submit', function (event) {
+        event.preventDefault();
+        formulierOmTeVerwijderen = formulier;
+        verwijderModal.classList.add('actief');
+    });
+});
+
+annuleerVerwijderen.addEventListener('click', function () {
+    verwijderModal.classList.remove('actief');
+    formulierOmTeVerwijderen = null;
+});
+
+bevestigVerwijderen.addEventListener('click', function () {
+    if (formulierOmTeVerwijderen) {
+        formulierOmTeVerwijderen.submit();
+    }
+});
+
+// Bevestiging voor contactpersonen
+let huidigContactpersoonFormulier = null;
+
+document.querySelectorAll('.contactpersoon-bevestiging-formulier').forEach(function (formulier) {
+    formulier.addEventListener('submit', function (event) {
+        event.preventDefault();
+        huidigContactpersoonFormulier = formulier;
+
+        const modal = document.getElementById(formulier.dataset.modal);
+        if (modal) {
+            modal.classList.add('actief');
+        }
+    });
+});
+
+document.querySelectorAll('.contactpersoon-bevestiging-modal').forEach(function (modal) {
+    const annuleren = modal.querySelector('.annuleer-contactpersoon');
+    const bevestigen = modal.querySelector('.bevestig-contactpersoon');
+
+    annuleren.addEventListener('click', function () {
+        modal.classList.remove('actief');
+        huidigContactpersoonFormulier = null;
+    });
+
+    bevestigen.addEventListener('click', function () {
+        if (huidigContactpersoonFormulier) {
+            huidigContactpersoonFormulier.submit();
+        }
+    });
+});
+
+// Knoppen voor contactpersoon-modals
+document.querySelectorAll('.contactpersoon-bevestiging-modal').forEach(function (modal) {
+    const annuleren = modal.querySelector('.annuleer-contactpersoon');
+    const bevestigen = modal.querySelector('.bevestig-contactpersoon');
+
+    annuleren.addEventListener('click', function () {
+        modal.classList.remove('actief');
+        huidigContactpersoonFormulier = null;
+    });
+
+    bevestigen.addEventListener('click', function () {
+        if (huidigContactpersoonFormulier) {
+            huidigContactpersoonFormulier.submit();
+        }
+    });
+
+    modal.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.classList.remove('actief');
+            huidigContactpersoonFormulier = null;
+        }
+    });
+});
+</script>
 </script>
 </body>
 

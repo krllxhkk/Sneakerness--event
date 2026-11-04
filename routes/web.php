@@ -122,11 +122,18 @@ Route::delete('/organisator/events/{event}', [EventController::class, 'destroy']
 |--------------------------------------------------------------------------
 */
 
+
+/*
+|--------------------------------------------------------------------------
+| Verkopers
+|--------------------------------------------------------------------------
+*/
+
 // Toon het overzicht van verkopers.
 Route::get('/verkopers', [VerkoperController::class, 'index'])
     ->name('verkopers.index');
 
-// Overzicht van verkopers en contactpersonen voor de organisator.
+// Overzicht voor de organisator.
 Route::get('/organisator/verkopers', [VerkoperController::class, 'organisator'])
     ->middleware(['auth', 'organisator'])
     ->name('organisator.verkopers');
@@ -135,6 +142,18 @@ Route::get('/organisator/verkopers', [VerkoperController::class, 'organisator'])
 Route::post('/verkopers/toevoegen', [VerkoperController::class, 'store'])
     ->middleware(['auth', 'organisator'])
     ->name('verkopers.store');
+
+// Wijzig een bestaande verkoper.
+Route::put('/verkopers/{id}', [VerkoperController::class, 'update'])
+    ->middleware(['auth', 'organisator'])
+    ->whereNumber('id')
+    ->name('verkopers.update');
+
+// Verwijder een verkoper.
+Route::delete('/verkopers/{id}', [VerkoperController::class, 'destroy'])
+    ->middleware(['auth', 'organisator'])
+    ->whereNumber('id')
+    ->name('verkopers.destroy');
 
 /*
 |--------------------------------------------------------------------------
@@ -155,6 +174,23 @@ Route::post('/contactpersonen/toevoegen', [ContactpersoonController::class, 'sto
 Route::post('/contactpersonen/koppelen', [ContactpersoonController::class, 'koppel'])
     ->middleware(['auth', 'organisator'])
     ->name('contactpersonen.koppel');
+// Wijzig een bestaande contactpersoon
+Route::put('/contactpersonen/{id}', [ContactpersoonController::class, 'update'])
+    ->middleware(['auth', 'organisator'])
+    ->whereNumber('id')
+    ->name('contactpersonen.update');
+
+// Verwijder een contactpersoon
+Route::delete('/contactpersonen/{id}', [ContactpersoonController::class, 'destroy'])
+    ->middleware(['auth', 'organisator'])
+    ->whereNumber('id')
+    ->name('contactpersonen.destroy');
+
+// Koppel een contactpersoon los van een verkoper
+Route::delete('/contactpersonen/{id}/loskoppelen', [ContactpersoonController::class, 'loskoppelen'])
+    ->middleware(['auth', 'organisator'])
+    ->whereNumber('id')
+    ->name('contactpersonen.loskoppelen');
 
 /*
 |--------------------------------------------------------------------------

@@ -1017,9 +1017,381 @@ body {
         border: none;
         background: transparent;
     }
+}
 
     .responsive-overzicht table,
     .responsive-overzicht tbody {
+            .beheer-kop .toevoegen-knop {
+                width: 100%;
+            }
+        }
+/* Actieknoppen in de verkoperstabel */
+.verkopers-tabel td:last-child {
+    white-space: nowrap;
+}
+
+.verkopers-tabel td:last-child .toevoegen-knop,
+.verkopers-tabel td:last-child .annuleer-knop {
+    padding: 10px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 0;
+}
+
+/* Bewerken */
+.verkopers-tabel td:last-child .toevoegen-knop {
+    background: transparent;
+    border: 1px solid #e5ff35;
+    color: #e5ff35;
+    margin-right: 12px;
+}
+
+.verkopers-tabel td:last-child .toevoegen-knop:hover {
+    background: #e5ff35;
+    color: #111;
+}
+
+/* Verwijderen */
+.verkopers-tabel td:last-child .annuleer-knop {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #777;
+}
+
+.verkopers-tabel td:last-child .annuleer-knop:hover {
+    color: #ff5555;
+}
+/* Verwijder bevestigingsvenster */
+.verwijder-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.verwijder-modal.actief {
+    display: flex;
+}
+
+.verwijder-modal-inhoud {
+    width: 100%;
+    max-width: 430px;
+    background: #171715;
+    border: 1px solid #35352d;
+    border-radius: 12px;
+    padding: 35px;
+    text-align: center;
+    animation: modalVerschijnen 0.25s ease;
+}
+
+.verwijder-icoon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e5ff35;
+    border-radius: 50%;
+    color: #e5ff35;
+    font-size: 24px;
+}
+
+.verwijder-label {
+    color: #e5ff35;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+
+.verwijder-modal-inhoud h2 {
+    color: #fff;
+    font-size: 25px;
+    margin: 12px 0;
+}
+
+.verwijder-tekst {
+    color: #999;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 28px;
+}
+
+.verwijder-acties {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.verwijder-acties button {
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#annuleerVerwijderen {
+    background: transparent;
+    border: 1px solid #555;
+    color: #ccc;
+}
+
+#annuleerVerwijderen:hover {
+    border-color: #fff;
+    color: #fff;
+}
+
+#bevestigVerwijderen,
+.bevestig-contactpersoon {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+#bevestigVerwijderen:hover,
+.bevestig-contactpersoon:hover {
+    background-color: #b02a37;
+}
+
+@keyframes modalVerschijnen {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Moderne stijl voor alle modals */
+.modal {
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 20px;
+}
+
+.modal-inhoud {
+    max-width: 520px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 32px;
+    background: linear-gradient(145deg, #191919, #101010);
+    border: 1px solid #333;
+    border-radius: 16px;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.7);
+    animation: modalOpenen 0.25s ease;
+}
+
+@keyframes modalOpenen {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Modal titel */
+.modal-kop {
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.modal-kop h2 {
+    color: #fff;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.modal-kop p {
+    color: #eaff00;
+    letter-spacing: 1.5px;
+}
+
+/* Sluitknop */
+.modal-sluiten {
+    width: 36px;
+    height: 36px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: #aaa;
+    font-size: 24px;
+    transition: 0.2s;
+}
+
+.modal-sluiten:hover {
+    background: #eaff00;
+    border-color: #eaff00;
+    color: #111;
+}
+
+/* Formuliervelden */
+.form-groep {
+    gap: 9px;
+    margin-bottom: 20px;
+}
+
+.form-groep label {
+    color: #ccc;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.form-groep input,
+.form-groep select {
+    min-height: 46px;
+    padding: 12px 14px;
+    background: #202020;
+    border: 1px solid #393939;
+    border-radius: 9px;
+    color: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-groep input:focus,
+.form-groep select:focus {
+    outline: none;
+    border-color: #eaff00;
+    box-shadow: 0 0 0 3px rgba(234, 255, 0, 0.1);
+}
+
+/* Modal knoppen */
+.modal-knoppen {
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.annuleer-knop,
+.opslaan-knop {
+    min-height: 44px;
+    padding: 0 22px;
+    border-radius: 9px;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.annuleer-knop {
+    border-color: #444;
+    color: #ccc;
+}
+
+.annuleer-knop:hover {
+    background: #292929;
+    border-color: #777;
+    color: #fff;
+}
+
+.opslaan-knop:hover {
+    background: #d5e900;
+    border-color: #d5e900;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .modal-inhoud {
+        padding: 23px;
+    }
+
+    .modal-knoppen {
+        flex-direction: column-reverse;
+    }
+
+    .modal-knoppen button {
+        width: 100%;
+    }
+}
+/* Actieknoppen in de tabel */
+.actie-knoppen {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 14px;
+}
+
+/* Wijzigen */
+.btn-wijzigen {
+    padding: 11px 20px;
+    background: transparent;
+    border: 1px solid #ccff00;
+    border-radius: 8px;
+    color: #ccff00;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-wijzigen:hover {
+    background: #ccff00;
+    color: #000;
+}
+
+/* Loskoppelen en verwijderen */
+.btn-loskoppelen,
+.btn-verwijderen {
+    padding: 4px 0;
+    background: transparent;
+    border: none;
+    color: #888;
+    font-size: 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.btn-loskoppelen:hover,
+.btn-verwijderen:hover {
+    color: #ccff00;
+}
+
+/* Mobiele versie: verkopers en contactpersonen */
+@media (max-width: 600px) {
+
+    .dashboard-inhoud {
+        padding: 15px;
+    }
+
+    .dashboard-kop h1 {
+        font-size: 26px;
+    }
+
+    /* Koppen en toevoegknoppen */
+    .verkopers-sectie-kop,
+    .sectie-kop {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .verkopers-sectie-kop .toevoegen-knop,
+    .contactpersoon-acties .toevoegen-knop {
+        width: 100%;
+    }
+
+    .contactpersoon-acties {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    /* Tabellen omzetten naar kaarten */
+    .verkopers-tabel table,
+    .contactpersonen-section .dashboard-tabel table,
+    .verkopers-tabel tbody,
+    .contactpersonen-section .dashboard-tabel tbody {
         display: block;
         width: 100%;
         min-width: 0;
@@ -1087,5 +1459,121 @@ body {
 
     .responsive-overzicht tbody td[colspan]::before {
         content: none;
+    }
+    .verkopers-tabel thead,
+    .contactpersonen-section .dashboard-tabel thead {
+        display: none;
+    }
+
+    .verkopers-tabel tbody tr,
+    .contactpersonen-section .dashboard-tabel tbody tr {
+        display: block;
+        margin-bottom: 12px;
+        padding: 10px;
+        background: #171717;
+        border: 1px solid #292929;
+        border-radius: 9px;
+    }
+
+    .verkopers-tabel tbody td,
+    .contactpersonen-section .dashboard-tabel tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 3px;
+        border-bottom: 1px solid #292929;
+        font-size: 12px;
+        text-align: right;
+        overflow-wrap: anywhere;
+    }
+
+    /* Labels voor verkopers */
+    .verkopers-tabel tbody td:nth-child(2)::before {
+        content: "TYPE";
+    }
+
+    .verkopers-tabel tbody td:nth-child(3)::before {
+        content: "STANDTYPE";
+    }
+
+    .verkopers-tabel tbody td:nth-child(4)::before {
+        content: "DAGEN";
+    }
+
+    .verkopers-tabel tbody td:nth-child(5)::before {
+        content: "STATUS";
+    }
+
+    /* Labels voor contactpersonen */
+    .contactpersonen-section .dashboard-tabel tbody td:nth-child(2)::before {
+        content: "VERKOPER";
+    }
+
+    .contactpersonen-section .dashboard-tabel tbody td:nth-child(3)::before {
+        content: "E-MAILADRES";
+    }
+
+    .contactpersonen-section .dashboard-tabel tbody td:nth-child(4)::before {
+        content: "TELEFOON";
+    }
+
+    .contactpersonen-section .dashboard-tabel tbody td:nth-child(5)::before {
+        content: "STATUS";
+    }
+
+    .verkopers-tabel tbody td:not(:last-child)::before,
+    .contactpersonen-section .dashboard-tabel tbody td:not(:last-child)::before {
+        color: #777;
+        font-size: 10px;
+        text-align: left;
+        flex-shrink: 0;
+    }
+
+    /* Naam bovenaan de kaart */
+    .verkopers-tabel tbody td:first-child,
+    .contactpersonen-section .dashboard-tabel tbody td:first-child {
+        font-size: 14px;
+        text-align: left;
+    }
+
+    /* Actieknoppen */
+    .verkopers-tabel tbody td:last-child,
+    .contactpersonen-section .dashboard-tabel tbody td:last-child {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+        padding-top: 10px;
+        border-bottom: none;
+    }
+
+    .verkopers-tabel tbody td:last-child button,
+    .verkopers-tabel tbody td:last-child form,
+    .verkopers-tabel tbody td:last-child form button {
+        display: block;
+        width: 100%;
+        margin: 0;
+    }
+
+    .actie-knoppen {
+        width: 100%;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .actie-knoppen button,
+    .actie-knoppen form,
+    .actie-knoppen form button {
+        width: 100%;
+    }
+
+    .btn-wijzigen {
+        min-height: 38px;
+    }
+
+    .btn-loskoppelen,
+    .btn-verwijderen {
+        min-height: 32px;
     }
 }
