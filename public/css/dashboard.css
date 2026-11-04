@@ -1004,3 +1004,88 @@ body {
         width: 100%;
     }
 }
+
+/* Voorkom dat de inhoud de pagina breder maakt. */
+.dashboard-inhoud {
+    min-width: 0;
+}
+
+/* Toon elke tabelrij op mobiel als een kaart. */
+@media (max-width: 768px) {
+    .responsive-overzicht {
+        overflow: visible;
+        border: none;
+        background: transparent;
+    }
+
+    .responsive-overzicht table,
+    .responsive-overzicht tbody {
+        display: block;
+        width: 100%;
+        min-width: 0;
+    }
+
+    /* Houd de kolomkoppen beschikbaar voor schermlezers. */
+    .responsive-overzicht thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+
+    .responsive-overzicht tbody tr {
+        display: block;
+        margin-bottom: 16px;
+        padding: 8px 16px;
+        border: 1px solid #333;
+        border-radius: 8px;
+        background: #111;
+    }
+
+    .responsive-overzicht tbody td {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        align-items: start;
+        gap: 12px;
+        padding: 12px 0;
+        border: none;
+        border-bottom: 1px solid #292929;
+        text-align: left;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .responsive-overzicht tbody td::before {
+        content: attr(data-label);
+        color: #aaa;
+        font-weight: 600;
+    }
+
+    .responsive-overzicht tbody td:last-child {
+        border-bottom: none;
+    }
+
+    /* Zet actieknoppen onder elkaar over de volledige breedte. */
+    .responsive-overzicht tbody td[data-label="Acties"] {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .responsive-overzicht td[data-label="Acties"] button {
+        width: 100%;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    /* Een lege tabel krijgt geen veldlabels. */
+    .responsive-overzicht tbody td[colspan] {
+        display: block;
+        text-align: center;
+    }
+
+    .responsive-overzicht tbody td[colspan]::before {
+        content: none;
+    }
+}

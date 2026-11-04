@@ -90,7 +90,7 @@
             @endif
 
             <!-- Tabel met stands -->
-            <div class="beheer-tabel">
+            <div class="beheer-tabel responsive-overzicht">
                 <table>
                     <thead>
                         <tr>
@@ -505,7 +505,20 @@
                 if (!melding.hidden) {
                     verbergMeldingNaDrieSeconden(melding);
                 }
-    });
+            });
+        // Gebruik de kolomkoppen als labels bij de mobiele weergave.
+        document.querySelectorAll('.responsive-overzicht table').forEach((tabel) => {
+            const koppen = Array.from(tabel.querySelectorAll('thead th'))
+                .map((kop) => kop.textContent.trim());
+
+            tabel.querySelectorAll('tbody tr').forEach((rij) => {
+                rij.querySelectorAll('td').forEach((cel, index) => {
+                    if (!cel.hasAttribute('colspan')) {
+                        cel.dataset.label = koppen[index];
+                    }
+                });
+            });
+        });
     </script>
 
 </body>
