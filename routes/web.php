@@ -111,6 +111,12 @@ Route::put('/organisator/events/{event}', [EventController::class, 'update'])
     ->middleware(['auth', 'organisator'])
     ->whereNumber('event')
     ->name('events.update');
+
+// Alleen organisatoren mogen evenementen verwijderen.
+Route::delete('/organisator/events/{event}', [EventController::class, 'destroy'])
+    ->middleware(['auth', 'organisator'])
+    ->whereNumber('event')
+    ->name('events.destroy');    
 /*
 |--------------------------------------------------------------------------
 | Verkopers

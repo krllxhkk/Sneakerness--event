@@ -74,6 +74,13 @@
                 </div>
             @endif
 
+            <!-- Foutmeldingen voor het verwijderen van events. -->
+            <div id="eventVerwijderenFout" class="melding-fout" role="alert" tabindex="-1" @if (!$errors->eventVerwijderen->any()) hidden @endif>
+                @foreach ($errors->eventVerwijderen->all() as $melding)
+                    <p>{{ $melding }}</p>
+                @endforeach
+            </div>
+
             @if ($errors->any())
                 <div class="melding-fout" role="alert">
                     Controleer de ingevulde gegevens.
@@ -116,6 +123,12 @@
                             ]) }}" data-update-url="{{ route('events.update', ['event' => $event->Id]) }}"
                                                             onclick="openWijzigEventModal(this)">
                                                             WIJZIGEN
+                                                        </button>
+                                                        <button type="button" class="verwijderen-knop"
+                                                            data-verwijder-url="{{ route('events.destroy', ['event' => $event->Id]) }}"
+                                                            data-vandaag="{{ \Carbon\Carbon::parse($event->Datum)->toDateString() === \Carbon\Carbon::now('Europe/Amsterdam')->toDateString() ? '1' : '0' }}"
+                                                            onclick="openVerwijderEventModal(this)">
+                                                            VERWIJDEREN
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -283,6 +296,45 @@
         </div>
     </div>
 
+    <!-- Bevestiging voor het verwijderen van een event. -->
+    <div class="modal" id="verwijderEventModal" role="dialog" aria-modal="true" aria-labelledby="verwijderEventTitel"
+        aria-describedby="verwijderEventVraag">
+        <div class="modal-inhoud">
+            <div class="modal-kop">
+                <div>
+                    <p>Evenementen beheren</p>
+                    <h2 id="verwijderEventTitel">Event verwijderen</h2>
+                </div>
+
+                <button type="button" class="modal-sluiten" onclick="closeVerwijderEventModal()" aria-label="Sluiten">
+                    &times;
+                </button>
+            </div>
+
+            <p id="verwijderEventVraag">
+                Weet je zeker dat je dit event wilt verwijderen?
+            </p>
+
+            <form id="verwijderEventForm" method="POST">
+                @csrf
+                @method('DELETE')
+
+                <input type="hidden" name="bevestiging" value="1">
+
+                <div class="modal-knoppen">
+                    <button type="button" id="annuleerEventVerwijderen" class="annuleer-knop"
+                        onclick="closeVerwijderEventModal()">
+                        ANNULEREN
+                    </button>
+
+                    <button type="submit" class="verwijderen-knop">
+                        BEVESTIGEN
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         function toggleMenu(knop) {
             const menu = document.getElementById('dashboardNav');
@@ -370,6 +422,74 @@
                     melding.hidden = true;
                 }, 3000);
             });
+        let laatsteEventVerwijderKnop = null;
+        let eventVerwijderTimer;
+
+        // Toon een verwijderfout gedurende drie seconden.
+        function toonEventVerwijderFout(tekst) {
+            const foutvak = document.getElementById('eventVerwijderenFout');
+
+            clearTimeout(eventVerwijderTimer);
+
+            foutvak.textContent = tekst;
+            foutvak.hidden = false;
+            foutvak.focus();
+
+            eventVerwijderTimer = setTimeout(() => {
+                foutvak.hidden = true;
+            }, 3000);
+        }
+
+        // Controleer de getoonde datum en open de bevestiging.
+        function openVerwijderEventModal(knop) {
+            laatsteEventVerwijderKnop = knop;
+
+            if (knop.dataset.vandaag === '1') {
+                toonEventVerwijderFout(
+                    'Dit event vindt vandaag plaats en kan niet worden verwijderd.'
+                );
+                return;
+            }
+
+            document.getElementById('eventVerwijderenFout').hidden = true;
+
+            document.getElementById('verwijderEventForm').action =
+                knop.dataset.verwijderUrl;
+
+            document.getElementById('verwijderEventModal')
+                .classList.add('actief');
+
+            document.getElementById('annuleerEventVerwijderen').focus();
+        }
+
+        // Annuleren verstuurt geen verwijderverzoek.
+        function closeVerwijderEventModal() {
+            document.getElementById('verwijderEventModal')
+                .classList.remove('actief');
+
+            if (laatsteEventVerwijderKnop) {
+                laatsteEventVerwijderKnop.focus();
+            }
+        }
+
+        // Klikken op de achtergrond sluit de bevestiging.
+        document.getElementById('verwijderEventModal')
+            .addEventListener('click', function (event) {
+                if (event.target === this) {
+                    closeVerwijderEventModal();
+                }
+            });
+
+        // Escape sluit de bevestiging.
+        document.addEventListener('keydown', function (event) {
+            if (
+                event.key === 'Escape'
+                && document.getElementById('verwijderEventModal')
+                    .classList.contains('actief')
+            ) {
+                closeVerwijderEventModal();
+            }
+        });
     </script>
 
 </body>

@@ -8,6 +8,7 @@ use App\Providers\Events\Create;
 use App\Providers\Events\Index;
 use App\Providers\Events\Update;
 use Illuminate\Http\Request;
+use App\Providers\Events\Delete;
 
 class EventController extends Controller
 {
@@ -54,5 +55,18 @@ class EventController extends Controller
         ]);
 
         return $update->update($event, $gegevens);
+    }
+
+    // Controleer de bevestiging en laat de provider het event verwijderen.
+    public function destroy(Request $request, int $event, Delete $delete)
+    {
+        $request->validateWithBag('eventVerwijderen', [
+            'bevestiging' => ['required', 'accepted'],
+        ], [
+            'bevestiging.required' => 'Bevestig eerst het verwijderen.',
+            'bevestiging.accepted' => 'Bevestig eerst het verwijderen.',
+        ]);
+
+        return $delete->delete($event);
     }
 }

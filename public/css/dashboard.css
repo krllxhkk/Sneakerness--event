@@ -968,3 +968,39 @@ body {
         width: 100%;
     }
 }
+
+/* Houd de verwijderbevestiging bereikbaar op kleine schermen. */
+#verwijderEventModal {
+    padding: 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#verwijderEventModal .modal-inhoud {
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    margin: auto;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#verwijderEventVraag {
+    margin-bottom: 24px;
+}
+
+@media (max-width: 600px) {
+    #verwijderEventModal .modal-inhoud {
+        padding: 16px;
+    }
+
+    #verwijderEventModal .modal-knoppen {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #verwijderEventModal .modal-knoppen button {
+        width: 100%;
+    }
+}
