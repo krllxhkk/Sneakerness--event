@@ -5,6 +5,7 @@ namespace App\Providers\Events;
 use App\Models\Event;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -49,7 +50,7 @@ class Update
             // Registreer de geslaagde wijziging na het afronden van de transactie.
             Log::info('Event succesvol gewijzigd', [
                 'event_id' => $id,
-                'gebruiker_id' => auth()->id(),
+                'gebruiker_id' => Auth::id(),
                 'gewijzigde_velden' => array_keys($gegevens),
             ]);
 
@@ -59,7 +60,7 @@ class Update
         } catch (ValidationException $fout) {
             Log::warning('Event wijzigen geweigerd', [
                 'event_id' => $id,
-                'gebruiker_id' => auth()->id(),
+                'gebruiker_id' => Auth::id(),
                 'fouten' => $fout->errors(),
             ]);
 
@@ -68,7 +69,7 @@ class Update
         } catch (QueryException $fout) {
             Log::error('Databasefout bij event wijzigen', [
                 'event_id' => $id,
-                'gebruiker_id' => auth()->id(),
+                'gebruiker_id' => Auth::id(),
                 'sqlstate' => $fout->errorInfo[0] ?? null,
                 'databasecode' => $fout->errorInfo[1] ?? null,
             ]);
@@ -85,12 +86,12 @@ class Update
             return back()
                 ->withInput()
                 ->withErrors([
-                    'event' => 'Er bestaat al een ander event op deze datum en tijd.',
+                    'event' => 'Het event kon niet worden gewijzigd. Probeer het opnieuw.',
                 ], 'eventWijzigen');
         } catch (Throwable $fout) {
             Log::error('Onverwachte fout bij event wijzigen', [
                 'event_id' => $id,
-                'gebruiker_id' => auth()->id(),
+                'gebruiker_id' => Auth::id(),
                 'fouttype' => get_class($fout),
                 'melding' => $fout->getMessage(),
             ]);
